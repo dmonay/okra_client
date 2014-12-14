@@ -1,0 +1,25 @@
+.enter-password {
+    position: relative;
+}
+
+.country-select,
+.address-line-2,
+.state-ZIP {
+    margin-top: 5px;
+}
+
+.last-name {
+    @include respond-min ($screen-sm-max) {
+        padding-left: 0;
+    }
+}
+
+.ZIP-label {
+    @include respond-min ($screen-xs-max) {
+        text-align: center;
+    }
+}
+
+.address-from {
+    padding-top: $padding-base;
+}

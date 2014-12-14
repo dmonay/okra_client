@@ -1,0 +1,14 @@
+$hr-border-width: 1px !default;
+$hr-border-style: solid !default;
+$hr-border-color: $color-gray-lighter !default;
+$hr-margin: $margin-base !default;
+
+%hr,
+.hr {
+    margin-top: $hr-margin;
+    margin-bottom: $hr-margin;
+    border-top: $hr-border-width $hr-border-style $hr-border-color;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}

@@ -1,0 +1,72 @@
+$alert-padding: $padding-base !default;
+$alert-margin: $margin-base !default;
+$alert-border-radius: $border-radius-default !default;
+$alert-animation-time: $base-animation-time !default;
+$alert-color: #fff !default;
+$alert-text-align: center !default;
+
+.alert {
+    position: relative;
+    opacity: 0;
+    height: 0;
+    color: $alert-color;
+    text-align: $alert-text-align;
+    border-radius: $alert-border-radius;
+
+    a {
+        color: $alert-color;
+    }
+
+    &.alert--show,
+    &.ng-hide-remove {
+        animation: bounce-in $alert-animation-time;
+    }
+
+    &.ng-hide-add {
+        animation: bounce-out $alert-animation-time;
+    }
+}
+
+.alert--show {
+    opacity: 1;
+    height: auto;
+    padding: ($alert-padding) ($alert-padding * 2);
+    padding-right: $alert-padding * 3;
+    margin: ($alert-margin / 2) 0;
+
+    @include respond-max ($screen-xs-min) {
+        margin: ($alert-margin / 2) 0;
+    }
+}
+
+.alert__close {
+    @extend .icon;
+    @extend .icon--cancel-circle;
+
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -8px;
+    cursor: pointer;
+}
+
+.alert__header {
+    padding-bottom: $padding-base / 2;
+}
+
+@mixin alert-type($modifier, $color) {
+    .alert--#{$modifier} {
+        background: $color;
+
+        .alert__close {
+            color: darken($color, 20%);
+        }
+    }
+}
+
+@include alert-type('success', $color-success);
+@include alert-type('error', $color-danger);
+@include alert-type('warning', $color-warning);
+@include alert-type('info', $color-info);
+@include alert-type('primary', $color-primary);
+@include alert-type('default', $color-grey);

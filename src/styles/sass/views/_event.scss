@@ -1,0 +1,244 @@
+.event-overview {
+    padding-top: $padding-base;
+    padding-bottom: $padding-base;
+
+    @include respond-max ($screen-xs-min) {
+        border: none;
+        padding-bottom: 0;
+    }
+
+    .icon {
+        padding-right: 10px;
+    }
+}
+
+.event-overview__info {
+    .event-opener {
+        margin-top: $padding-base;
+        margin-bottom: $padding-base;
+        line-height: 1.5
+    }
+}
+
+.event-overview__description {
+    margin-top: $margin-base;
+    margin-bottom: $margin-base;
+
+    @include respond-max ($screen-xs-min) {
+        margin-top: $margin-base / 2;
+        margin-bottom: $margin-base / 2;
+    }
+}
+
+.event-facts .event-fact {
+    padding-left: 30px;
+    line-height: 1.7;
+}
+
+.event-facts .event-fact:before {
+    @extend .icon;
+    width: 30px;
+    display: inline-block;
+    margin-left: -30px;
+}
+
+.event-date.event-fact:before {
+    @extend .icon--ticket;
+}
+
+.event-start.event-fact:before {
+    @extend .icon--clock;
+}
+
+.event-venue.event-fact:before {
+    @extend .icon--location;
+}
+
+.event-address.event-fact:before {
+    @extend .icon--map;
+}
+
+.event-restrictions.event-fact:before {
+    @extend .icon--checkmark;
+}
+
+@include respond-min ($break-lap) {
+    .seatmap {
+        position: relative;
+        cursor: pointer;
+        cursor: -webkit-zoom-in;
+
+        &:after {
+            content: '\e625';
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px 10px;
+            background: #333;
+            color: #fff;
+            font-family: "Glyphicons Halflings";
+            border-radius: $border-radius-default;
+        }
+
+        &:hover:after {
+            background: #999;
+        }
+    }
+
+    .seatmap--full {
+        cursor: pointer;
+        cursor: -webkit-zoom-out;
+
+        &:after {
+            content: '\e624';
+        }
+    }
+}
+
+.event-overview__seatplan {
+    @include respond-max ($screen-xs-min) {
+        display: none;
+    }
+}
+
+.event-overview__map-controls {
+    padding-bottom: $padding-base;
+
+    @include respond-min ($screen-xs-max) {
+        margin-top: $margin-base / 2;
+    }
+}
+
+.ticket-selector__head {
+    border-top: 1px solid $color-gray-lighter;
+    padding-bottom: $padding-base;
+    padding-top: $padding-base * 2;
+}
+
+.ticket-form {
+    .reserved-type-toggle {
+        padding-top: $padding-base;
+        padding-bottom: $padding-base;
+        @include respond-max ($screen-xs-min) {
+            padding-bottom: $padding-base;
+        }
+    }
+}
+
+.ticket-form__quantity {
+    padding-bottom: $padding-base;
+    margin-bottom: $margin-base / 2;
+
+    @include respond-max ($screen-sm-min) {
+        padding-top: $padding-base * 2;
+    }
+
+    @include respond-max ($screen-sm-min) {
+        padding-bottom: $padding-base * 2;
+    }
+
+    .step {
+        padding-top: $padding-base / 2;
+
+        .ticket-from-price {
+            padding-top: 2px;
+        }
+
+        h3 {
+            @include respond-max ($screen-xs-min) {
+                font-size: 17px;
+            }
+        }
+    }
+
+    .ticket-qty-spinner {
+        text-align: right;
+    }
+}
+
+.ticket-form__tree {
+    .step {
+        padding-top: $padding-base;
+        padding-bottom: $padding-base;
+        border-top: 1px solid $color-gray-lighter;
+    }
+
+    // Show element animation
+    &.ng-hide-remove {
+        animation: flip-in-x $base-animation-time;
+    }
+
+    // Hide element animation
+    &.ng-hide-add {
+        animation: flip-out-x $base-animation-time;
+    }
+}
+
+.ticket-form__table {
+    padding-top: $padding-base;
+    padding-bottom: $padding-base;
+
+    fieldset:first-of-type {
+        @include respond-min ($screen-xs-max) {
+            border-top: 1px solid $color-gray-lighter;
+        }
+    }
+}
+
+.ticket-summary {
+    padding-top: $padding-base;
+
+    @include respond-max ($screen-xs-min) {
+        font-size: 12px;
+
+        h3 {
+            font-size: 14px;
+        }
+    }
+}
+
+.ticket-summary .ticket-results:nth-of-type(2) .block-list--group {
+    border-top: 0;
+}
+
+.service-fee-mobile {
+    padding-top: $padding-base;
+    padding-bottom: $padding-base;
+}
+
+.ticket-summary__qty {
+    @include respond-min ($screen-xs-max) {
+        text-align: right;
+    }
+}
+
+.ticket-summary__price,
+.ticket-summary__section,
+.ticket-summary__remove {
+    text-align: right;
+}
+
+.ticket-summary__remove {
+    .btn {
+        display: block;
+    }
+
+    @include respond-min ($screen-sm-max) {
+        padding-top: $margin-base / 4;
+    }
+}
+
+.ticket-controls {
+    margin-top: $margin-base / 2;
+    border-top: 1px solid $color-gray-lighter;
+    padding-top: $margin-base / 2;
+    padding-bottom: $margin-base / 2;
+}
+
+.clear-selection {
+    @include respond-min ($screen-sm-max) {
+        text-align: right;
+        line-height: 2;
+    }
+}

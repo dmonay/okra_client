@@ -1,0 +1,13 @@
+.spin {
+    animation: spin 2s linear infinite;
+}
+
+// Spin Animation
+@keyframes spin {
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

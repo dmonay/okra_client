@@ -1,0 +1,132 @@
+/**
+ * Bare List
+ * A simple list with no indents or bullet points
+ */
+
+%bare-list,
+.bare-list {
+    margin: 0;
+    list-style: none;
+}
+
+
+/**
+ * Block List
+ * A chunky list with padding
+ */
+
+$block-list-base-padding: $padding-base / 2 !default;
+$block-list-base-padding-small: halve($block-list-base-padding) !default;
+$block-list-base-padding-large: double($block-list-base-padding) !default;
+
+
+%block-list,
+.block-list {
+    @extend %bare-list;
+
+    > li {
+        @extend %block-list__item;
+    }
+}
+
+%block-list__item,
+.block-list__item {
+    padding: ($padding-base / 2)  0;
+    float: left;
+    width: 100%;
+    %block-list--small > &,
+    .block-list--small > & {
+        padding-top: $block-list-base-padding-small;
+        padding-bottom: $block-list-base-padding-small;
+    }
+    %block-list--large > &,
+    .block-list--large > & {
+        padding-top: $block-list-base-padding-large;
+        padding-bottom: $block-list-base-padding-large;
+    }
+}
+
+
+/**
+ * Grouped List
+ */
+
+$group-list-border-width: 1px !default;
+$group-list-border-style: solid !default;
+$group-list-border-color: $color-gray-lighter !default;
+$group-list-border-radius: $border-radius-default !default;
+
+%block-list--group,
+.block-list--group {
+    overflow: hidden;
+
+    @include respond-min($screen-sm-max) {
+        border-width: $group-list-border-width;
+        border-radius: $group-list-border-radius;
+    }
+
+    > %block-list__item,
+    > .block-list__item {
+        @include respond-max ($screen-sm-min) {
+            padding-top: $padding-base;
+            padding-bottom: $padding-base;
+            line-height: 1.1;
+        }
+
+        %block-list--small > &,
+        .block-list--small > & {
+            padding-left: $block-list-base-padding-small;
+            padding-right: $block-list-base-padding-small;
+        }
+
+        %block-list--large > &,
+        .block-list--large > & {
+            padding-left: $block-list-base-padding-large;
+            padding-right: $block-list-base-padding-large;
+        }
+    }
+
+    %block-list__item:not(:last-child),
+    .block-list__item:not(:last-child) {
+        border-bottom: $group-list-border-width solid $group-list-border-color;
+    }
+}
+
+.block-list.touchable {
+    > %block-list__item,
+    > .block-list__item {
+        @include respond-max ($screen-xs-min) {
+            @include btn;
+            border-radius: 6px;
+            text-align: left;
+        }
+    }
+    > %block-list__item.selected,
+    > .block-list__item.selected {
+        @include respond-max ($screen-xs-min) {
+            background-color: $color-selected;
+            color: #fff;
+            border-color: $color-selected;
+        }
+    }
+}
+
+/**
+ * Nav List
+ * Inlines a list of nav links
+ */
+
+%nav-list,
+.nav-list {
+    @extend %bare-list;
+
+    > li {
+        display: inline;
+    }
+}
+
+%nav-list-no-padding,
+.nav-list-no-padding {
+    @extend %nav-list;
+    padding: 0;
+}

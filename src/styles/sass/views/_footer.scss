@@ -1,0 +1,18 @@
+/**
+ * Page Footer
+ */
+
+.footer-main {
+    font-size: $footer-font-size;
+    margin-top: $margin-base;
+}
+
+.footer-main__links {
+    > li:not(:last-child) {
+        @extend %split-after;
+    }
+}
+
+.footer-main__logo {
+    text-align: right;
+}

@@ -1,0 +1,41 @@
+/**
+ * Common Styles
+ */
+
+html {
+    font-size: ($font-base-size / 16px) * 1em;
+    line-height: $font-base-line-height / $font-base-size;
+    background-color: $color-base-background;
+    color: $color-base-text;
+    min-height: 100%;
+}
+
+body {
+    padding-top: double($padding-base);
+    padding-bottom: double($padding-base);
+}
+
+
+
+/**
+ * Conditional CSS
+ * http://adactio.com/journal/5429/
+ */
+
+
+body:after {
+    display: none;
+    content: 'break--handheld';
+
+    @include respond-min($break-handheld-wide) {
+        content: 'break--handheld-wide';
+    }
+
+    @include respond-min($break-lap) {
+        content: 'break--lap';
+    }
+
+    @include respond-min($break-desktop) {
+        content: 'break--desktop';
+    }
+}
