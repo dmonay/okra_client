@@ -1,0 +1,140 @@
+# .gitignore Boilerplate
+#
+# For noise that might accidentally end up in Repos
+# And anything that should be in S3
+# -------------------------------------------------
+
+
+
+# Noise
+# -----
+
+$RECYCLE.BIN/
+*.*~
+*.log
+*.pid
+*.un~
+*~
+.*.sw[a-z]
+.DS_Store
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+.\#*
+._*
+.directory
+.elc
+/.emacs.desktop
+/.emacs.desktop.lock
+Desktop.ini
+Session.vim
+Thumbs.db
+\#*\#
+Icon
+auto-save-list
+temp
+tmp
+tramp
+lib-cov
+*.seed
+*.dat
+*.out
+.idea
+
+
+# Compressed
+# ----------
+
+*.gz
+*.zip
+
+
+
+# Node
+# ----
+
+node_modules
+/node_modules/*/node-modules/
+
+
+
+# Sass
+# ----
+
+.sass-cache
+*.sass-cache
+*.scssc
+
+
+
+# Images
+# ------
+
+*.tiff
+*.bmp
+
+
+
+# Audio
+# -----
+
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.aiff
+*.wma
+*.flac
+
+
+
+# Video
+# -----
+
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.3gp
+*.flv
+
+
+
+# Adobe CS
+# --------
+
+*.psd
+*.ai
+*.indd
+
+
+
+# Docs
+# ----
+
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+
+
+
+# Other
+# -----
+
+*.jar
+dist
+cache
+libs
+reports
+docs
+src/app/templates.js
+src/styles/css/**/*
+src/styles/css/**
+.tmp
+coverage
