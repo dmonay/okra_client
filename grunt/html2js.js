@@ -11,7 +11,7 @@ module.exports = {
      */
     app: {
         options: {
-            module: 'csStore.templates',
+            module: 'okra.templates',
             base: 'src',
             useStrict: true,
             singleModule: true,

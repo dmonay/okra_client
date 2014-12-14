@@ -1,9 +1,9 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('csStore.routes', [
-    'ui.router'
-])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    var app = angular.module('okra.routes', ['ui.router']);
+
+    app.config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise(function ($injector, $location) {
             var storePath = $location.path().split('/').slice(0, 2).join('/');
@@ -33,3 +33,4 @@ angular.module('csStore.routes', [
         });
 
     });
+})();
