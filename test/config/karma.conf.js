@@ -11,18 +11,11 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/libs/jquery/jquery.js',
+            'src/components/jquery/dist/jquery.js',
             'src/libs/lodash.build.js',
-            'src/libs/angular/angular.js',
-            'src/libs/angular-sanitize/angular-sanitize.js',
-            'src/libs/angular-animate/angular-animate.js',
-            'src/libs/angular-ui-router/release/angular-ui-router.js',
-            'src/libs/angular-mocks/angular-mocks.js',
-            'src/libs/ng-test-helpers/dist/testing-helpers.js',
-            'test/config-mocks.js',
-            'src/libs/angular-flash/dist/angular-flash.js',
-            'src/libs/angular-local-storage/angular-local-storage.js',
-            'src/libs/angular-toggle-switch/angular-toggle-switch.js',
+            'src/components/angular/angular.js',
+            'src/components/angular-ui-router/release/angular-ui-router.js',
+            'src/components/angular-mocks/angular-mocks.js',
             'src/app/**/*.js'
         ],
 
@@ -30,8 +23,8 @@ module.exports = function (config) {
         // list of files to exclude
         exclude: [
             'src/app/init.js',
-            'src/libs/angular/*.min.js',
-            'src/libs/angular-route/*.min.js'
+            'src/components/angular/*.min.js',
+            'src/components/angular-route/*.min.js'
         ],
 
 
