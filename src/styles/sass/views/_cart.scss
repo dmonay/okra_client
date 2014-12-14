@@ -1,0 +1,46 @@
+.cart-overview {
+    padding-top: $padding-base * 5;
+    padding-bottom: $padding-base * 6;
+}
+
+.cart-content .cart-header,
+.cart-content .reserved-ticket-type,
+.cart-content .unreserved-ticket-type,
+.cart-content .service-charge-row {
+    padding-top: $padding-base + 2;
+    padding-bottom: $padding-base + 2;
+}
+
+.cart-content .ticket-qty-spinner {
+    margin-top: -5px;
+    height: 27px;
+}
+
+.cart-content__item {
+    .ticket-price-mobile {
+        padding: ($padding-base / 2) 0;
+    }
+}
+
+.delete-unreserved-btn,
+.delete-reserved-btn {
+    margin-bottom: $margin-base;
+}
+
+.cart-subtotal,
+.cart-total-row {
+    padding-top: $padding-base + 2;
+    padding-bottom: $padding-base + 2;
+}
+
+.not-including-shipping-label {
+    font-size: 12px;
+}
+
+.checkout__cart-empty {
+    padding-bottom: $padding-base *2;
+    .checkout__cart-empty-message {
+        padding-top: $padding-base * 4;
+        padding-bottom: $padding-base * 4;
+    }
+}

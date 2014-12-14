@@ -1,0 +1,39 @@
+//
+// Page Defaults
+//
+
+$color-base-text: #222 !default;
+$color-base-background: transparent !default;
+
+$color-link: $color-brand;
+$color-link-hover: lighten($color-link, 20%);
+
+
+
+//
+// Color Scheme
+//
+$color-black: #333 !default;
+$color-grey: #aaa !default;
+$color-grey-darker: #444 !default;
+$color-gray-lighter: #ddd !default;
+
+$color-red: #d9534f !default;
+$color-green: #5cb85c !default;
+$color-blue: #428bca !default;
+$color-blue-lighter: #5bc0de !default;
+$color-yellow: #f0ad4e !default;
+$color-violet: #be10c9 !default;
+
+
+
+//
+// Color Types
+//
+
+$color-primary: $color-blue !default;
+$color-success: $color-green !default;
+$color-info: $color-blue-lighter !default;
+$color-warning: $color-yellow !default;
+$color-danger: $color-red !default;
+$color-selected: $color-violet !default;

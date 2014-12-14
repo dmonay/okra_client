@@ -1,0 +1,67 @@
+.shipping-section {
+
+    .step-header {
+        padding-top: $padding-base * 2;
+        padding-bottom: $padding-base;
+    }
+
+    .block-list > li, .block-list__item {
+        @include respond-min ($screen-xs-max) {
+            padding-top: $padding-base;
+            padding-bottom: $padding-base;
+        }
+    }
+}
+
+.shipping-section__selection {
+    padding-top: $padding-base;
+    padding-bottom: $padding-base;
+
+    @include respond-max ($screen-xs-min) {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    input {
+        margin-top: $margin-base;
+    }
+}
+
+.shipping-select-button,
+.shipping-option {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.shipping-select-button {
+    width: 35px;
+}
+
+.shipping-option {
+    @include respond-min ($screen-xs-max) {
+        width: 85%;
+        vertical-align: top;
+    }
+    @include respond-max ($screen-xs-min) {
+        width: 100%;
+    }
+}
+
+.shipping-option__name,
+.shipping-option__price {
+    @include respond-min ($screen-xs-max) {
+        font-size: 16px;
+    }
+}
+
+.shipping-option__name {
+    @include respond-min ($screen-xs-max) {
+        font-weight: bold;
+    }
+}
+
+.shipping-option__price {
+    @include respond-max ($screen-xs-min) {
+        float: right;
+    }
+}

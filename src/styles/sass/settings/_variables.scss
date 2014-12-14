@@ -1,0 +1,47 @@
+//
+// Use border-box sizing on every element?
+//
+
+$global-border-box: true !default;
+
+
+
+//
+// Setup Base Sizing
+//
+
+$rem-base: 16px !default;
+$spacing-base: 10px !default;
+$padding-base: $spacing-base !default;
+$margin-base: $spacing-base * 2 !default;
+
+
+//
+// Media Queries
+//
+
+// Media Query Start Points
+$break-handheld-wide: 480px !default;
+$break-lap: 720px !default;
+$break-desktop: 960px !default;
+
+
+
+//
+// Border Radius
+//
+
+$border-radius-default: 2px;
+
+//
+// Animation Timing
+//
+
+$base-animation-time: 0.5s;
+
+//
+// Font Paths
+//
+
+$icon-font-path: '../../../assets/fonts/';
+$icon-font-name: 'icomoon';

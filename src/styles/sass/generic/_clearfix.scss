@@ -1,0 +1,18 @@
+/**
+ * Clearfix
+ * Source: http://cssmojo.com/latest_new_clearfix_so_far/
+ *
+ * Usage:
+ *  @extend %clearfix;
+ */
+
+.clearfix,
+%clearfix {
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+}

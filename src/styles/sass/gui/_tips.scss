@@ -1,0 +1,186 @@
+/*
+tips - http://jh3y.github.io/tips
+Licensed under the MIT license
+
+jh3y (c) 2014.
+Modified by @benhodgson for CrowdSurge 2014
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+$tip-padding: $padding-base !default;
+$tip-border-radius: $border-radius-default !default;
+$tip-bg: $color-grey-darker !default;
+$tip-color: #fff !default;
+$tip-font-size: $font-size-heading-6 !default;
+$tip-anim-duration: 0.5s !default;
+
+$tip-width: 150px !default;
+$tip-height: 40px !default;
+$tip-width-small: 75px !default;
+$tip-height-small: 20px !default;
+$tip-width-large: 300px !default;
+$tip-height-large: 100px !default;
+$tip-arrow: 12px !default;
+
+// Foundation for tips
+
+[data-tip] {
+    position: relative;
+
+    &,
+    &:before,
+    &:after {
+        box-sizing: border-box;
+    }
+
+    &:hover,
+    &.tip-show {
+
+        &:before {
+            z-index: 1;
+            content: attr(data-tip);
+            display: block;
+            position: absolute;
+            padding: $tip-padding;
+            background: $tip-bg;
+            color: $tip-color;
+            font-size: $tip-font-size;
+            text-align: center;
+            border-radius: $tip-border-radius;
+        }
+
+        &:after {
+            z-index: 1;
+            content: "";
+            position: absolute;
+            display: block;
+        }
+
+        &:before,
+        &:after {
+          transition: all $tip-anim-duration ease 0s;
+          animation: fadeIn $tip-anim-duration;
+        }
+
+    }
+
+    &.top,
+    &.bottom {
+        &:before {
+            left: 50%;
+            width: $tip-width;
+            margin-left: -($tip-width / 2);
+        }
+
+        &:after {
+            left: 50%;
+            margin-left: -($tip-arrow);
+            border: $tip-arrow solid transparent;
+        }
+
+        &.small:before {
+            width: $tip-width-small;
+            margin-left: -($tip-width-small / 2);
+        }
+
+        &.large:before {
+            width: $tip-width-large;
+            margin-left: -($tip-width-large / 2);
+        }
+    }
+
+    &.top {
+        &:before {
+            bottom: 100%;
+            margin-bottom: $tip-arrow;
+        }
+
+        &:after {
+            bottom: 100%;
+            margin-bottom: -($tip-arrow);
+            border-top: $tip-arrow solid $tip-bg;
+        }
+    }
+
+    &.bottom {
+        &:before {
+            top: 100%;
+            margin-top: $tip-arrow;
+        }
+
+        &:after {
+            top: 100%;
+            margin-top: -($tip-arrow);
+            border-bottom: $tip-arrow solid $tip-bg;
+        }
+    }
+
+    &.right,
+    &.left {
+        &:before {
+            top: 50%;
+            width: $tip-width;
+            height: $tip-height;
+            margin-top: -($tip-height / 2);
+        }
+
+        &:after {
+            top: 50%;
+            margin-top: -($tip-arrow);
+            border: $tip-arrow solid transparent;
+        }
+
+        &.small:before {
+            width: $tip-width-small;
+            height: $tip-height-small;
+            margin-top: -($tip-height-small / 2)
+        }
+
+        &.large:before {
+            width: $tip-width-large;
+            height: $tip-height-large;
+            margin-top: -($tip-height-large / 2)
+        }
+    }
+
+    &.right {
+        &:before {
+            left: 100%;
+            margin-left: $tip-arrow;
+        }
+
+        &:after {
+            left: 100%;
+            margin-left: -($tip-arrow);
+            border-right: $tip-arrow solid $tip-bg;
+        }
+    }
+
+    &.left {
+        &:before {
+            right: 100%;
+            margin-right: $tip-arrow;
+        }
+
+        &:after {
+            right: 100%;
+            margin-right: -($tip-arrow);
+            border-left: $tip-arrow solid $tip-bg;
+        }
+    }
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.9;
+    }
+}

@@ -1,0 +1,31 @@
+.checkout__countdown {
+    margin-top: $margin-base;
+    margin-bottom: $margin-base;
+    padding-top: $margin-base;
+    padding-bottom: $margin-base;
+    border-radius: none;
+}
+
+.checkout-steps {
+    padding-top: $padding-base * 2;
+    @include respond-max ($screen-xs-min) {
+        background-color: #fff;
+        padding-bottom: $padding-base * 2;
+    }
+}
+
+.checkout-steps__container {
+    @include respond-min ($screen-xs-max) {
+        border-color: $color-gray-lighter;
+        border-style: solid;
+        border-width: 1px;
+        background-color: #fff;
+        border-radius: $border-radius-default;
+        padding: $padding-base * 2 ($padding-base * 4);
+    }
+}
+
+.progress-controls {
+    margin-top: $margin-base;
+    padding-top: $padding-base * 2;
+}

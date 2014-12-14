@@ -1,0 +1,58 @@
+$base-rotation-radius: 30deg;
+$base-animation-delay: -0.9167s;
+$total-bars: 12;
+
+%loader,
+.loader {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 14px;
+}
+
+%loader__bar,
+.loader__bar {
+    width: 12%;
+    height: 26%;
+    position: absolute;
+    left: 44.5%;
+    top: 37%;
+    opacity: 0;
+    border-radius: 50px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    animation: fade-to-10 1s linear infinite;
+
+    %loader--dark &,
+    .loader--dark & {
+        background: #333;
+    }
+
+    %loader--light &,
+    .loader--light & {
+        background: #fff;
+        background: rgba(255,255,255,0.75);
+    }
+}
+
+%loader--large,
+.loader--large {
+    width: 32px;
+    height: 52px;
+}
+
+@for $i from 0 through $total-bars {
+    %loader__bar--#{$i},
+    .loader__bar--#{$i} {
+        transform: rotate($base-rotation-radius * $i) translate(0, -142%);
+        animation-delay: -0.9167s * $i;
+    }
+}
+
+@keyframes fade-to-10 {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.10;
+    }
+}

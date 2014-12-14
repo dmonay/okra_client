@@ -1,0 +1,109 @@
+.card-input-group {
+    @include respond-max ($screen-xs-min) {
+        padding-right: 0;
+    }
+
+    @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+        padding-right: 0;
+    }
+}
+
+.CSV-input,
+.expiration-date-input {
+    @include respond-min ($screen-sm-max) {
+        @include col--no-gutter-right;
+        width: 13%;
+    }
+}
+
+.CSV-input {
+    @include respond-min ($screen-sm-max) {
+        width: 11%;
+
+        label {
+            text-align: center;
+        }
+    }
+}
+
+.CSV-label {
+    text-align: center;
+    @include respond-min ($screen-xs-max) {
+        padding-top: 30px;
+    }
+}
+
+.exp-label {
+    @include respond-min ($screen-sm-max) {
+        @include col--no-gutter-right;
+    }
+}
+
+.desktp-payment-select {
+    padding-top: $padding-base * 2;
+    padding-bottom: $padding-base * 2;
+}
+
+.cred-cards {
+    margin-left: -3px;
+    margin-right: -3px;
+    padding-top: $padding-base;
+
+    .card-holder {
+        padding: 4px;
+    }
+
+    .card {
+        border-radius: 2px;
+        overflow: hidden;
+        background-color: #555;
+        text-align: center;
+        line-height: 0;
+
+        &.active {
+            background-color: transparent;
+
+            img {
+                opacity: 1.0;
+            }
+        }
+
+        img {
+            background-image: url(../../assets/img/cc-icon-2x.png);
+            width: 100%;
+            opacity: 0.2;
+            background-repeat: no-repeat;
+            background-size: 200%;
+            padding-bottom: 62%;
+            display: block;
+            text-indent: -99999px;
+            overflow: hidden;
+        }
+
+        .ui-cc-icon-amex{
+            background-position: 0 0;
+        }
+
+        .ui-cc-icon-mastercard{
+            background-position: 100% 0%;
+        }
+
+        .ui-cc-icon-visa{
+            background-position: 0% 100%;
+        }
+
+        .ui-cc-icon-discover{
+            background-position: 100% 102%;
+        }
+    }
+
+    &.cred-cards-active {
+        .card {
+            background-color: transparent;
+
+            img {
+                opacity: 1.0;
+            }
+        }
+    }
+}

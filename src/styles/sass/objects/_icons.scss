@@ -1,0 +1,56 @@
+// Import the fonts
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('#{$icon-font-path}#{$icon-font-name}.eot');
+    src: url('#{$icon-font-path}#{$icon-font-name}.eot?#iefix') format('embedded-opentype'),
+         url('#{$icon-font-path}#{$icon-font-name}.woff') format('woff'),
+         url('#{$icon-font-path}#{$icon-font-name}.ttf') format('truetype'),
+         url('#{$icon-font-path}#{$icon-font-name}.svg}') format('svg');
+     font-weight: normal;
+     font-style: normal;
+}
+
+// Catchall baseclass
+%icon,
+.icon {
+    position: relative;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// TODO: When node-sass / grunt-contrib-sass starts supporting Sass 3.3 Maps we'll make this a loop
+// https://gist.github.com/benhodgson87/6443330f7f2f925edfc2
+@mixin icon-type($modifier, $content) {
+    %icon--#{$modifier}:before,
+    .icon--#{$modifier}:before {
+        content: $content;
+    }
+}
+
+@include icon-type('pencil', '\e602');
+@include icon-type('ticket', '\e60d');
+@include icon-type('cart2', '\e60f');
+@include icon-type('credit', '\e627');
+@include icon-type('location', '\e612');
+@include icon-type('map', '\e634');
+@include icon-type('clock', '\e614');
+@include icon-type('calendar', '\e636');
+@include icon-type('undo', '\e617');
+@include icon-type('undo2', '\e619');
+@include icon-type('redo', '\e618');
+@include icon-type('redo2', '\e61a');
+@include icon-type('forward', '\e61b');
+@include icon-type('user', '\e63d');
+@include icon-type('spinner', '\e600');
+@include icon-type('spinner2', '\e620');
+@include icon-type('cancel-circle', '\e63b');
+@include icon-type('close', '\e621');
+@include icon-type('checkmark', '\e622');
+@include icon-type('plus', '\e625');
+@include icon-type('minus', '\e624');
+@include icon-type('arrow-left', '\e63c');
