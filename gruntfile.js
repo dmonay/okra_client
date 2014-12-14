@@ -65,8 +65,8 @@ module.exports = function (grunt) {
     var serveBaseTasks = [
         'newer:lodash',
         'concurrent:dev',
-        'karma:unit',
-        'newer:autoprefixer:dev',
+        // 'karma:unit',
+        // 'newer:autoprefixer:dev',
         'connect:app'];
 
     grunt.registerTask('serve', serveBaseTasks.concat([
