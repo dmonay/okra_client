@@ -8,7 +8,7 @@ module.exports = {
             style: 'expanded'
         },
         files: {
-            '<%= meta.src %>/styles/css/core.css': '<%= meta.src %>/styles/sass/core.scss'
+            '<%= meta.src %>/styles/css/main.css': '<%= meta.src %>/styles/sass/main.scss'
         }
     },
     dist: {
@@ -16,7 +16,7 @@ module.exports = {
             style: 'compressed'
         },
         files: {
-            '<%= meta.dist %>/styles/css/core.css': '<%= meta.src %>/styles/sass/core.scss'
+            '<%= meta.dist %>/styles/css/main.css': '<%= meta.src %>/styles/sass/main.scss'
         }
     }
 };
