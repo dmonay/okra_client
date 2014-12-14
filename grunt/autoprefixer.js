@@ -9,12 +9,12 @@ module.exports = {
     },
     dev: {
         files: {
-            '<%= meta.src %>/styles/css/core.css': '<%= meta.src %>/styles/css/core.css'
+            '<%= meta.src %>/styles/css/main.css': '<%= meta.src %>/styles/css/main.css'
         }
     },
     dist: {
         files: {
-            '<%= meta.dist %>/styles/css/core.css': '<%= meta.dist %>/styles/css/core.css'
+            '<%= meta.dist %>/styles/css/main.css': '<%= meta.dist %>/styles/css/main.css'
         }
     }
 };
