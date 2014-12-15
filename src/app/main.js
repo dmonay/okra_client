@@ -29,7 +29,9 @@
 
     //Constants
     app.constant('okraAPI', {
-        createOrg: 'http://localhost:8080/create/organization'
+        createOrg: 'http://localhost:8080/create/organization',
+        updateMission: 'http://localhost:8080/update/mission/',
+        updateMembers: 'http://localhost:8080/update/members/'
     });
 })();
 
@@ -93,6 +95,19 @@
                 return $http.post(okraAPI.createOrg, {
                     organization: orgName,
                     userId: "548e3feebee23fc7375b788b"
+                });
+            },
+            updateMission: function (orgName, mission) {
+                var url = okraAPI.updateMission + orgName;
+
+                return $http.post(url, {
+                    mission: mission
+                });
+            },
+            updateMembers: function (orgName, members) {
+                var url = okraAPI.updateMembers + orgName;
+                return $http.post(url, {
+                    "members": members
                 });
             }
         };

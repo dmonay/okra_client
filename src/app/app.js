@@ -29,6 +29,8 @@
 
     //Constants
     app.constant('okraAPI', {
-        createOrg: 'http://localhost:8080/create/organization'
+        createOrg: 'http://localhost:8080/create/organization',
+        updateMission: 'http://localhost:8080/update/mission/',
+        updateMembers: 'http://localhost:8080/update/members/'
     });
 })();
