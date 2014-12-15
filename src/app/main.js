@@ -38,13 +38,22 @@
 
     var app = angular.module('HeaderModule');
 
-    function AddOrganizationModalController($scope, OrganizationFactory, $modal) {
+    function AddOrganizationModalController($scope, OrganizationFactory, $modalInstance) {
         var modal = this;
 
-
+        modal.createOrganization = function (name) {
+            if (modal.organizationForm.$valid) {
+                OrganizationFactory.createOrganization(name).then(function (response) {
+                    console.log(response);
+                });
+            }
+        };
+        modal.closeModal = function () {
+            $modalInstance.close();
+        };
     }
 
-    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory'];
+    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$modalInstance'];
 
     app.controller('AddOrganizationModalController', AddOrganizationModalController);
 
@@ -98,6 +107,6 @@
 
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
     $templateCache.put("app/header/add-organization-modal.tpl.html",
-        "<div class=\"modal-header\"><h3 class=\"modal-title text-center\">Add Organization</h3><a href ng-click=\"modal.closeModal()\">X</a></div><div class=\"modal-body\"><form><label>Organization Name</label><input></form></div><div class=\"modal-footer\"><button>Add</button> <button>Cancel</button></div>"
+        "<div class=\"modal-header\"><h3 class=\"modal-title text-center\">Add Organization</h3><a href ng-click=\"modal.closeModal()\">X</a></div><div class=\"modal-body\"><form name=\"modal.organizationForm\"><label>Organization Name</label><input ng-model=\"modal.organizationName\" required></form></div><div class=\"modal-footer\"><button ng-click=\"modal.createOrganization(modal.organizationName)\">Add</button> <button ng-click=\"modal.closeModal()\">Cancel</button></div>"
     );
 }]);
