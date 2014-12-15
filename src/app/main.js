@@ -91,7 +91,8 @@
         var organizationAPI = {
             createOrganization: function (orgName) {
                 return $http.post(okraAPI.createOrg, {
-                    organization: orgName
+                    organization: orgName,
+                    userId: "548e3feebee23fc7375b788b"
                 });
             }
         };
