@@ -4,15 +4,15 @@
 
 module.exports = {
     dev: [
-        'newer:sass:dev',
-        'newer:html2js:app'
+        'sass:dev',
+        'html2js:app'
     ],
     test: [
         'jshint',
-        'newer:html2js:app'
+        'html2js:app'
     ],
     dist: [
-        'newer:lodash',
+        'lodash',
         'html2js:app',
         'ngmin:dist',
         'sass:dist'

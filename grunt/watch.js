@@ -4,13 +4,13 @@ module.exports = {
     },
     scripts: {
         files: ['<%= meta.src %>/app/**/*.js'],
-        tasks: ['test:unit'],
+        tasks: ['concat:js', 'jshint', 'jsbeautifier'],
         options: {
             spawn: false
         }
     },
     src: {
-        files: ['<%= meta.src %>/**/views/*.html', '<%= meta.src %>/index.html'],
+        files: ['<%= meta.src %>/app/**/*.html', '<%= meta.src %>/index.html'],
         tasks: ['html2js']
     },
     styles: {
