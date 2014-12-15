@@ -10,6 +10,19 @@
                     organization: orgName,
                     userId: "548e3feebee23fc7375b788b"
                 });
+            },
+            updateMission: function (orgName, mission) {
+                var url = okraAPI.updateMission + orgName;
+
+                return $http.post(url, {
+                    mission: mission
+                });
+            },
+            updateMembers: function (orgName, members) {
+                var url = okraAPI.updateMembers + orgName;
+                return $http.post(url, {
+                    "members": members
+                });
             }
         };
 
