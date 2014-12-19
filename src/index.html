@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Okra</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="styles/css/main.css">
     </head>
     <body>
@@ -21,19 +22,19 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li ng-repeat="organization in [1, 2, 3, 4, 5]">
+                <li ng-repeat="organization in [1, 2, 3]">
                     <a href>Organization {{$index + 1}}</a>
                 </li>
                 <li>
-                    <button ng-click="vm.addOrganization()">+Add an organization</button>
+                    <button ng-click="vm.addOrganization()" class="btn btn-default navbar-btn"><i class="fa fa-plus"></i></button>
                 </li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href><i>User Profile</i></a>
+                    <a href><i class="fa fa-user"></i> User Profile</a>
                 </li>
                 <li>
-                    <a href><i>Notification</i></a>
+                    <a href><i class="fa fa-bell"></i></a>
                 </li>
               </ul>
             </div>

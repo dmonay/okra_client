@@ -1,7 +1,35 @@
 /*============================================================*/
 /*===================Table Of Contents========================*/
 /*============================================================*/
+/*=Imports===========8========================================*/
+/*=Variables=========11=======================================*/
+
+
+// Imports
+// Variables
+$white  : #ffffff;
+$black : #000000;
+$okraGreen : #0D8120;
+
 
 html {
 	background-color: #ffffff;
 }
+
+.navbar {
+	background-color: $okraGreen;
+}
+
+.navbar-default, .navbar-brand {
+	color: $white; 
+
+	.navbar-nav > li > a{
+		color: $white;
+	}
+
+	.navbar-nav > li > a:hover {
+		color: $white;
+		font-weight: 700;
+	}
+}
+
