@@ -4,6 +4,7 @@
     //Define high level modules
     angular.module('SharedFactories', []);
     angular.module('HeaderModule', []);
+    angular.module('OrganizationModule', []);
 
 
     var appDependencies = [
@@ -11,7 +12,9 @@
         'ui.bootstrap',
         'okra.templates',
         'HeaderModule',
-        'SharedFactories'
+        'SharedFactories',
+        'OrganizationModule',
+        'okra.routes'
     ];
 
     var app = angular.module('okra', appDependencies);

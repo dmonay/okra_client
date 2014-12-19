@@ -4,6 +4,7 @@
     //Define high level modules
     angular.module('SharedFactories', []);
     angular.module('HeaderModule', []);
+    angular.module('OrganizationModule', []);
 
 
     var appDependencies = [
@@ -11,7 +12,9 @@
         'ui.bootstrap',
         'okra.templates',
         'HeaderModule',
-        'SharedFactories'
+        'SharedFactories',
+        'OrganizationModule',
+        'okra.routes'
     ];
 
     var app = angular.module('okra', appDependencies);
@@ -32,6 +35,23 @@
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
         updateMembers: 'http://localhost:8080/update/members/'
+    });
+})();
+
+(function () {
+    'use strict';
+
+    var router = angular.module('okra.routes', ['ui.router']);
+
+    router.config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
+
+        $stateProvider
+            .state('organization', {
+                url: '/organization/:organization',
+                templateUrl: 'app/organization/organization-tree.tpl.html',
+                controller: 'OrganizationController as vm'
+            });
     });
 })();
 
@@ -87,6 +107,21 @@
 (function () {
     'use strict';
 
+    var app = angular.module('OrganizationModule');
+
+    function OrganizationController($scope, $modal) {
+        var vm = this;
+    }
+
+    OrganizationController.$inject = ['$scope', '$modal'];
+
+    app.controller('OrganizationController', OrganizationController);
+
+})();
+
+(function () {
+    'use strict';
+
     var app = angular.module('SharedFactories');
 
     function OrganizationFactory($http, okraAPI) {
@@ -124,4 +159,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     $templateCache.put("app/header/add-organization-modal.tpl.html",
         "<div class=\"modal-header\"><h3 class=\"modal-title text-center\">Add Organization</h3><a href class=\"pull-right\" ng-click=\"modal.closeModal()\"><i class=\"fa fa-close\"></i></a></div><div class=\"modal-body\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><div class=\"row\"><div class=\"form-group\"><label for=\"organizationName\" class=\"col-sm-4 control-label\">Organization Name</label><div class=\"col-sm-7\"><input name=\"organizationName\" class=\"form-control\" ng-model=\"modal.organizationName\" required></div></div></div></form></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\">Add</button> <button class=\"btn btn-primary\" ng-click=\"modal.closeModal()\">Cancel</button></div>"
     );
+    $templateCache.put("app/organization/organization-tree.tpl.html",
+        "<div>Dummy content</div>");
 }]);

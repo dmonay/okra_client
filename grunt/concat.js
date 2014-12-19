@@ -7,8 +7,8 @@ module.exports = {
         src: [
             ['src/app/app.js',
                 'src/app/**/*.js',
-                // 'app-route.js',
-                '!src/app/app-route.js',
+                'app-route.js',
+                'src/app/app-route.js',
                 '!src/app/main.js'                
             ],
         ],
