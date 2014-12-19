@@ -2,9 +2,11 @@
 /*===================Table Of Contents========================*/
 /*============================================================*/
 /*=Variables=========11=======================================*/
-/*=Navbar Styles=====24=======================================*/
-/*=Modal Styles =====36=======================================*/
-/*=Btn Styles =======58=======================================*/
+/*=Mixins============19=======================================*/
+/*=Navbar Styles=====25=======================================*/
+/*=Modal Styles =====49=======================================*/
+/*=Btn Styles =======69=======================================*/
+/*=Organization =====88=======================================*/
 /*============================================================*/
 
 // Variables ====================================================================
@@ -12,6 +14,15 @@ $white  : #ffffff;
 $black : #000000;
 $okraGreen : #0D8120;
 $okraLightGreen: #139E2A;
+$grey: #C2C5C3;
+
+// Mixins ========================================================================
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
 
 // Navbar Styles =================================================================
 .navbar {
@@ -77,3 +88,61 @@ $okraLightGreen: #139E2A;
 	color: $okraLightGreen;
 }
 
+.btn-info {
+	background-color: $grey;
+	color: $white;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active {
+	background-color: $grey;
+	color: $white;
+}
+// Organization =================================================================
+.organization-wrapper {
+	.row {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	.btn-danger, .btn-info {
+		padding: 5px 10px;
+		margin-left: 10px;
+	}
+}
+
+.centered-container {
+	margin: 0 auto;
+	display: table;
+
+	.well {
+		width: 500px;
+	}
+}
+
+.centered-container + .centered-container {
+	margin-top: 15px;
+}
+
+.tree-node {
+	padding: 20px 20px;
+	background-color: $grey;
+	@include border-radius(5px);
+	color: $white;
+}
+
+.tree-node.active {
+	background-color: $okraGreen;
+}
+
+.task-node {
+	background-color: $okraLightGreen;
+	padding: 10px 10px;
+	color: $white;
+	@include border-radius(5px);
+	min-width: 100px;
+	margin-top: 10px;
+}
+
+.objective + .objective {
+	margin-left: 50px;
+}
