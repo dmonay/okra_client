@@ -1,13 +1,19 @@
 <div class="modal-header">
-    <h3 class="modal-title text-center">Add Organization</h3> <a href ng-click="modal.closeModal()">X</a>
+    <h3 class="modal-title text-center">Add Organization</h3> <a href class="pull-right" ng-click="modal.closeModal()"><i class="fa fa-close"></i></a>
 </div>
 <div class="modal-body">
-	<form name="modal.organizationForm">
-		<label>Organization Name</label>
-		<input ng-model="modal.organizationName" required>
+	<form class="form-horizontal" name="modal.organizationForm">
+		<div class="row">
+			<div class="form-group">
+				<label for="organizationName" class="col-sm-4 control-label">Organization Name</label>
+				<div class="col-sm-7">
+					<input name="organizationName" class="form-control" ng-model="modal.organizationName" required>
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 <div class="modal-footer">
-	<button ng-click="modal.createOrganization(modal.organizationName)">Add</button>
-	<button ng-click="modal.closeModal()">Cancel</button>
+	<button class="btn btn-primary" ng-click="modal.createOrganization(modal.organizationName)">Add</button>
+	<button class="btn btn-primary" ng-click="modal.closeModal()">Cancel</button>
 </div>
