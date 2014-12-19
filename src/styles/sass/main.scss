@@ -3,6 +3,9 @@
 /*============================================================*/
 /*=Imports===========8========================================*/
 /*=Variables=========11=======================================*/
+/*=Modal Styles =====36=======================================*/
+/*=Btn Styles =======58=======================================*/
+/*============================================================*/
 
 
 // Imports
@@ -10,6 +13,7 @@
 $white  : #ffffff;
 $black : #000000;
 $okraGreen : #0D8120;
+$okraLightGreen: #139E2A;
 
 
 html {
@@ -31,5 +35,44 @@ html {
 		color: $white;
 		font-weight: 700;
 	}
+}
+//Modal Styles
+.modal-content {
+	.modal-title {
+		color: $okraGreen;
+	}
+
+	.modal-header {
+		i {
+			position: relative;
+			top: -40px;
+			color: $okraGreen;
+		}
+	}
+
+	.modal-body {
+		label {
+			color: $okraGreen;
+		}
+	}
+}
+//Btn Styles
+.btn-primary {
+	color: $white;
+	background-color: $okraGreen;
+	border-color: $black;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+	background-color: $okraLightGreen;
+	border-color: $black;
+}
+
+.btn-default {
+	color: $okraGreen;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active  {
+	color: $okraLightGreen;
 }
 
