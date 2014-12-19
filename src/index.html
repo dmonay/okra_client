@@ -9,25 +9,40 @@
         <link rel="stylesheet" href="styles/css/main.css">
     </head>
     <body>
-        <div class="container">
-            <div ng-cloak>
-                <header ng-controller="HeaderController as vm">
-                    <ul>
-                        <li ng-repeat="organization in [1, 2, 3, 4, 5]">
-                            Organization {{$index + 1}}
-                        </li>
-                        <li>
-                            <button ng-click="vm.addOrganization()">+Add an organization</button>
-                        </li>
-                    </ul>
-                    <a href><i>User Profile</i></a>
-                    <i>Notification</i>
-                </header>
-                <div ui-view></div>
-
-                <!-- Global  Footer -->
-                <div>Footer</div>
+        <nav class="navbar navbar-default" ng-controller="HeaderController as vm" role="navigation">
+          <div class="container-fluid">
+            <!-- Mobile Display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+              <a class="navbar-brand" href="#">LOGO</a>
             </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li ng-repeat="organization in [1, 2, 3, 4, 5]">
+                    <a href>Organization {{$index + 1}}</a>
+                </li>
+                <li>
+                    <button ng-click="vm.addOrganization()">+Add an organization</button>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href><i>User Profile</i></a>
+                </li>
+                <li>
+                    <a href><i>Notification</i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Global  Footer -->
+        <div>Footer</div>
+        </div>
+        <div class="container">
         </div>
 
         <!-- build:js app/vendor-modules.min.js -->
