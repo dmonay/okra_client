@@ -99,7 +99,6 @@
             },
             updateMission: function (orgName, mission) {
                 var url = okraAPI.updateMission + orgName;
-
                 return $http.post(url, {
                     mission: mission
                 });
