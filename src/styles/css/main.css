@@ -1,0 +1,77 @@
+/*============================================================*/
+/*===================Table Of Contents========================*/
+/*============================================================*/
+/*=Variables==================12==============================*/
+/*=Mixins=====================19==============================*/
+/*=Toolbar Styles=============27==============================*/
+/*=Dialog/Modal Styles =======31==============================*/
+/*=Btn Styles ================41==============================*/
+/*=Organization ==============53==============================*/
+/*============================================================*/
+md-item {
+  margin: 0px 10px;
+}
+
+.md-dialog-container md-dialog:first-child {
+  padding: 15px;
+}
+.md-dialog-container md-content {
+  padding-bottom: 0px;
+}
+
+.md-raised {
+  padding: 5px 10px;
+}
+
+.md-button {
+  text-transform: none;
+}
+
+md-input-group.long > input {
+  width: 264px;
+}
+
+.organization-wrapper .row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.organization-wrapper .btn-danger, .organization-wrapper .btn-info {
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.centered-container {
+  margin: 0 auto;
+  display: table;
+}
+.centered-container .well {
+  width: 500px;
+}
+
+.centered-container + .centered-container {
+  margin-top: 15px;
+}
+
+.tree-node {
+  padding: 20px 20px;
+  background-color: #c2c5c3;
+  border-radius: 5px;
+  color: white;
+}
+
+.tree-node.active {
+  background-color: #0d8120;
+}
+
+.task-node {
+  background-color: #139e2a;
+  padding: 10px 10px;
+  color: white;
+  border-radius: 5px;
+  min-width: 100px;
+  margin-top: 10px;
+}
+
+.objective + .objective {
+  margin-left: 50px;
+}
