@@ -134,7 +134,5 @@ libs
 reports
 docs
 src/app/templates.js
-src/styles/css/**/*
-src/styles/css/**
 .tmp
 coverage
