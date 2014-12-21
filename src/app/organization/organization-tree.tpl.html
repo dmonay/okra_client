@@ -1,73 +1,84 @@
 <section class="organization-wrapper">
-	<div class="row">
-		<div class="centered-container">
-			<div class="tree-node active pull-left">
-				Organization #1
-			</div>
-			<button class="btn btn-danger"><i class="fa fa-minus"></i></button>
+	<div layout="row" layout-align="center">
+		<div class="tree-node active">
+			Organization #1
 		</div>
-		<div class="centered-container">
-			<div class="well">
-				The mission of this organization is to blah blah blah blah blah blah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blah
-			</div>
-		</div>
+		<div layout="column" layout-align="start end">
+			<md-button href class="md-raised md-warn" aria-label="toggle">
+	        	<i class="fa fa-minus"></i>
+	    	</md-button>
+	    	<md-button href class="md-raised md-primary" aria-label="edit">
+				<i class="fa fa-pencil"></i>
+	    	</md-button>
+	    </div>
+	</div>
+	<div layout="row">
+		The mission of this organization is to blah blah blah blah blah blah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blah
 	</div>
 
 	<!-- objectives -->
-	<div class="row">
-		<div class="centered-container">
-			<div class="objective pull-left">
-				<div class="tree-node active pull-left">
-					Objective #1
-				</div>
-				<button class="btn btn-danger"><i class="fa fa-minus"></i></button>
-				<button class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+	<div layout="row" layout-align="center center">
+		<div class="objective" layout="row" layout-align="start">
+			<div class="tree-node active" layout-align="start">
+				Objective #1
 			</div>
-
-			<div class="objective pull-left">
-				<div class="tree-node pull-left">
-					Objective #2
-				</div>
-				<button class="btn btn-info"><i class="fa fa-plus"></i></button>
-			</div>
-
-			<div class="objective pull-left">
-				<div class="tree-node pull-left">
-					Objective #3
-				</div>
-				<button class="btn btn-info"><i class="fa fa-plus"></i></button>
-			</div>
-
-			<div class="objective pull-left">
-				<div class="tree-node pull-left">
-					Objective #4
-				</div>
-				<button class="btn btn-info"><i class="fa fa-plus"></i></button>
-			</div>
+			<div layout="column" layout-align="end end">
+	            <md-button href class="md-raised md-warn" aria-label="toggle">
+	            	<i class="fa fa-minus"></i>
+	        	</md-button>
+	        	<md-button href class="md-raised md-primary" aria-label="edit">
+					<i class="fa fa-pencil"></i>
+	        	</md-button>
+	        </div>
 		</div>
+
+		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in [1, 2, 3]">
+			<div class="tree-node" layout-align="start">
+				Objective {{$index + 2}}
+			</div>
+			<div layout="column" layout-align="start end">
+	            <md-button href class="md-raised" aria-label="toggle">
+	            	<i class="fa fa-plus"></i>
+	        	</md-button>
+	        </div>
+		</div>
+
+
 	</div>
 
 	<!-- key results -->
-	<div class="row">
-		<div class="centered-container">
-			<div class="tree-node pull-left active">
-				Key Result
+	<div layout="row" layout-align="center center">
+		<div class="key-result" layout="row" layout-align="start">
+			<div class="tree-node active">
+				Key Result #1
 			</div>
-			<button class="btn btn-danger"><i class="fa fa-minus"></i></button>
+			<div layout="column" layout-align="end end">
+				<md-button href class="md-raised md-warn" aria-label="toggle">
+	            	<i class="fa fa-minus"></i>
+	        	</md-button>
+	        	<md-button href class="md-raised md-primary" aria-label="edit">
+					<i class="fa fa-pencil"></i>
+	        	</md-button>
+	        </div>
+		</div>
+		<div class="key-result" layout="row" layout-align="start">
+			<div class="tree-node">
+				Key Result #2
+			</div>
+			<div layout="column" layout-align="start end">
+				<md-button href class="md-raised md-warn" aria-label="toggle">
+	            	<i class="fa fa-plus"></i>
+	        	</md-button>
+	        </div>
 		</div>
 	</div>
 
 	<!-- Tasks -->
-	<div class="row">
-		<div class="centered-container">
+	<div layout="column" layout-align="center center">
+		<div layout="row" layout-align="start center" ng-repeat="task in [1, 2, 3, 4]">
+			<md-checkbox ng-model="vm.isChecked[$index]" aria-label></md-checkbox>
 			<div class="task-node">
-				<input type="checkbox"> Task 1
-			</div>
-			<div class="task-node">
-				<input type="checkbox"> Task 2
-			</div>
-			<div class="task-node">
-				<input type="checkbox"> Task 3
+				Task {{$index + 1}}
 			</div>
 		</div>
 	</div>

@@ -31,39 +31,20 @@ md-input-group.long > input {
   width: 264px;
 }
 
-.organization-wrapper .row {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.organization-wrapper .btn-danger, .organization-wrapper .btn-info {
-  padding: 5px 10px;
-  margin-left: 10px;
+md-checkbox:focus .md-label {
+  border-color: transparent;
 }
 
-.centered-container {
-  margin: 0 auto;
-  display: table;
-}
-.centered-container .well {
-  width: 500px;
-}
-
-.centered-container + .centered-container {
-  margin-top: 15px;
-}
-
-.tree-node {
+.organization-wrapper .tree-node {
   padding: 20px 20px;
   background-color: #c2c5c3;
   border-radius: 5px;
   color: white;
 }
-
-.tree-node.active {
+.organization-wrapper .tree-node.active {
   background-color: #0d8120;
 }
-
-.task-node {
+.organization-wrapper .task-node {
   background-color: #139e2a;
   padding: 10px 10px;
   color: white;
@@ -71,7 +52,16 @@ md-input-group.long > input {
   min-width: 100px;
   margin-top: 10px;
 }
-
-.objective + .objective {
+.organization-wrapper .objective + .objective, .organization-wrapper .key-result + .key-result {
   margin-left: 50px;
+}
+.organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"] {
+  margin-top: 25px;
+}
+.organization-wrapper .md-button {
+  padding: 3px 8px;
+  margin-left: 10px;
+}
+.organization-wrapper .md-button + .md-button {
+  margin-top: 5px;
 }
