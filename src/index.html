@@ -18,19 +18,19 @@
                 <md-list layout="row">
                   <md-item ng-repeat="item in [1, 2, 3]">
                     <md-item-content>
-                      <md-button href class="md-raised md-accent">Organization {{$index+1}}</md-button>
+                      <md-button href class="md-raised md-accent" aria-label="Organization {{$index+1}}">Organization {{$index+1}}</md-button>
                     </md-item-content>
                   </md-item>
                   <md-item>
-                    <md-button ng-click="vm.addOrganization()" class="md-raised md-primary"><i class="fa fa-plus"></i></md-button>
+                    <md-button ng-click="vm.addOrganization()" class="md-raised md-primary" aria-label="add organization"><i class="fa fa-plus"></i></md-button>
                   </md-item>
                 </md-list>
               <!-- fill up the space between left and right area -->
               <span flex></span>
-              <md-button>
+              <md-button aria-label="user profile">
                     <i class="fa fa-user"></i>                    
               </md-button>
-              <md-button>
+              <md-button aria-label="notifications">
                     <i class="fa fa-bell"></i>                    
               </md-button>
             </div>
