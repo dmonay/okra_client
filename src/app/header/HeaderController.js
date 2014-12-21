@@ -6,13 +6,6 @@
     function HeaderController($scope, $mdDialog) {
         var vm = this;
 
-        // vm.addOrganization = function () {
-        //     var modalInstance = $modal.open({
-        //         templateUrl: 'app/header/add-organization-modal.tpl.html',
-        //         controller: 'AddOrganizationModalController',
-        //         controllerAs: 'modal'
-        //     });
-        // };
         vm.addOrganization = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,

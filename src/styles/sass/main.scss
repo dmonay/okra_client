@@ -24,29 +24,9 @@ $grey: #C2C5C3;
           border-radius: $radius;
 }
 
-// Navbar Styles =================================================================
-.navbar {
-	background-color: $okraGreen;
-}
-
-.navbar-default, .navbar-brand {
-	color: $white; 
-
-	.navbar-nav > li > a{
-		color: $white;
-	}
-
-	.navbar-nav > li > a:hover,
-	.navbar-nav > li > a:focus,
-	.navbar-nav > li > a:active {
-		color: $white;
-		font-weight: 700;
-	}
-}
-.navbar-right {
-	i:hover, i:active, i:focus {
-		color: $okraLightGreen;
-	}
+// Toolbar Styles =================================================================
+md-item {
+	margin: 0px 10px;
 }
 // Dialog/modal styles =========================================================
 .md-dialog-container {
@@ -61,6 +41,10 @@ $grey: #C2C5C3;
 // Btn Styles ==================================================================
 .md-raised {
 	padding: 5px 10px;
+}
+
+.md-button {
+	text-transform: none;
 }
 // Input and form fields =======================================================
 md-input-group.long > input {
