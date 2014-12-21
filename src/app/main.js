@@ -9,7 +9,10 @@
 
     var appDependencies = [
         'ui.router',
-        'ui.bootstrap',
+        'ngAnimate',
+        'ngAria',
+        // 'ui.bootstrap',
+        'ngMaterial',
         'okra.templates',
         'HeaderModule',
         'SharedFactories',
@@ -19,15 +22,19 @@
 
     var app = angular.module('okra', appDependencies);
 
+    //Manual Bootstrap
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, ['okra']);
+    });
 
     /**
      * Configuration
      */
-
-
-    //Manual Bootstrap
-    angular.element(document).ready(function () {
-        angular.bootstrap(document, ['okra']);
+    app.config(function ($mdThemingProvider) {
+        // $mdThemingProvider.theme('default')
+        //     .primaryColor('pink')
+        //     .accentColor('orange');
+        $mdThemingProvider.setDefaultTheme('green');
     });
 
     //Constants
@@ -37,7 +44,6 @@
         updateMembers: 'http://localhost:8080/update/members/'
     });
 })();
-
 (function () {
     'use strict';
 
@@ -54,13 +60,12 @@
             });
     });
 })();
-
 (function () {
     'use strict';
 
     var app = angular.module('HeaderModule');
 
-    function AddOrganizationModalController($scope, OrganizationFactory, $modalInstance) {
+    function AddOrganizationModalController($scope, OrganizationFactory, $mdDialog) {
         var modal = this;
 
         modal.createOrganization = function (name) {
@@ -71,11 +76,11 @@
             }
         };
         modal.closeModal = function () {
-            $modalInstance.close();
+            $mdDialog.hide();
         };
     }
 
-    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$modalInstance'];
+    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog'];
 
     app.controller('AddOrganizationModalController', AddOrganizationModalController);
 
@@ -86,11 +91,19 @@
 
     var app = angular.module('HeaderModule');
 
-    function HeaderController($scope, $modal) {
+    function HeaderController($scope, $mdDialog) {
         var vm = this;
 
-        vm.addOrganization = function () {
-            var modalInstance = $modal.open({
+        // vm.addOrganization = function () {
+        //     var modalInstance = $modal.open({
+        //         templateUrl: 'app/header/add-organization-modal.tpl.html',
+        //         controller: 'AddOrganizationModalController',
+        //         controllerAs: 'modal'
+        //     });
+        // };
+        vm.addOrganization = function ($event) {
+            $mdDialog.show({
+                targetEvent: $event,
                 templateUrl: 'app/header/add-organization-modal.tpl.html',
                 controller: 'AddOrganizationModalController',
                 controllerAs: 'modal'
@@ -98,7 +111,7 @@
         };
     }
 
-    HeaderController.$inject = ['$scope', '$modal'];
+    HeaderController.$inject = ['$scope', '$mdDialog'];
 
     app.controller('HeaderController', HeaderController);
 
@@ -109,11 +122,11 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $modal) {
+    function OrganizationController($scope) {
         var vm = this;
     }
 
-    OrganizationController.$inject = ['$scope', '$modal'];
+    OrganizationController.$inject = ['$scope'];
 
     app.controller('OrganizationController', OrganizationController);
 
@@ -157,7 +170,7 @@
 
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
     $templateCache.put("app/header/add-organization-modal.tpl.html",
-        "<div class=\"modal-header\"><h3 class=\"modal-title text-center\">Add Organization</h3><a href class=\"pull-right\" ng-click=\"modal.closeModal()\"><i class=\"fa fa-close\"></i></a></div><div class=\"modal-body\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><div class=\"row\"><div class=\"form-group\"><label for=\"organizationName\" class=\"col-sm-4 control-label\">Organization Name</label><div class=\"col-sm-7\"><input name=\"organizationName\" class=\"form-control\" ng-model=\"modal.organizationName\" required></div></div></div></form></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\">Add</button> <button class=\"btn btn-primary\" ng-click=\"modal.closeModal()\">Cancel</button></div>"
+        "<md-dialog flex=\"30\"><md-subheader><h3 class=\"modal-title text-center\">Add An Organization</h3></md-subheader><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/organization-tree.tpl.html",
         "<section class=\"organization-wrapper\"><div class=\"row\"><div class=\"centered-container\"><div class=\"tree-node active pull-left\">Organization #1</div><button class=\"btn btn-danger\"><i class=\"fa fa-minus\"></i></button></div><div class=\"centered-container\"><div class=\"well\">The mission of this organization is to blah blah blah blah blah blah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blah</div></div></div><div class=\"row\"><div class=\"centered-container\"><div class=\"objective pull-left\"><div class=\"tree-node active pull-left\">Objective #1</div><button class=\"btn btn-danger\"><i class=\"fa fa-minus\"></i></button> <button class=\"btn btn-primary\"><i class=\"fa fa-pencil\"></i></button></div><div class=\"objective pull-left\"><div class=\"tree-node pull-left\">Objective #2</div><button class=\"btn btn-info\"><i class=\"fa fa-plus\"></i></button></div><div class=\"objective pull-left\"><div class=\"tree-node pull-left\">Objective #3</div><button class=\"btn btn-info\"><i class=\"fa fa-plus\"></i></button></div><div class=\"objective pull-left\"><div class=\"tree-node pull-left\">Objective #4</div><button class=\"btn btn-info\"><i class=\"fa fa-plus\"></i></button></div></div></div><div class=\"row\"><div class=\"centered-container\"><div class=\"tree-node pull-left active\">Key Result</div><button class=\"btn btn-danger\"><i class=\"fa fa-minus\"></i></button></div></div><div class=\"row\"><div class=\"centered-container\"><div class=\"task-node\"><input type=\"checkbox\"> Task 1</div><div class=\"task-node\"><input type=\"checkbox\"> Task 2</div><div class=\"task-node\"><input type=\"checkbox\"> Task 3</div></div></div></section>"

@@ -9,7 +9,10 @@
 
     var appDependencies = [
         'ui.router',
-        'ui.bootstrap',
+        'ngAnimate',
+        'ngAria',
+        // 'ui.bootstrap',
+        'ngMaterial',
         'okra.templates',
         'HeaderModule',
         'SharedFactories',
@@ -19,15 +22,19 @@
 
     var app = angular.module('okra', appDependencies);
 
+    //Manual Bootstrap
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, ['okra']);
+    });
 
     /**
      * Configuration
      */
-
-
-    //Manual Bootstrap
-    angular.element(document).ready(function () {
-        angular.bootstrap(document, ['okra']);
+    app.config(function ($mdThemingProvider) {
+        // $mdThemingProvider.theme('default')
+        //     .primaryColor('pink')
+        //     .accentColor('orange');
+        $mdThemingProvider.setDefaultTheme('green');
     });
 
     //Constants

@@ -6,14 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Okra</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="components/angular-material/angular-material.css">
+        <link rel="stylesheet" type="text/css" href="components/angular-material/themes/green-theme.css">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="styles/css/main.css">
     </head>
     <body>
-        <nav class="navbar navbar-default" ng-controller="HeaderController as vm" role="navigation">
+        <!-- <nav class="navbar navbar-default" ng-controller="HeaderController as vm" role="navigation">
           <div class="container-fluid">
             <!-- Mobile Display -->
-            <div class="navbar-header">
+            <!-- <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
               </button>
@@ -26,7 +28,7 @@
                     <a href>Organization {{$index + 1}}</a>
                 </li>
                 <li>
-                    <button ng-click="vm.addOrganization()" class="btn btn-default navbar-btn"><i class="fa fa-plus"></i></button>
+                    <md-button ng-click="vm.addOrganization()" class="md-raised md-primary navbar-btn"><i class="fa fa-plus"></i></md-button>
                 </li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -47,18 +49,20 @@
               </ul>
             </div>
           </div>
-        </nav>
+        </nav> -->
         <div class="container">
             <section ui-view></section>
         </div>
         <!-- build:js app/vendor-modules.min.js -->
+        <script src="components/hammerjs/hammer.min.js" type="text/javascript"></script>
         <script src="components/angular/angular.js" type="text/javascript"></script>
-        <script src="components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
-        <script src="components/angular-bootstrap/ui-bootstrap-tpls.js" type="text/javascript"></script>
+        // <script src="components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+        <!-- // <script src="components/angular-bootstrap/ui-bootstrap-tpls.js" type="text/javascript"></script> -->
+        <script src="components/angular-material/angular-material.js" type="text/javascript"></script>
+        <script src="components/angular-animate/angular-animate.js" type="text/javascript"></script>
+        <script src="components/angular-aria/angular-aria.min.js" type="text/javascript"></script>
         <!-- endbuild -->
 
-        <!-- build:js app/core.min.js -->
-        <!-- <script src="app/init.js" type="text/javascript"></script> -->
         <script src="app/templates.js" type="text/javascript"></script>
         <script src="app/main.js" type="text/javascript"></script>
         <!-- endbuild -->
