@@ -48,56 +48,25 @@ $grey: #C2C5C3;
 		color: $okraLightGreen;
 	}
 }
-// Modal Styles =================================================================
-.modal-content {
-	.modal-title {
-		color: $okraGreen;
+// Dialog/modal styles =========================================================
+.md-dialog-container {
+	md-dialog:first-child {
+		padding: 15px;
 	}
 
-	.modal-header {
-		i {
-			position: relative;
-			top: -40px;
-			color: $okraGreen;
-		}
-	}
-
-	.modal-body {
-		label {
-			color: $okraGreen;
-		}
+	md-content {
+		padding-bottom: 0px;
 	}
 }
 // Btn Styles ==================================================================
-.btn-primary {
-	color: $white;
-	background-color: $okraGreen;
-	border-color: $black;
+.md-raised {
+	padding: 5px 10px;
 }
-
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-	background-color: $okraLightGreen;
-	border-color: $black;
+// Input and form fields =======================================================
+md-input-group.long > input {
+    width: 264px; 
 }
-
-.btn-default {
-	color: $okraGreen;
-}
-
-.btn-default:hover, .btn-default:focus, .btn-default:active  {
-	color: $okraLightGreen;
-}
-
-.btn-info {
-	background-color: $grey;
-	color: $white;
-}
-
-.btn-info:hover, .btn-info:focus, .btn-info:active {
-	background-color: $grey;
-	color: $white;
-}
-// Organization =================================================================
+// Organization ================================================================
 .organization-wrapper {
 	.row {
 		margin-top: 20px;

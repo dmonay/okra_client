@@ -3,11 +3,11 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $modal) {
+    function OrganizationController($scope) {
         var vm = this;
     }
 
-    OrganizationController.$inject = ['$scope', '$modal'];
+    OrganizationController.$inject = ['$scope'];
 
     app.controller('OrganizationController', OrganizationController);
 

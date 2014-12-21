@@ -3,7 +3,7 @@
 
     var app = angular.module('HeaderModule');
 
-    function AddOrganizationModalController($scope, OrganizationFactory, $modalInstance) {
+    function AddOrganizationModalController($scope, OrganizationFactory, $mdDialog) {
         var modal = this;
 
         modal.createOrganization = function (name) {
@@ -14,11 +14,11 @@
             }
         };
         modal.closeModal = function () {
-            $modalInstance.close();
+            $mdDialog.hide();
         };
     }
 
-    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$modalInstance'];
+    AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog'];
 
     app.controller('AddOrganizationModalController', AddOrganizationModalController);
 
