@@ -50,52 +50,48 @@ md-item {
 md-input-group.long > input {
     width: 264px; 
 }
+
+md-checkbox:focus .md-label {
+	border-color: transparent;
+}
 // Organization ================================================================
 .organization-wrapper {
-	.row {
-		margin-top: 20px;
-		margin-bottom: 20px;
+
+	.tree-node {
+		padding: 20px 20px;
+		background-color: $grey;
+		@include border-radius(5px);
+		color: $white;
 	}
 
-	.btn-danger, .btn-info {
-		padding: 5px 10px;
+	.tree-node.active {
+		background-color: $okraGreen;
+	}
+
+	.task-node {
+		background-color: $okraLightGreen;
+		padding: 10px 10px;
+		color: $white;
+		@include border-radius(5px);
+		min-width: 100px;
+		margin-top: 10px;
+	}
+
+	.objective + .objective, .key-result + .key-result {
+		margin-left: 50px;
+	}
+
+	[layout-align="center center"], [layout-align="center"] {
+		margin-top: 25px;
+	}
+
+	.md-button {
+		padding: 3px 8px;
 		margin-left: 10px;
 	}
-}
 
-.centered-container {
-	margin: 0 auto;
-	display: table;
-
-	.well {
-		width: 500px;
+	.md-button + .md-button {
+		margin-top: 5px;
 	}
 }
 
-.centered-container + .centered-container {
-	margin-top: 15px;
-}
-
-.tree-node {
-	padding: 20px 20px;
-	background-color: $grey;
-	@include border-radius(5px);
-	color: $white;
-}
-
-.tree-node.active {
-	background-color: $okraGreen;
-}
-
-.task-node {
-	background-color: $okraLightGreen;
-	padding: 10px 10px;
-	color: $white;
-	@include border-radius(5px);
-	min-width: 100px;
-	margin-top: 10px;
-}
-
-.objective + .objective {
-	margin-left: 50px;
-}
