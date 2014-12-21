@@ -11,7 +11,6 @@
         'ui.router',
         'ngAnimate',
         'ngAria',
-        // 'ui.bootstrap',
         'ngMaterial',
         'okra.templates',
         'HeaderModule',
@@ -31,10 +30,7 @@
      * Configuration
      */
     app.config(function ($mdThemingProvider) {
-        // $mdThemingProvider.theme('default')
-        //     .primaryColor('pink')
-        //     .accentColor('orange');
-        $mdThemingProvider.setDefaultTheme('green');
+        $mdThemingProvider.setDefaultTheme('okra');
     });
 
     //Constants
@@ -44,6 +40,7 @@
         updateMembers: 'http://localhost:8080/update/members/'
     });
 })();
+
 (function () {
     'use strict';
 
@@ -60,6 +57,7 @@
             });
     });
 })();
+
 (function () {
     'use strict';
 
@@ -94,13 +92,6 @@
     function HeaderController($scope, $mdDialog) {
         var vm = this;
 
-        // vm.addOrganization = function () {
-        //     var modalInstance = $modal.open({
-        //         templateUrl: 'app/header/add-organization-modal.tpl.html',
-        //         controller: 'AddOrganizationModalController',
-        //         controllerAs: 'modal'
-        //     });
-        // };
         vm.addOrganization = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,

@@ -11,7 +11,6 @@
         'ui.router',
         'ngAnimate',
         'ngAria',
-        // 'ui.bootstrap',
         'ngMaterial',
         'okra.templates',
         'HeaderModule',
@@ -31,10 +30,7 @@
      * Configuration
      */
     app.config(function ($mdThemingProvider) {
-        // $mdThemingProvider.theme('default')
-        //     .primaryColor('pink')
-        //     .accentColor('orange');
-        $mdThemingProvider.setDefaultTheme('green');
+        $mdThemingProvider.setDefaultTheme('okra');
     });
 
     //Constants
