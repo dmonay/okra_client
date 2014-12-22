@@ -19,6 +19,9 @@ md-item {
 .md-dialog-container md-content {
   padding-bottom: 0px;
 }
+.md-dialog-container md-tooltip .md-background {
+  height: 30px;
+}
 
 md-toast .md-button {
   margin-top: -20px;
@@ -39,6 +42,24 @@ md-input-group.long > input {
 
 md-checkbox:focus .md-label {
   border-color: transparent;
+}
+
+.error-msg {
+  color: #ef5350;
+  opacity: 1;
+}
+
+.error-msg.ng-hide-add.ng-hide-add-active,
+.error-msg.ng-hide-remove.ng-hide-remove-active {
+  transition: opacity linear 0.5s;
+}
+
+.error-msg.ng-hide {
+  opacity: 0;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }
 
 .organization-wrapper .tree-node {

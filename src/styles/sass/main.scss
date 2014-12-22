@@ -10,12 +10,15 @@
 /*=Organization ==============65==============================*/
 /*============================================================*/
 
+//Imports
+@import "transitions.scss";
 // Variables ====================================================================
 $white  : #ffffff;
 $black : #000000;
 $okraGreen : #0D8120;
-$okraLightGreen: #139E2A;
-$grey: #C2C5C3;
+$okraLightGreen : #139E2A;
+$grey : #C2C5C3;
+$warningRed : #ef5350;
 
 // Mixins ========================================================================
 @mixin border-radius($radius) {
@@ -37,6 +40,12 @@ md-item {
 
 	md-content {
 		padding-bottom: 0px;
+	}
+
+	md-tooltip {
+		.md-background {
+			height: 30px;
+		}
 	}
 }
 // Toast Styles ================================================================
@@ -61,6 +70,24 @@ md-input-group.long > input {
 
 md-checkbox:focus .md-label {
 	border-color: transparent;
+}
+//Global Styles ================================================================
+.error-msg {
+	color: $warningRed;
+	opacity: 1;
+}
+
+.error-msg.ng-hide-add.ng-hide-add-active,
+.error-msg.ng-hide-remove.ng-hide-remove-active {
+	@include fade-in();
+}
+
+.error-msg.ng-hide {
+	opacity: 0;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }
 // Organization ================================================================
 .organization-wrapper {
