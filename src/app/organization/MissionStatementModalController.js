@@ -7,10 +7,12 @@
         var modal = this;
 
         modal.missionStatement = missionStatement;
+        modal.formSubmitted = false;
 
-        modal.saveMissionStatement = function() {
+        modal.saveMissionStatement = function () {
             modal.formSubmitted = true;
-            if(modal.missionStatementForm.$valid) {
+            console.log(modal.formSubmitted);
+            if (modal.missionStatementForm.$valid) {
 
             }
         };
