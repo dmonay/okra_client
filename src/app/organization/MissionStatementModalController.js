@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var app = angular.module('HeaderModule');
+    var app = angular.module('OrganizationModule');
 
     function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement) {
         var modal = this;
@@ -18,7 +18,7 @@
                     .then(function (response) {
                         modal.currentlySaving = false;
                         modal.formSubmitted = false;
-                        modal.missionStatement = angular.copy(modal.newMissionStatement);
+                        $mdDialog.hide(response.data);
                     });
             }
         };

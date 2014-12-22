@@ -8,7 +8,7 @@
             createOrganization: function (orgName) {
                 return $http.post(okraAPI.createOrg, {
                     organization: orgName,
-                    userId: "548e3feebee23fc7375b788b"
+                    userId: "5491e2aebee23fc7375b789c"
                 });
             },
             updateMission: function (orgName, mission) {
@@ -20,6 +20,7 @@
             updateMembers: function (orgName, members) {
                 var url = okraAPI.updateMembers + orgName;
                 return $http.post(url, {
+                    "updateTree": false,
                     "members": members
                 });
             }

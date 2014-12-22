@@ -28,6 +28,13 @@ $warningRed : #ef5350;
           border-radius: $radius;
 }
 
+@mixin box-shadow($horizontal, $vertical, $spread, $color) {
+	-webkit-box-shadow: $horizontal $vertical $spread $color;
+    -moz-box-shadow: $horizontal $vertical $spread $color;
+    -ms-box-shadow: $horizontal $vertical $spread $color;
+	box-shadow: $horizontal $vertical $spread $color;
+}
+
 // Toolbar Styles =================================================================
 md-item {
 	margin: 0px 10px;
@@ -88,6 +95,32 @@ md-checkbox:focus .md-label {
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+ul.list-horizontal {
+	list-style: none;
+
+	li {
+		float: left;
+		text-align: center;
+		margin-right: 15px;
+		margin-bottom: 10px;
+		padding: 5px;
+		@include box-shadow(0px, 2px, 6px, #888888);
+		max-width: 170px;
+		
+		h3 {
+			margin-bottom: 0px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		span.sub-text {
+			font-size: 12px;
+			font-weight: 500;
+		}
+	}
 }
 // Organization ================================================================
 .organization-wrapper {
