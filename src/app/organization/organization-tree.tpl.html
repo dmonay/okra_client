@@ -11,11 +11,14 @@
 				<i class="fa fa-pencil"></i>
 	    	</md-button>
 	    </div>
-	</div>
-	<div layout="row" layout-align="center">
-	    <md-button class="md-raised" ng-click="vm.openMissionStatement()">
-		    Mission Statement
-		</md-button>
+	    <div layout="column" layout-align="start">
+		    <md-button class="md-fab" aria-label="Insert Drive" ng-click="vm.openMissionStatementModal()">
+		    	<i class="fa fa-briefcase"></i>
+			    <md-tooltip>
+			        Mission Statement
+			    </md-tooltip>
+			</md-button>
+		</div>
 	</div>
 	<!-- objectives -->
 	<div layout="row" layout-align="center center">
