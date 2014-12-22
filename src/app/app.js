@@ -27,7 +27,7 @@
     });
 
     /**
-     * Configuration
+     * Theme Configuration
      */
     app.config(function ($mdThemingProvider) {
         $mdThemingProvider.setDefaultTheme('okra');
