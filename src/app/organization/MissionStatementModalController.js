@@ -11,9 +11,15 @@
 
         modal.saveMissionStatement = function () {
             modal.formSubmitted = true;
-            console.log(modal.formSubmitted);
             if (modal.missionStatementForm.$valid) {
-
+                var hardCodedOrg = 'someorg';
+                modal.currentlySaving = true;
+                OrganizationFactory.updateMission(hardCodedOrg, modal.newMissionStatement)
+                    .then(function (response) {
+                        modal.currentlySaving = false;
+                        modal.formSubmitted = false;
+                        modal.missionStatement = angular.copy(modal.newMissionStatement);
+                    });
             }
         };
 

@@ -28,5 +28,6 @@
 	<div class="md-actions" style="border-top: none;" layout="row" layout-align="center end">
 		<md-button class="md-raised md-warn" ng-click="modal.closeModal()" aria-label="cancel">Cancel</md-button>
 		<md-button class="md-raised md-primary" ng-click="modal.saveMissionStatement()" aria-label="add">Save</md-button>
+		<md-progress-circular ng-if="modal.currentlySaving" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
 	</div>
 <md-dialog>
