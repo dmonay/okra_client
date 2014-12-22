@@ -2,7 +2,7 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.6.1
+ * v0.7.0-rc1-master-854fd0e
  */
 goog.provide('ng.material.components.radioButton');
 goog.require('ng.material.core');
@@ -69,10 +69,8 @@ function mdRadioGroupDirective($mdUtil, $mdConstant, $mdTheming) {
 
   function linkRadioGroup(scope, element, attr, ctrls) {
     $mdTheming(element);
-    var rgCtrl = ctrls[0],
-      ngModelCtrl = ctrls[1] || {
-        $setViewValue: angular.noop
-      };
+    var rgCtrl = ctrls[0];
+    var ngModelCtrl = ctrls[1] || $mdUtil.fakeNgModel();
 
     function keydownListener(ev) {
       if (ev.keyCode === $mdConstant.KEY_CODE.LEFT_ARROW || ev.keyCode === $mdConstant.KEY_CODE.UP_ARROW) {
