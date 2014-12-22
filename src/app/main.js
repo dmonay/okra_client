@@ -113,11 +113,40 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope) {
+    function MissionStatementController($scope, $mdToast) {
         var vm = this;
+
+        vm.closeToast = function () {
+            $mdToast.hide();
+        };
     }
 
-    OrganizationController.$inject = ['$scope'];
+    MissionStatementController.$inject = ['$scope', '$mdToast'];
+
+    app.controller('MissionStatementController', MissionStatementController);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('OrganizationModule');
+
+    function OrganizationController($scope, $mdToast) {
+        var vm = this;
+
+        vm.openMissionStatement = function ($event) {
+            $mdToast.show({
+                controller: 'MissionStatementController',
+                controllerAs: 'toast',
+                templateUrl: 'app/organization/mission-statement-toast.tpl.html',
+                hideDelay: 0,
+                position: 'bottom right'
+            });
+        };
+    }
+
+    OrganizationController.$inject = ['$scope', '$mdToast'];
 
     app.controller('OrganizationController', OrganizationController);
 
@@ -163,7 +192,10 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     $templateCache.put("app/header/add-organization-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
+    $templateCache.put("app/organization/mission-statement-toast.tpl.html",
+        "<md-toast><p>Monterey Bay Aquarium: The mission of the non-profit Monterey Bay Aquarium is to inspire conservation of the oceans.</p><md-button ng-click=\"toast.closeToast()\"><i class=\"fa fa-times\"></i></md-button></md-toast>"
+    );
     $templateCache.put("app/organization/organization-tree.tpl.html",
-        "<section class=\"organization-wrapper\"><div layout=\"row\" layout-align=\"center\"><div class=\"tree-node active\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div layout=\"row\">The mission of this organization is to blah blah blah blah blah blah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blahblah blah blah blah blah</div><div layout=\"row\" layout-align=\"center center\"><div class=\"objective\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\" layout-align=\"start\">Objective #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 2}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"row\" layout-align=\"center center\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"column\" layout-align=\"center center\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
+        "<section class=\"organization-wrapper\"><div layout=\"row\" layout-align=\"center\"><div class=\"tree-node active\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div layout=\"row\" layout-align=\"center\"><md-button class=\"md-raised\" ng-click=\"vm.openMissionStatement()\">Mission Statement</md-button></div><div layout=\"row\" layout-align=\"center center\"><div class=\"objective\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\" layout-align=\"start\">Objective #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 2}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"row\" layout-align=\"center center\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"column\" layout-align=\"center center\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
     );
 }]);
