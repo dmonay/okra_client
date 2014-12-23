@@ -8,45 +8,29 @@
             restrict: 'A',
             link: linkFunc,
             scope: {
-                linkedTo: '@'
+                linkedTo: '@',
+                allLinkedNodes: '='
             }
         };
 
-        function replaceClass(oldClass, newClass, element) {
-            element.addClass(newClass);
-            element.removeClass(oldClass);
-        }
-
         function linkFunc(scope, iElement, iAttrs) {
-            var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
-                thisNode = angular.element(document.getElementById(scope.linkedTo));
+            var thisNode = angular.element(document.getElementById(scope.linkedTo)),
+                allNodes = scope.allLinkedNodes;
 
             iElement.bind('click', function () {
-                var isPlus = iElement.find('i').hasClass('fa-plus');
-                //On click replace class extrapolate this instead of using ng-class, cleaner html
-                if (iElement.hasClass('md-warn')) {
-                    replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
-                    replaceClass('md-warn', 'md-primary', iElement);
-                } else if (iElement.hasClass('md-primary')) {
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    replaceClass('md-primary', 'md-warn', iElement);
-                } else {
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    replaceClass('md-primary', 'md-warn', iElement);
-                    thisNode.children().removeClass('active');
-                    iElement.parent().parent().addClass('active');
-                }
-                //hide all nodes
+                var isCollapsed = thisNode.next().hasClass('collapse');
+
+                //hide all nodes beneath the node we chose
                 var node,
                     i = allNodes.indexOf(scope.linkedTo) + 1;
                 for (i; i < allNodes.length; i++) {
                     node = angular.element(document.getElementById(allNodes[i]));
-                    if (allNodes[i] !== scope.linkedTo && isPlus) {
+                    if (allNodes[i] !== scope.linkedTo && !isCollapsed) {
+                        $animate.addClass(node, 'collapse');
+                    }
+                    if (isCollapsed) {
                         $animate.removeClass(node, 'collapse');
                         i = allNodes.length;
-                    }
-                    if (!isPlus) {
-                        $animate.addClass(node, 'collapse');
                     }
                     scope.$apply();
                 }

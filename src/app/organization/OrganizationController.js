@@ -19,6 +19,9 @@
             role: "denizen"
         }];
 
+        vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+
         vm.openMissionStatementModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,

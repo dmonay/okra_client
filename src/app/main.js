@@ -169,6 +169,9 @@
             role: "denizen"
         }];
 
+        vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+
         vm.openMissionStatementModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
@@ -255,45 +258,29 @@
             restrict: 'A',
             link: linkFunc,
             scope: {
-                linkedTo: '@'
+                linkedTo: '@',
+                allLinkedNodes: '='
             }
         };
 
-        function replaceClass(oldClass, newClass, element) {
-            element.addClass(newClass);
-            element.removeClass(oldClass);
-        }
-
         function linkFunc(scope, iElement, iAttrs) {
-            var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
-                thisNode = angular.element(document.getElementById(scope.linkedTo));
+            var thisNode = angular.element(document.getElementById(scope.linkedTo)),
+                allNodes = scope.allLinkedNodes;
 
             iElement.bind('click', function () {
-                var isPlus = iElement.find('i').hasClass('fa-plus');
-                //On click replace class extrapolate this instead of using ng-class, cleaner html
-                if (iElement.hasClass('md-warn')) {
-                    replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
-                    replaceClass('md-warn', 'md-primary', iElement);
-                } else if (iElement.hasClass('md-primary')) {
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    replaceClass('md-primary', 'md-warn', iElement);
-                } else {
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    replaceClass('md-primary', 'md-warn', iElement);
-                    thisNode.children().removeClass('active');
-                    iElement.parent().parent().addClass('active');
-                }
-                //hide all nodes
+                var isCollapsed = thisNode.next().hasClass('collapse');
+
+                //hide all nodes beneath the node we chose
                 var node,
                     i = allNodes.indexOf(scope.linkedTo) + 1;
                 for (i; i < allNodes.length; i++) {
                     node = angular.element(document.getElementById(allNodes[i]));
-                    if (allNodes[i] !== scope.linkedTo && isPlus) {
+                    if (allNodes[i] !== scope.linkedTo && !isCollapsed) {
+                        $animate.addClass(node, 'collapse');
+                    }
+                    if (isCollapsed) {
                         $animate.removeClass(node, 'collapse');
                         i = allNodes.length;
-                    }
-                    if (!isPlus) {
-                        $animate.addClass(node, 'collapse');
                     }
                     scope.$apply();
                 }
@@ -371,6 +358,80 @@
 
 })();
 
+(function () {
+    'use strict';
+
+    var app = angular.module('SharedDirectives');
+
+    function okToggleColor() {
+        return {
+            restrict: 'A',
+            link: linkFunc
+        };
+
+        function linkFunc(scope, iElement, iAttrs) {
+            var collapseScope = iElement.isolateScope();
+
+            function replaceClass(oldClass, newClass, element) {
+                element.addClass(newClass);
+                element.removeClass(oldClass);
+            }
+
+            function resetAllButtons(iconElements, buttonElement) {
+                var i;
+                for (i = 0; i < iconElements.length; i++) {
+                    var currentElement = angular.element(iconElements[i]);
+                    if (currentElement.hasClass('fa') && !currentElement.hasClass('fa-pencil')) {
+                        replaceClass('fa-minus', 'fa-plus', currentElement);
+                        currentElement.parent().removeClass('md-warn');
+                        currentElement.parent().removeClass('md-primary');
+                    }
+                }
+            }
+
+            function disableChildren(collapseScope, thisElement) {
+                var allNodes = collapseScope.allLinkedNodes,
+                    i = allNodes.indexOf(collapseScope.linkedTo);
+                for (i; i < allNodes.length; i++) {
+                    var node = angular.element(document.getElementById(allNodes[i]));
+
+                    node.children().removeClass('active');
+
+                    resetAllButtons(node.find('a').find('i'), node.find('a'));
+                }
+
+                thisElement.addClass('active');
+            }
+
+            iElement.bind('click', function () {
+                //is toggled open
+                if (iElement.hasClass('md-warn')) {
+                    disableChildren(collapseScope, iElement.parent().parent());
+                    replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
+                    replaceClass('md-warn', 'md-primary', iElement);
+                }
+                //is toggled closed 
+                else if (iElement.hasClass('md-primary')) {
+                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+                    replaceClass('md-primary', 'md-warn', iElement);
+                }
+                //hasn't been toggled 
+                else {
+                    console.log('not toggled yet');
+                    disableChildren(collapseScope, iElement.parent().parent());
+                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+                    iElement.addClass('md-warn');
+                }
+            });
+        }
+    }
+
+    // okToggleColor.$inject = [];
+
+    app.directive('okToggleColor', okToggleColor);
+
+})();
+
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
     $templateCache.put("app/header/add-organization-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
@@ -382,6 +443,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Role</label><md-input required name=\"newUserRole\" ng-model=\"modal.newUser.role\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/organization-tree.tpl.html",
-        "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse linked-to=\"organizationNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\" layout-align=\"start\">Objective #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ok-collapse linked-to=\"objectiveNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 2}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse linked-to=\"objectiveNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ok-collapse linked-to=\"keyResultNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse linked-to=\"keyResultNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"column\" class=\"collapse\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
+        "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3, 4]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 1}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"column\" class=\"collapse\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
     );
 }]);
