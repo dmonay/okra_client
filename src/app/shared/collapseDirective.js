@@ -8,29 +8,32 @@
             restrict: 'A',
             link: linkFunc,
             scope: {
-            	linkedTo: '@'
+                linkedTo: '@'
             }
         };
 
         function replaceClass(oldClass, newClass, element) {
-        	element.addClass(newClass);
-        	element.removeClass(oldClass);
+            element.addClass(newClass);
+            element.removeClass(oldClass);
         }
 
-        function linkFunc(scope, iElement, iAttrs) {            	
-        	var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
-        		thisNode = angular.element(document.getElementById(scope.linkedTo));
+        function linkFunc(scope, iElement, iAttrs) {
+            var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
+                thisNode = angular.element(document.getElementById(scope.linkedTo));
 
 
             iElement.bind('click', function () {
-	            //On click replace class extrapolate this instead of using ng-class, cleaner
-                iElement.find('i').hasClass('fa-minus') ? 
-	                replaceClass('fa-minus', 'fa-plus', iElement.find('i')) :  replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-	            //hide all nodes
-	            for(var i = 0; i < allNodes.length; i++) {
-	            	var node = angular.element(document.getElementById(allNodes[i]));
-	            	$animate.addClass(node, '.collapse');
-	            }
+                //On click replace class extrapolate this instead of using ng-class, cleaner
+                if (iElement.find('i').hasClass('fa-minus')) {
+                    replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
+                } else {
+                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+                }
+                //hide all nodes
+                for (var i = 0; i < allNodes.length; i++) {
+                    var node = angular.element(document.getElementById(allNodes[i]));
+                    $animate.addClass(node, '.collapse');
+                }
             });
         }
     }
