@@ -24,16 +24,21 @@
             iElement.bind('click', function () {
                 var isPlus = iElement.find('i').hasClass('fa-plus');
                 //On click replace class extrapolate this instead of using ng-class, cleaner html
-                if (iElement.find('i').hasClass('fa-minus')) {
+                if (iElement.hasClass('md-warn')) {
                     replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
                     replaceClass('md-warn', 'md-primary', iElement);
+                } else if (iElement.hasClass('md-primary')) {
+                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+                    replaceClass('md-primary', 'md-warn', iElement);
                 } else {
                     replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
                     replaceClass('md-primary', 'md-warn', iElement);
+                    thisNode.children().removeClass('active');
+                    iElement.parent().parent().addClass('active');
                 }
+                //hide all nodes
                 var node,
                     i = allNodes.indexOf(scope.linkedTo) + 1;
-                //hide all nodes
                 for (i; i < allNodes.length; i++) {
                     node = angular.element(document.getElementById(allNodes[i]));
                     if (allNodes[i] !== scope.linkedTo && isPlus) {

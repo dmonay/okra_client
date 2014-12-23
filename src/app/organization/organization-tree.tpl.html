@@ -1,6 +1,6 @@
 <section class="organization-wrapper">
-	<div layout="row" layout-align="center" id="organizationNode">
-		<div class="tree-node active">
+	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
+		<div class="tree-node">
 			Organization #1
 		</div>
 		<div layout="column" layout-align="start end">
@@ -23,11 +23,11 @@
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start">
-			<div class="tree-node active" layout-align="start">
+			<div class="tree-node" layout-align="start">
 				Objective #1
 			</div>
 			<div layout="column" layout-align="end end">
-	            <md-button href class="md-raised md-primary" ok-collapse linked-to="objectiveNode" aria-label="toggle">
+	            <md-button href class="md-raised" ok-collapse linked-to="objectiveNode" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
 	        	<md-button href class="md-raised md-primary" aria-label="edit">
@@ -41,8 +41,11 @@
 				Objective {{$index + 2}}
 			</div>
 			<div layout="column" layout-align="start end">
-	            <md-button href class="md-raised" aria-label="toggle">
+	            <md-button href class="md-raised" ok-collapse linked-to="objectiveNode" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
+	        	</md-button>
+	        	<md-button href class="md-raised md-primary" aria-label="edit">
+					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
 		</div>
@@ -53,11 +56,11 @@
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start">
-			<div class="tree-node active">
+			<div class="tree-node">
 				Key Result #1
 			</div>
 			<div layout="column" layout-align="end end">
-				<md-button href class="md-raised md-primary" ok-collapse linked-to="keyResultNode" aria-label="toggle">
+				<md-button href class="md-raised" ok-collapse linked-to="keyResultNode" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
 	        	<md-button href class="md-raised md-primary" aria-label="edit">
@@ -70,8 +73,11 @@
 				Key Result #2
 			</div>
 			<div layout="column" layout-align="start end">
-				<md-button href class="md-raised" aria-label="toggle">
+				<md-button href class="md-raised" ok-collapse linked-to="keyResultNode" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
+	        	</md-button>
+	        	<md-button href class="md-raised md-primary" aria-label="edit">
+					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
 		</div>

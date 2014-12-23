@@ -141,8 +141,13 @@ ul.list-horizontal {
 		color: $white;
 	}
 
-	.tree-node.active {
-		background-color: $okraGreen;
+	.objective.active, 
+	.key-result.active,
+	.organization.active {
+
+		.tree-node {
+			background-color: $okraGreen;
+		}
 	}
 
 	.task-node {
