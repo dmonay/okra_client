@@ -6,6 +6,7 @@
     angular.module('HeaderModule', []);
     angular.module('OrganizationModule', []);
     angular.module('SharedServices', []);
+    angular.module('SharedDirectives', []);
 
 
     var appDependencies = [
@@ -17,6 +18,7 @@
         'HeaderModule',
         'SharedFactories',
         'SharedServices',
+        'SharedDirectives',
         'OrganizationModule',
         'okra.routes'
     ];

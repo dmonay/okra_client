@@ -6,6 +6,7 @@
     angular.module('HeaderModule', []);
     angular.module('OrganizationModule', []);
     angular.module('SharedServices', []);
+    angular.module('SharedDirectives', []);
 
 
     var appDependencies = [
@@ -17,6 +18,7 @@
         'HeaderModule',
         'SharedFactories',
         'SharedServices',
+        'SharedDirectives',
         'OrganizationModule',
         'okra.routes'
     ];
@@ -246,6 +248,49 @@
 (function () {
     'use strict';
 
+    var app = angular.module('SharedDirectives');
+
+    function okCollapse($animate) {
+        return {
+            restrict: 'A',
+            link: linkFunc,
+            scope: {
+            	linkedTo: '@'
+            }
+        };
+
+        function replaceClass(oldClass, newClass, element) {
+        	element.addClass(newClass);
+        	element.removeClass(oldClass);
+        }
+
+        function linkFunc(scope, iElement, iAttrs) {            	
+        	var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
+        		thisNode = angular.element(document.getElementById(scope.linkedTo));
+
+
+            iElement.bind('click', function () {
+	            //On click replace class extrapolate this instead of using ng-class, cleaner
+                iElement.find('i').hasClass('fa-minus') ? 
+	                replaceClass('fa-minus', 'fa-plus', iElement.find('i')) :  replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+	            //hide all nodes
+	            for(var i = 0; i < allNodes.length; i++) {
+	            	var node = angular.element(document.getElementById(allNodes[i]));
+	            	$animate.addClass(node, '.collapse');
+	            }
+            });
+        }
+    }
+
+    okCollapse.$inject = ['$animate'];
+
+    app.directive('okCollapse', okCollapse);
+
+})();
+
+(function () {
+    'use strict';
+
     var app = angular.module('SharedServices');
 
     function MemberService() {
@@ -307,17 +352,13 @@
 
 })();
 
-angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
-    $templateCache.put("app/header/add-organization-modal.tpl.html",
-        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
-    );
-    $templateCache.put("app/organization/mission-statement-modal.tpl.html",
-        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
-    );
-    $templateCache.put("app/organization/organization-members-modal.tpl.html",
-        "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Role</label><md-input required name=\"newUserRole\" ng-model=\"modal.newUser.role\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
-    );
-    $templateCache.put("app/organization/organization-tree.tpl.html",
-        "<section class=\"organization-wrapper\"><div layout=\"row\" layout-align=\"center\"><div class=\"tree-node active\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" layout-align=\"center center\"><div class=\"objective\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\" layout-align=\"start\">Objective #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 2}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"row\" layout-align=\"center center\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"column\" layout-align=\"center center\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
-    );
+angular.module('okra.templates', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put("app/header/add-organization-modal.tpl.html",
+    "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>");
+  $templateCache.put("app/organization/mission-statement-modal.tpl.html",
+    "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>");
+  $templateCache.put("app/organization/organization-members-modal.tpl.html",
+    "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Role</label><md-input required name=\"newUserRole\" ng-model=\"modal.newUser.role\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>");
+  $templateCache.put("app/organization/organization-tree.tpl.html",
+    "<section class=\"organization-wrapper\"><div layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node active\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-warn\" ok-collapse linked-to=\"organizationNode\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\" layout-align=\"start\">Objective #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 2}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"row\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node active\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised md-warn\" aria-label=\"toggle\"><i class=\"fa fa-minus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div></div></div><div layout=\"column\" layout-align=\"center center\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>");
 }]);

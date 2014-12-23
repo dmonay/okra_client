@@ -122,8 +122,17 @@ ul.list-horizontal {
 		}
 	}
 }
+
+.collapse {
+	overflow: hidden;
+	max-height: 0 !important;
+}
 // Organization ================================================================
 .organization-wrapper {
+	[layout=row], [layout=column] {
+		@include collapse();
+		max-height: 100px;
+	}
 
 	.tree-node {
 		padding: 20px 20px;
