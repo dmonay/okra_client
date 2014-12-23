@@ -91,10 +91,11 @@ ul.list-horizontal li span.sub-text {
   max-height: 0 !important;
 }
 
-.organization-wrapper [layout=row], .organization-wrapper [layout=column] {
+.organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
   transition: max-height ease-in-out 0.9s;
-  max-height: 100px;
+  max-height: 200px;
 }
+
 .organization-wrapper .tree-node {
   padding: 20px 20px;
   background-color: #c2c5c3;

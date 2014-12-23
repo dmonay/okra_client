@@ -128,12 +128,12 @@ ul.list-horizontal {
 	max-height: 0 !important;
 }
 // Organization ================================================================
-.organization-wrapper {
-	[layout=row], [layout=column] {
-		@include collapse();
-		max-height: 100px;
-	}
+.organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
+	@include collapse();
+	max-height: 200px;
+}
 
+.organization-wrapper {
 	.tree-node {
 		padding: 20px 20px;
 		background-color: $grey;

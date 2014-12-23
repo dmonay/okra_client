@@ -21,25 +21,28 @@
             var allNodes = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'],
                 thisNode = angular.element(document.getElementById(scope.linkedTo));
 
-
             iElement.bind('click', function () {
-                //On click replace class extrapolate this instead of using ng-class, cleaner
+                var isPlus = iElement.find('i').hasClass('fa-plus');
+                //On click replace class extrapolate this instead of using ng-class, cleaner html
                 if (iElement.find('i').hasClass('fa-minus')) {
                     replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
+                    replaceClass('md-warn', 'md-primary', iElement);
                 } else {
                     replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
+                    replaceClass('md-primary', 'md-warn', iElement);
                 }
-                var currentIcon = iElement.find('i'),
-                	node;
+                var node,
+                    i = allNodes.indexOf(scope.linkedTo) + 1;
                 //hide all nodes
-                for (var i = 0; i < allNodes.length; i++) {
-					node = angular.element(document.getElementById(allNodes[i]));
-                    if(allNodes[i] !== scope.linkedTo && currentIcon.hasClass('fa-minus')) {
-						$animate.addClass(node, 'collapse');
-	                }
-	                else {
-	                	$animate.removeClass(node, 'collapse');
-	                }
+                for (i; i < allNodes.length; i++) {
+                    node = angular.element(document.getElementById(allNodes[i]));
+                    if (allNodes[i] !== scope.linkedTo && isPlus) {
+                        $animate.removeClass(node, 'collapse');
+                        i = allNodes.length;
+                    }
+                    if (!isPlus) {
+                        $animate.addClass(node, 'collapse');
+                    }
                     scope.$apply();
                 }
             });
