@@ -1,11 +1,11 @@
 <section class="organization-wrapper">
-	<div layout="row" layout-align="center">
+	<div layout="row" layout-align="center" id="organizationNode">
 		<div class="tree-node active">
 			Organization #1
 		</div>
 		<div layout="column" layout-align="start end">
-			<md-button href class="md-raised md-warn" aria-label="toggle">
-	        	<i class="fa fa-minus"></i>
+			<md-button href class="md-raised md-warn" ok-collapse linked-to="organizationNode" aria-label="toggle">
+	        	<i class="fa fa-plus"></i>
 	    	</md-button>
 	    	<md-button href class="md-raised md-primary" aria-label="edit">
 				<i class="fa fa-pencil"></i>
@@ -21,7 +21,7 @@
 	    </div>
 	</div> 
 	<!-- objectives -->
-	<div layout="row" layout-align="center center">
+	<div layout="row" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start">
 			<div class="tree-node active" layout-align="start">
 				Objective #1
@@ -51,7 +51,7 @@
 	</div>
 
 	<!-- key results -->
-	<div layout="row" layout-align="center center">
+	<div layout="row" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start">
 			<div class="tree-node active">
 				Key Result #1
@@ -78,7 +78,7 @@
 	</div>
 
 	<!-- Tasks -->
-	<div layout="column" layout-align="center center">
+	<div layout="column" layout-align="center center" id="taskNode">
 		<div layout="row" layout-align="start center" ng-repeat="task in [1, 2, 3, 4]">
 			<md-checkbox ng-model="vm.isChecked[$index]" aria-label></md-checkbox>
 			<div class="task-node">

@@ -4,3 +4,9 @@
       -ms-transition: opacity linear 0.5s;
           transition: opacity linear 0.5s;
 }
+@mixin collapse() {
+	-webkit-transition: max-height ease-in-out 0.9s;
+    -moz-transition: max-height ease-in-out 0.9s;
+    -ms-transition: max-height ease-in-out 0.9s;
+	transition: max-height ease-in-out 0.9s;
+}
