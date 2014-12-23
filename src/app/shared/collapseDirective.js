@@ -29,10 +29,18 @@
                 } else {
                     replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
                 }
+                var currentIcon = iElement.find('i'),
+                	node;
                 //hide all nodes
                 for (var i = 0; i < allNodes.length; i++) {
-                    var node = angular.element(document.getElementById(allNodes[i]));
-                    $animate.addClass(node, '.collapse');
+					node = angular.element(document.getElementById(allNodes[i]));
+                    if(allNodes[i] !== scope.linkedTo && currentIcon.hasClass('fa-minus')) {
+						$animate.addClass(node, 'collapse');
+	                }
+	                else {
+	                	$animate.removeClass(node, 'collapse');
+	                }
+                    scope.$apply();
                 }
             });
         }
