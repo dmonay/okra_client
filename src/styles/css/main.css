@@ -102,7 +102,9 @@ ul.list-horizontal li span.sub-text {
   border-radius: 5px;
   color: white;
 }
-.organization-wrapper .tree-node.active {
+.organization-wrapper .objective.active .tree-node,
+.organization-wrapper .key-result.active .tree-node,
+.organization-wrapper .organization.active .tree-node {
   background-color: #0d8120;
 }
 .organization-wrapper .task-node {
