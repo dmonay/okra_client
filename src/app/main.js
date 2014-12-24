@@ -251,6 +251,23 @@
 (function () {
     'use strict';
 
+    /**
+     * @ngdoc directive
+     * @name okCollapse
+     *
+     * @restrict A
+     *
+     * @description
+     * `ok-collapse`
+     * @param {string=} linked-to Required by the directive to know which container/node it is linked to
+     * @param {binding=} all-linked-nodes Array required by the directive to keep track of all collapsable units
+     *
+     * @usage
+     * <button ok-collapse linked-to="uniqueId" all-linked-nodes="['uniqueIdOne', 'uniqueIdTwo']"></button>
+     *<div id="uniqueIdOne"></div>
+     *<div id="uniqueIdTwo"></div>
+     */
+
     var app = angular.module('SharedDirectives');
 
     function okCollapse($animate) {
@@ -365,6 +382,25 @@
     'use strict';
 
     var app = angular.module('SharedDirectives');
+
+    /**
+     * @ngdoc directive
+     * @name okToggleColor
+     *
+     * @restrict A
+     *
+     * @description
+     * `ok-toggle-color`
+     *
+     *  Added to an element that has an ok-collapse attribute attached to it. Requires the same attributes as ok-collapse.
+     *  Toggles primary to warning color and minus to plus classes (font awesome).
+     * @usage
+     * <button ok-collapse ok-toggle-color linked-to="uniqueId" all-linked-nodes="['uniqueIdOne', 'uniqueIdTwo']">
+     *  <i class="fa fa-plus"></i>
+     *</button>
+     *<div id="uniqueIdOne"></div>
+     *<div id="uniqueIdTwo"></div>
+     */
 
     function okToggleColor() {
         return {

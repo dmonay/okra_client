@@ -4,7 +4,7 @@
 
 module.exports = {
     options: {
-        title: "CrowdSurge Store Docs"
+        title: "Okra Docs"
     },
     all: {
         src: ['<%= meta.src %>/app/**/*.js'],

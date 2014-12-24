@@ -36,7 +36,7 @@ module.exports = {
     },
     docs: {
         options: {
-            port: 4444,
+            port: 4445,
             base: 'docs'
         }
     }
