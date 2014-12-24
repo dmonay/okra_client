@@ -269,7 +269,6 @@
 
             iElement.bind('click', function () {
                 var isCollapsed = thisNode.next().hasClass('collapse');
-
                 //hide all nodes beneath the node we chose
                 var node,
                     i = allNodes.indexOf(scope.linkedTo) + 1;
@@ -281,6 +280,10 @@
                     if (isCollapsed) {
                         $animate.removeClass(node, 'collapse');
                         i = allNodes.length;
+                    }
+                    if (iElement.hasClass('md-warn')) {
+                        $animate.addClass(node, 'collapse');
+                        $animate.removeClass(thisNode.next(), 'collapse');
                     }
                     scope.$apply();
                 }
@@ -417,7 +420,6 @@
                 }
                 //hasn't been toggled 
                 else {
-                    console.log('not toggled yet');
                     disableChildren(collapseScope, iElement.parent().parent());
                     replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
                     iElement.addClass('md-warn');

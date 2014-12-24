@@ -57,7 +57,6 @@
                 }
                 //hasn't been toggled 
                 else {
-                    console.log('not toggled yet');
                     disableChildren(collapseScope, iElement.parent().parent());
                     replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
                     iElement.addClass('md-warn');
