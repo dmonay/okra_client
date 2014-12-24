@@ -3,6 +3,25 @@
 
     var app = angular.module('SharedDirectives');
 
+    /**
+     * @ngdoc directive
+     * @name okToggleColor
+     *
+     * @restrict A
+     *
+     * @description
+     * `ok-toggle-color`
+     *
+     *  Added to an element that has an ok-collapse attribute attached to it. Requires the same attributes as ok-collapse.
+     *  Toggles primary to warning color and minus to plus classes (font awesome).
+     * @usage
+     * <button ok-collapse ok-toggle-color linked-to="uniqueId" all-linked-nodes="['uniqueIdOne', 'uniqueIdTwo']">
+     *  <i class="fa fa-plus"></i>
+     *</button>
+     *<div id="uniqueIdOne"></div>
+     *<div id="uniqueIdTwo"></div>
+     */
+
     function okToggleColor() {
         return {
             restrict: 'A',

@@ -1,7 +1,4 @@
 module.exports = {
-    options: {
-        livereload: true
-    },
     scripts: {
         files: ['<%= meta.src %>/app/**/*.js'],
         tasks: ['concat:js', 'jshint', 'jsbeautifier'],
