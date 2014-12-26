@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog) {
+    function OrganizationController($scope, $mdDialog, TreeFactory) {
         var vm = this;
 
         vm.missionStatement =
@@ -20,6 +20,10 @@
         }];
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+        TreeFactory.getTrees('someorg').then(function (reponse) {
+            console.log(response);
+        });
 
 
         vm.openMissionStatementModal = function ($event) {
@@ -51,7 +55,7 @@
         };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];
 
     app.controller('OrganizationController', OrganizationController);
 
