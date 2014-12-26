@@ -25,11 +25,11 @@
 		    </md-button>
 	    </div>
 	</div> 
-	<!-- objectives -->
+	<!--Trees -->
 	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
 		<div layout="row" layout-align="center center" ng-repeat="treeRow in [1, 2, 3, 4]">
-			<div class="objective" layout-align="start" ng-repeat="node in [1, 2, 3, 4]">
-				<div class="tree-node" layout-align="start">
+			<div class="objective" layout="row" layout-align="start" ng-repeat="node in [1, 2, 3, 4]">
+				<div class="tree-node">
 					Objective {{$index + 1}}
 				</div>
 				<div layout="column" layout-align="start end">

@@ -101,6 +101,10 @@ ul.list-horizontal li span.sub-text {
   background-color: #c2c5c3;
   border-radius: 5px;
   color: white;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
