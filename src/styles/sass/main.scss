@@ -139,6 +139,10 @@ ul.list-horizontal {
 		background-color: $grey;
 		@include border-radius(5px);
 		color: $white;
+		max-width: 200px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.objective.active, 
