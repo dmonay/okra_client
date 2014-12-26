@@ -41,7 +41,10 @@
     app.constant('okraAPI', {
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
-        updateMembers: 'http://localhost:8080/update/members/'
+        updateMembers: 'http://localhost:8080/update/members/',
+        createTree: 'http://localhost:8080/create/tree/',
+        getTreesInOrg: 'http://localhost:8080/get/trees/',
+        getSingleTreeInOrg: 'http://localhost:8080/get/trees/' //ORG/TREEID
     });
 })();
 
@@ -158,7 +161,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog) {
+    function OrganizationController($scope, $mdDialog, TreeFactory) {
         var vm = this;
 
         vm.missionStatement =
@@ -175,6 +178,10 @@
         }];
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+        TreeFactory.getTrees('someorg').then(function (reponse) {
+            console.log(response);
+        });
 
 
         vm.openMissionStatementModal = function ($event) {
@@ -206,7 +213,7 @@
         };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];
 
     app.controller('OrganizationController', OrganizationController);
 
@@ -250,6 +257,74 @@
     ];
 
     app.controller('OrganizationMembersModalController', OrganizationMembersModalController);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('SharedFactories');
+
+    function OrganizationFactory($http, okraAPI) {
+        var organizationAPI = {
+            createOrganization: function (orgName) {
+                return $http.post(okraAPI.createOrg, {
+                    organization: orgName,
+                    userId: "5491e2aebee23fc7375b789c"
+                });
+            },
+            updateMission: function (orgName, mission) {
+                var url = okraAPI.updateMission + orgName;
+                return $http.post(url, {
+                    mission: mission
+                });
+            },
+            updateMembers: function (orgName, members) {
+                var url = okraAPI.updateMembers + orgName;
+                return $http.post(url, {
+                    "updateTree": false,
+                    "members": members
+                });
+            }
+        };
+
+        return organizationAPI;
+    }
+
+    OrganizationFactory.$inject = ['$http', 'okraAPI'];
+
+    app.factory('OrganizationFactory', OrganizationFactory);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('SharedFactories');
+
+    function TreeFactory($http, okraAPI) {
+        var TreeFactoryAPI = {
+            getTrees: function (orgName) {
+                var url = okraAPI.getTreesInOrg + orgName;
+                return $http.get(url);
+            },
+            createTree: function (orgName, tree) {
+                var url = okraAPI.createTree + orgName;
+                return $http.post(url, {
+                    treeName: tree.name,
+                    timeframe: tree.timeframe,
+                    userId: tree.userId,
+                    username: tree.username
+                });
+            }
+        };
+
+        return TreeFactoryAPI;
+    }
+
+    TreeFactory.$inject = ['$http', 'okraAPI'];
+
+    app.factory('TreeFactory', TreeFactory);
 
 })();
 
@@ -349,43 +424,6 @@
 (function () {
     'use strict';
 
-    var app = angular.module('SharedFactories');
-
-    function OrganizationFactory($http, okraAPI) {
-        var organizationAPI = {
-            createOrganization: function (orgName) {
-                return $http.post(okraAPI.createOrg, {
-                    organization: orgName,
-                    userId: "5491e2aebee23fc7375b789c"
-                });
-            },
-            updateMission: function (orgName, mission) {
-                var url = okraAPI.updateMission + orgName;
-                return $http.post(url, {
-                    mission: mission
-                });
-            },
-            updateMembers: function (orgName, members) {
-                var url = okraAPI.updateMembers + orgName;
-                return $http.post(url, {
-                    "updateTree": false,
-                    "members": members
-                });
-            }
-        };
-
-        return organizationAPI;
-    }
-
-    OrganizationFactory.$inject = ['$http', 'okraAPI'];
-
-    app.factory('OrganizationFactory', OrganizationFactory);
-
-})();
-
-(function () {
-    'use strict';
-
     var app = angular.module('SharedDirectives');
 
     /**
@@ -479,16 +517,16 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     $templateCache.put("app/header/add-organization-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><md-text-float class=\"long\" label=\"Organization Name\" ng-model=\"modal.organizationName\"></md-text-float></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
-    $templateCache.put("app/organization/mission-statement-modal.tpl.html",
+    $templateCache.put("app/tree/mission-statement-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
-    $templateCache.put("app/organization/organization-members-modal.tpl.html",
+    $templateCache.put("app/tree/organization-members-modal.tpl.html",
         "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Role</label><md-input required name=\"newUserRole\" ng-model=\"modal.newUser.role\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
-    $templateCache.put("app/organization/organization-tree.tpl.html",
+    $templateCache.put("app/tree/organization-tree.tpl.html",
         "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3, 4]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 1}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"column\" class=\"collapse\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
     );
-    $templateCache.put("app/organization/organization-trees-selection.tpl.html",
+    $templateCache.put("app/tree/organization-trees-selection.tpl.html",
         "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div layout=\"row\" layout-align=\"center center\" ng-repeat=\"treeRow in [1, 2, 3, 4]\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"node in [1, 2, 3, 4]\"><div class=\"tree-node\">Objective {{$index + 1}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div></div></section>"
     );
 }]);
