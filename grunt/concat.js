@@ -9,7 +9,7 @@ module.exports = {
             'src/app/**/*.js',
             'app-route.js',
             'src/app/app-route.js',
-            '!src/app/**/*.test.js',
+            '!src/app/**/*.spec.js',
             '!src/app/main.js'
         ],
         dest: 'src/app/main.js'
