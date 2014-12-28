@@ -51,6 +51,9 @@ md-checkbox:focus .md-label {
 
 .error-msg.ng-hide-add.ng-hide-add-active,
 .error-msg.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: opacity linear 0.5s;
+  -moz-transition: opacity linear 0.5s;
+  -ms-transition: opacity linear 0.5s;
   transition: opacity linear 0.5s;
 }
 
@@ -71,6 +74,8 @@ ul.list-horizontal li {
   margin-right: 15px;
   margin-bottom: 10px;
   padding: 5px;
+  -webkit-box-shadow: 0px 2px 6px #888888;
+  -moz-box-shadow: 0px 2px 6px #888888;
   -ms-box-shadow: 0px 2px 6px #888888;
   box-shadow: 0px 2px 6px #888888;
   max-width: 170px;
@@ -92,6 +97,9 @@ ul.list-horizontal li span.sub-text {
 }
 
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
+  -webkit-transition: max-height ease-in-out 0.9s;
+  -moz-transition: max-height ease-in-out 0.9s;
+  -ms-transition: max-height ease-in-out 0.9s;
   transition: max-height ease-in-out 0.9s;
   max-height: 200px;
 }
@@ -99,6 +107,9 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .tree-node {
   padding: 20px 20px;
   background-color: #c2c5c3;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
   border-radius: 5px;
   color: white;
   max-width: 200px;
@@ -115,6 +126,9 @@ ul.list-horizontal li span.sub-text {
   background-color: #139e2a;
   padding: 10px 10px;
   color: white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
   border-radius: 5px;
   min-width: 100px;
   margin-top: 10px;
