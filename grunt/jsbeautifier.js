@@ -23,10 +23,10 @@ module.exports = {
         }
     },
     "app": {
-        src : ["src/app/**/*.js", '!src/app/templates.js']
+        src : ["src/app/**/*.js", '!src/app/templates.js', '!src/app/**/*.test.js']
     },
     "pre-commit": {
-        src : ["src/app/**/*.js", '!src/app/templates.js'],
+        src : ["src/app/**/*.js", '!src/app/templates.js', '!src/app/**/*.test.js'],
         options : {
             mode:"VERIFY_ONLY"
         }

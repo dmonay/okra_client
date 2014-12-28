@@ -18,8 +18,7 @@ module.exports = function (config) {
             'src/components/angular-aria/angular-aria.js',
             'src/components/angular-material/angular-material.js',
             'src/components/angular-mocks/angular-mocks.js',
-            'src/app/**/*.js',
-            'test/unit/*.js'
+            'src/app/**/*.js'
         ],
 
 
