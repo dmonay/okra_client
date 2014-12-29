@@ -2,7 +2,6 @@
 describe('AddOrganizationModalController', function () {
     var scope;
     var modalController;
-    var modalInstance;
     var element;
     var $httpBackend;
 
