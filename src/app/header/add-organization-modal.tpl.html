@@ -7,7 +7,20 @@
 	<md-content>
 	    <div layout="row" layout-align="center">
 			<form class="form-horizontal" name="modal.organizationForm">
-				<md-text-float class="long" label="Organization Name" ng-model="modal.organizationName"></md-text-float>
+				<div layout="row" layout-align="center center">
+					<div layout-align="start start">						
+						<md-input-group class="long">
+						   	<label>Organization Name</label>
+						   	<md-input required name="organizationName" ng-model="modal.organizationName" autocapitalize="off"></md-input>
+						</md-input-group>
+					</div>
+					<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.organizationForm.organizationName.$invalid" ng-cloak>
+						<i class="fa fa-warning"></i>
+						<md-tooltip>
+							This field is required
+						</md-tooltip>
+					</div>
+				</div>
 			</form>
 		</div>
 	<md-content>
