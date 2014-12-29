@@ -1,4 +1,4 @@
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
 
         // base path, that will be used to resolve files and exclude
@@ -15,10 +15,13 @@ module.exports = function (config) {
             'src/components/angular/angular.js',
             'src/components/angular-ui-router/release/angular-ui-router.js',
             'src/components/angular-animate/angular-animate.js',
+            'src/components/hammerjs/hammer.js',
             'src/components/angular-aria/angular-aria.js',
             'src/components/angular-material/angular-material.js',
             'src/components/angular-mocks/angular-mocks.js',
-            'src/app/**/*.js'
+            'src/app/**/*.js',
+            'src/components/angular-material/angular-material.css',
+            'src/styles/css/okra-theme.css'
         ],
 
 

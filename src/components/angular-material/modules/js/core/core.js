@@ -2,7 +2,7 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.7.0-rc1-master-854fd0e
+ * v0.7.0-rc1-master-84842ff
  */
 (function() {
 'use strict';
@@ -120,8 +120,251 @@ MdConstantFactory.$inject = ["$$rAF", "$sniffer"];
 
 })();
 
+(function(){
+
+  angular
+    .module('material.core')
+    .config( ["$provide", function($provide){
+       $provide.decorator('$mdUtil', ['$delegate', function ($delegate){
+           /**
+            * Inject the iterator facade to easily support iteration and accessors
+            * @see iterator below
+            */
+           $delegate.iterator = Iterator;
+
+           return $delegate;
+         }
+       ])
+     }]);
+
+  /**
+   * iterator is a list facade to easily support iteration and accessors
+   *
+   * @param items Array list which this iterator will enumerate
+   * @param reloop Boolean enables iterator to consider the list as an endless reloop
+   */
+  function Iterator(items, reloop) {
+    var trueFn = function() { return true; };
+
+    reloop = !!reloop;
+    var _items = items || [ ];
+
+    // Published API
+    return {
+      items: getItems,
+      count: count,
+
+      inRange: inRange,
+      contains: contains,
+      indexOf: indexOf,
+      itemAt: itemAt,
+
+      findBy: findBy,
+
+      add: add,
+      remove: remove,
+
+      first: first,
+      last: last,
+      next: next,
+      previous: previous,
+
+      hasPrevious: hasPrevious,
+      hasNext: hasNext
+
+    };
+
+    /**
+     * Publish copy of the enumerable set
+     * @returns {Array|*}
+     */
+    function getItems() {
+      return [].concat(_items);
+    }
+
+    /**
+     * Determine length of the list
+     * @returns {Array.length|*|number}
+     */
+    function count() {
+      return _items.length;
+    }
+
+    /**
+     * Is the index specified valid
+     * @param index
+     * @returns {Array.length|*|number|boolean}
+     */
+    function inRange(index) {
+      return _items.length && ( index > -1 ) && (index < _items.length );
+    }
+
+    /**
+     * Can the iterator proceed to the next item in the list; relative to
+     * the specified item.
+     *
+     * @param item
+     * @returns {Array.length|*|number|boolean}
+     */
+    function hasNext(item) {
+      return item ? inRange(indexOf(item) + 1) : false;
+    }
+
+    /**
+     * Can the iterator proceed to the previous item in the list; relative to
+     * the specified item.
+     *
+     * @param item
+     * @returns {Array.length|*|number|boolean}
+     */
+    function hasPrevious(item) {
+      return item ? inRange(indexOf(item) - 1) : false;
+    }
+
+    /**
+     * Get item at specified index/position
+     * @param index
+     * @returns {*}
+     */
+    function itemAt(index) {
+      return inRange(index) ? _items[index] : null;
+    }
+
+    /**
+     * Find all elements matching the key/value pair
+     * otherwise return null
+     *
+     * @param val
+     * @param key
+     *
+     * @return array
+     */
+    function findBy(key, val) {
+      return _items.filter(function(item) {
+        return item[key] === val;
+      });
+    }
+
+    /**
+     * Add item to list
+     * @param item
+     * @param index
+     * @returns {*}
+     */
+    function add(item, index) {
+      if ( !item ) return -1;
+
+      if (!angular.isNumber(index)) {
+        index = _items.length;
+      }
+
+      _items.splice(index, 0, item);
+
+      return indexOf(item);
+    }
+
+    /**
+     * Remove item from list...
+     * @param item
+     */
+    function remove(item) {
+      if ( contains(item) ){
+        _items.splice(indexOf(item), 1);
+      }
+    }
+
+    /**
+     * Get the zero-based index of the target item
+     * @param item
+     * @returns {*}
+     */
+    function indexOf(item) {
+      return _items.indexOf(item);
+    }
+
+    /**
+     * Boolean existence check
+     * @param item
+     * @returns {boolean}
+     */
+    function contains(item) {
+      return item && (indexOf(item) > -1);
+    }
+
+    /**
+     * Find the next item. If reloop is true and at the end of the list, it will
+     * go back to the first item. If given ,the `validate` callback will be used
+     * determine whether the next item is valid. If not valid, it will try to find the
+     * next item again.
+     * @param item
+     * @param {optional} validate function
+     * @param {optional} recursion limit
+     * @returns {*}
+     */
+    function next(item, validate, limit) {
+      validate = validate || trueFn;
+
+      var index = indexOf(item) + 1;
+      var found = inRange(index) ? _items[ index ] : (reloop ? first() : null);
+
+          found = hasCheckedAll(found, limit) ? null : found;
+
+      return !found || validate(found) ? found : next(found, validate, limit || index);
+    }
+
+    /**
+     * Find the previous item. If reloop is true and at the beginning of the list, it will
+     * go back to the last item. If given ,the `validate` callback will be used
+     * determine whether the previous item is valid. If not valid, it will try to find the
+     * previous item again.
+     * @param item
+     * @param {optional} validation function
+     * @param {optional} recursion limit
+     * @returns {*}
+     */
+    function previous(item, validate, limit) {
+      validate = validate || trueFn;
+
+        var index = indexOf(item) - 1;
+        var found = inRange(index) ? _items[ index ] : (reloop ? last() : null);
+
+            found = hasCheckedAll(found, limit) ? null : found;
+
+        return !found || validate(found) ? found : previous(found, validate, limit || index);
+    }
+
+    /**
+     * Return first item in the list
+     * @returns {*}
+     */
+    function first() {
+      return _items.length ? _items[0] : null;
+    }
+
+    /**
+     * Return last item in the list...
+     * @returns {*}
+     */
+    function last() {
+      return _items.length ? _items[_items.length - 1] : null;
+    }
+
+    /**
+     * Has the iteration checked all items in the list
+     * @param item current found item in th list
+     * @param {optional} stopAt index
+     * @returns {*|boolean}
+     */
+    function hasCheckedAll(item, stopAt) {
+      return stopAt && item && (indexOf(item) == stopAt);
+    }
+
+  }
+
+})();
+
 angular.module('material.core')
-    .factory('$mdMedia', mdMediaFactory);
+.factory('$mdMedia', mdMediaFactory);
 
 /**
  * Exposes a function on the '$mdMedia' service which will return true or false,
@@ -132,46 +375,52 @@ angular.module('material.core')
  * @example $mdMedia('(min-width: 1200px)') == true if device-width >= 1200px
  * @example $mdMedia('max-width: 300px') == true if device-width <= 300px (sanitizes input, adding parens)
  */
-function mdMediaFactory($window, $mdUtil, $timeout, $mdConstant) {
-    var cache = $mdUtil.cacheFactory('$mdMedia', { capacity: 15 });
+function mdMediaFactory($mdConstant, $mdUtil, $rootScope, $window) {
+  var queriesCache = $mdUtil.cacheFactory('$mdMedia:queries', {capacity: 15});
+  var resultsCache = $mdUtil.cacheFactory('$mdMedia:results', {capacity: 15});
 
-    angular.element($window).on('resize', updateAll);
+  angular.element($window).on('resize', updateAll);
 
-    return $mdMedia;
+  return $mdMedia;
 
-    function $mdMedia(query) {
-        query = validate(query);
-        var result;
-        if (!angular.isDefined(result = cache.get(query)) ) {
-            return add(query);
-        }
-        return result;
+  function $mdMedia(query) {
+    var validated = queriesCache.get(query);
+    if (angular.isUndefined(validated)) {
+      validated = queriesCache.put(query, validate(query));
     }
 
-    function validate(query) {
-        return $mdConstant.MEDIA[query] || (
-                query.charAt(0) != '(' ?  ('(' + query + ')') : query
-            );
+    var result = resultsCache.get(validated);
+    if (angular.isUndefined(result)) {
+      result = add(validated);
     }
 
-    function add(query) {
-        return cache.put(query, !!$window.matchMedia(query).matches);
+    return result;
+  }
 
+  function validate(query) {
+    return $mdConstant.MEDIA[query] ||
+           ((query.charAt(0) !== '(') ? ('(' + query + ')') : query);
+  }
+
+  function add(query) {
+    return resultsCache.put(query, !!$window.matchMedia(query).matches);
+  }
+
+  function updateAll() {
+    var keys = resultsCache.keys();
+    var len = keys.length;
+
+    if (len) {
+      for (var i = 0; i < len; i++) {
+        add(keys[i]);
+      }
+
+      // Trigger a $digest() if not already in progress
+      $rootScope.$evalAsync();
     }
-
-    function updateAll() {
-        var keys = cache.keys();
-        if (keys.length) {
-            for (var i = 0, ii = keys.length; i < ii; i++) {
-                cache.put(keys[i], !!$window.matchMedia(keys[i]).matches);
-            }
-            // trigger a $digest()
-            $timeout(angular.noop);
-        }
-    }
-
+  }
 }
-mdMediaFactory.$inject = ["$window", "$mdUtil", "$timeout", "$mdConstant"];
+mdMediaFactory.$inject = ["$mdConstant", "$mdUtil", "$rootScope", "$window"];
 
 (function() {
 'use strict';
@@ -205,12 +454,6 @@ angular.module('material.core')
         height: nodeRect.height
       };
     },
-
-    /**
-     * Publish the iterator facade to easily support iteration and accessors
-     * @see iterator below
-     */
-    iterator: iterator,
 
     fakeNgModel: function() {
       return {
@@ -341,220 +584,6 @@ angular.module('material.core')
     }
   };
 
-  /*
-   * iterator is a list facade to easily support iteration and accessors
-   *
-   * @param items Array list which this iterator will enumerate
-   * @param reloop Boolean enables iterator to consider the list as an endless reloop
-   */
-  function iterator(items, reloop) {
-    var trueFn = function() { return true; };
-
-    reloop = !!reloop;
-    var _items = items || [ ];
-
-    // Published API
-    return {
-      items: getItems,
-      count: count,
-
-      inRange: inRange,
-      contains: contains,
-      indexOf: indexOf,
-      itemAt: itemAt,
-
-      findBy: findBy,
-
-      add: add,
-      remove: remove,
-
-      first: first,
-      last: last,
-      next: next,
-      previous: previous,
-
-      hasPrevious: hasPrevious,
-      hasNext: hasNext
-
-    };
-
-    /*
-     * Publish copy of the enumerable set
-     * @returns {Array|*}
-     */
-    function getItems() {
-      return [].concat(_items);
-    }
-
-    /*
-     * Determine length of the list
-     * @returns {Array.length|*|number}
-     */
-    function count() {
-      return _items.length;
-    }
-
-    /*
-     * Is the index specified valid
-     * @param index
-     * @returns {Array.length|*|number|boolean}
-     */
-    function inRange(index) {
-      return _items.length && ( index > -1 ) && (index < _items.length );
-    }
-
-    /*
-     * Can the iterator proceed to the next item in the list; relative to
-     * the specified item.
-     *
-     * @param item
-     * @returns {Array.length|*|number|boolean}
-     */
-    function hasNext(item) {
-      return item ? inRange(indexOf(item) + 1) : false;
-    }
-
-    /*
-     * Can the iterator proceed to the previous item in the list; relative to
-     * the specified item.
-     *
-     * @param item
-     * @returns {Array.length|*|number|boolean}
-     */
-    function hasPrevious(item) {
-      return item ? inRange(indexOf(item) - 1) : false;
-    }
-
-    /*
-     * Get item at specified index/position
-     * @param index
-     * @returns {*}
-     */
-    function itemAt(index) {
-      return inRange(index) ? _items[index] : null;
-    }
-
-    /*
-     * Find all elements matching the key/value pair
-     * otherwise return null
-     *
-     * @param val
-     * @param key
-     *
-     * @return array
-     */
-    function findBy(key, val) {
-      return _items.filter(function(item) {
-        return item[key] === val;
-      });
-    }
-
-    /*
-     * Add item to list
-     * @param item
-     * @param index
-     * @returns {*}
-     */
-    function add(item, index) {
-      if ( !item ) return -1;
-
-      if (!angular.isNumber(index)) {
-        index = _items.length;
-      }
-
-      _items.splice(index, 0, item);
-
-      return indexOf(item);
-    }
-
-    /*
-     * Remove item from list...
-     * @param item
-     */
-    function remove(item) {
-      if ( contains(item) ){
-        _items.splice(indexOf(item), 1);
-      }
-    }
-
-    /*
-     * Get the zero-based index of the target item
-     * @param item
-     * @returns {*}
-     */
-    function indexOf(item) {
-      return _items.indexOf(item);
-    }
-
-    /*
-     * Boolean existence check
-     * @param item
-     * @returns {boolean}
-     */
-    function contains(item) {
-      return item && (indexOf(item) > -1);
-    }
-
-    /*
-     * Find the next item. If reloop is true and at the end of the list, it will
-     * go back to the first item. If given ,the `validate` callback will be used
-     * determine whether the next item is valid. If not valid, it will try to find the
-     * next item again.
-     * @param item
-     * @param {optional} validate
-     * @returns {*}
-     */
-    function next(item, validate) {
-      validate = validate || trueFn;
-
-      if (contains(item)) {
-        var index = indexOf(item) + 1,
-        found = inRange(index) ? _items[ index ] : (reloop ? first() : null);
-
-        return validate(found) ? found : next(found, validate);
-      }
-
-      return null;
-    }
-
-    /*
-     * Find the previous item. If reloop is true and at the beginning of the list, it will
-     * go back to the last item. If given ,the `validate` callback will be used
-     * determine whether the previous item is valid. If not valid, it will try to find the
-     * previous item again.
-     * @param item
-     * @param {optional} validate
-     * @returns {*}
-     */
-    function previous(item, validate) {
-      validate = validate || trueFn;
-
-      if (contains(item)) {
-        var index = indexOf(item) - 1,
-        found = inRange(index) ? _items[ index ] : (reloop ? last() : null);
-
-        return validate(found) ? found : previous(found, validate);
-      }
-
-      return null;
-    }
-
-    /*
-     * Return first item in the list
-     * @returns {*}
-     */
-    function first() {
-      return _items.length ? _items[0] : null;
-    }
-
-    /*
-     * Return last item in the list...
-     * @returns {*}
-     */
-    function last() {
-      return _items.length ? _items[_items.length - 1] : null;
-    }
-  }
 
   function attachDragBehavior(scope, element, options) {
     // The state of the current drag & previous drag
@@ -656,22 +685,36 @@ angular.module('material.core')
   }
 
   /*
-   * Angular's $cacheFactory doesn't have a keys() method,
-   * so we add one ourself.
+   * Inject a 'keys()' method into Angular's $cacheFactory. Then
+   * head-hook all other methods
+   *
    */
   function cacheFactory(id, options) {
     var cache = $cacheFactory(id, options);
-
     var keys = {};
+
     cache._put = cache.put;
     cache.put = function(k,v) {
       keys[k] = true;
       return cache._put(k, v);
     };
+
     cache._remove = cache.remove;
     cache.remove = function(k) {
       delete keys[k];
       return cache._remove(k);
+    };
+
+    cache._removeAll = cache.removeAll;
+    cache.removeAll = function() {
+      keys = {};
+      return cache._removeAll();
+    };
+
+    cache._destroy = cache.destroy;
+    cache.destroy = function() {
+      keys = {};
+      return cache._destroy();
     };
 
     cache.keys = function() {
@@ -1299,6 +1342,133 @@ function InterimElementProvider() {
   }
 
 }
+
+})();
+
+(function() {
+  'use strict';
+
+  /**
+   * @ngdoc module
+   * @name material.core.componentRegistry
+   *
+   * @description
+   * A component instance registration service.
+   * Note: currently this as a private service in the SideNav component.
+   */
+  angular.module('material.core')
+    .factory('$mdComponentRegistry', ComponentRegistry);
+
+  /*
+   * @private
+   * @ngdoc factory
+   * @name ComponentRegistry
+   * @module material.core.componentRegistry
+   *
+   */
+  function ComponentRegistry($log, $q) {
+
+    var self;
+    var instances = [ ];
+    var pendings = { };
+
+    return self = {
+      /**
+       * Used to print an error when an instance for a handle isn't found.
+       */
+      notFoundError: function(handle) {
+        $log.error('No instance found for handle', handle);
+      },
+      /**
+       * Return all registered instances as an array.
+       */
+      getInstances: function() {
+        return instances;
+      },
+
+      /**
+       * Get a registered instance.
+       * @param handle the String handle to look up for a registered instance.
+       */
+      get: function(handle) {
+        if ( !isValidID(handle) ) return null;
+
+        var i, j, instance;
+        for(i = 0, j = instances.length; i < j; i++) {
+          instance = instances[i];
+          if(instance.$$mdHandle === handle) {
+            return instance;
+          }
+        }
+        return null;
+      },
+
+      /**
+       * Register an instance.
+       * @param instance the instance to register
+       * @param handle the handle to identify the instance under.
+       */
+      register: function(instance, handle) {
+        if ( !handle ) return angular.noop;
+
+        instance.$$mdHandle = handle;
+        instances.push(instance);
+        resolveWhen();
+
+        return deregister;
+
+        /**
+         * Remove registration for an instance
+         */
+        function deregister() {
+          var index = instances.indexOf(instance);
+          if (index !== -1) {
+            instances.splice(index, 1);
+          }
+        }
+
+        /**
+         * Resolve any pending promises for this instance
+         */
+        function resolveWhen() {
+          var dfd = pendings[handle];
+          if ( dfd ) {
+            dfd.resolve( instance );
+            delete pendings[handle];
+          }
+        }
+      },
+
+      /**
+       * Async accessor to registered component instance
+       * If not available then a promise is created to notify
+       * all listeners when the instance is registered.
+       */
+      when : function(handle) {
+        if ( isValidID(handle) ) {
+          var deferred = $q.defer();
+          var instance = self.get(handle);
+
+          if ( instance )  {
+            deferred.resolve( instance );
+          } else {
+            pendings[handle] = deferred;
+          }
+
+          return deferred.promise;
+        }
+        return $q.reject("Invalid `md-component-id` value.")
+      }
+
+    };
+
+    function isValidID(handle){
+      return handle && (handle != "");
+    }
+
+  }
+  ComponentRegistry.$inject = ["$log", "$q"];
+
 
 })();
 
