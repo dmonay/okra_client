@@ -236,12 +236,13 @@
             modal.formSubmitted = true;
             if (modal.newMemberForm.$valid) {
                 modal.currentlySaving = true;
+                var newMembersArray = [];
 
                 var newMember = MemberService.createUser(modal.newUser.name, modal.newUser.role);
 
-                modal.members.push(newMember);
+                newMembersArray.push(newMember);
 
-                OrganizationFactory.updateMembers(modal.members).then(function (response) {
+                OrganizationFactory.updateMembers('someorg', newMembersArray).then(function (response) {
                     modal.currentlySaving = false;
                     modal.formSubmitted = false;
                 });
