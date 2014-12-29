@@ -7,6 +7,7 @@
         var modal = this;
 
         modal.createOrganization = function (name) {
+            modal.formSubmitted = true;
             if (modal.organizationForm.$valid) {
                 OrganizationFactory.createOrganization(name).then(function (response) {
                     console.log(response);
