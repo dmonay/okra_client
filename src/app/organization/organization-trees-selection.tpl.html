@@ -1,5 +1,5 @@
 <section class="organization-wrapper">
-	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
+	<div class="organization active" style="margin-bottom: 5px;" layout="row" layout-align="center" id="organizationNode">
 		<div class="tree-node">
 			Organization #1
 		</div>
@@ -24,13 +24,21 @@
 		    	<i class="fa fa-briefcase"></i>
 		    </md-button>
 	    </div>
+	    <div layout="column" layout-align="start end">
+	    	<md-button class="md-raised md-primary" aria-label="Add Tree">
+		    	<i class="fa fa-tree"></i>
+		    	<md-tooltip>
+					Add a Tree
+				</md-tooltip>
+		    </md-button>
+	    </div>
 	</div> 
 	<!--Trees -->
 	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
-		<div layout="row" layout-align="center center" ng-repeat="treeRow in [1, 2, 3, 4]">
+		<div layout="row" layout-align="center center" ng-repeat="treeRow in [1, 2, 3]">
 			<div class="objective" layout="row" layout-align="start" ng-repeat="node in [1, 2, 3, 4]">
 				<div class="tree-node">
-					Objective {{$index + 1}}
+					Tree #{{$index + 1}}
 				</div>
 				<div layout="column" layout-align="start end">
 		        	<md-button href class="md-raised md-primary" aria-label="edit">
