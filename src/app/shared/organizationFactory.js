@@ -14,14 +14,15 @@
             updateMission: function (orgName, mission) {
                 var url = okraAPI.updateMission + orgName;
                 return $http.post(url, {
-                    mission: mission
+                    mission: mission,
+                    treeId: '549dcbe9efb6f7204b000001'
                 });
             },
             updateMembers: function (orgName, members) {
                 var url = okraAPI.updateMembers + orgName;
                 return $http.post(url, {
-                    "updateTree": false,
-                    "members": members
+                    updateTree: false,
+                    members: members
                 });
             }
         };
