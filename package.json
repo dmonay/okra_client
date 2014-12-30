@@ -8,7 +8,7 @@
   "contributors": [
     {
       "name": "Pedro Cunha",
-      "email": "pdero.spinsomewebs@gmail.com"
+      "email": "pedro.spinsomewebs@gmail.com"
     },
     {
       "name": "Dmitry Pavluk",
@@ -60,11 +60,11 @@
     "load-grunt-config": "^0.9.1",
     "load-grunt-tasks": "^0.3.0",
     "phantomjs": "^1.9.7-8",
-    "protractor": "^1.0.0-rc1",
+    "protractor": "^1.4.0",
     "time-grunt": "^0.2.10"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && echo -n $NODE_ENV | grep -v 'production' && ./node_modules/protractor/bin/webdriver-manager update || echo 'will skip the webdriver install/update in production'",
     "start": "grunt serve",
     "test": "grunt test:watch",
     "build": "grunt dist"
