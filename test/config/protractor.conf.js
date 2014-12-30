@@ -1,4 +1,5 @@
 exports.config = {
+    seleniumServerJar: null,
     seleniumPort: null,
     chromeDriver: '../../node_modules/chromedriver/bin/chromedriver',
 
@@ -12,5 +13,9 @@ exports.config = {
     // },
 
     // A base URL for your application under test
-    baseUrl: 'http://localhost:3333'
+    baseUrl: 'http://localhost:3333',
+
+    onPrepare: function() {
+        browser.helpers = require('../e2e/utils/helpers.js');
+    },
 };
