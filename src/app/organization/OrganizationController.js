@@ -77,6 +77,18 @@
                 vm.orgMembers = response;
             });
         };
+
+        vm.openAddTreeModal = function ($event) {
+            $mdDialog.show({
+                targetEvent: $event,
+                templateUrl: 'app/organization/add-tree-modal.tpl.html',
+                controller: 'AddTreeModalController',
+                controllerAs: 'modal'
+            }).then(function (response) {
+                vm.trees.push(response);
+                vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
+            });
+        };
     }
 
     OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];

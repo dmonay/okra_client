@@ -3,7 +3,8 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationMembersModalController($scope, OrganizationFactory, $mdDialog, members, MemberService) {
+    function OrganizationMembersModalController($scope, OrganizationFactory, $mdDialog, members, MemberService,
+        hardCoded) {
         var modal = this;
 
         modal.members = members;
@@ -20,7 +21,7 @@
 
                 newMembersArray.push(newMember);
 
-                OrganizationFactory.updateMembers('someorg', newMembersArray).then(function (response) {
+                OrganizationFactory.updateMembers(hardCoded.org, newMembersArray).then(function (response) {
                     modal.currentlySaving = false;
                     modal.formSubmitted = false;
                 });

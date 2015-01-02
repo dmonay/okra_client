@@ -1,0 +1,38 @@
+<md-dialog flex="30">
+	<div layout="row" layout-align="center">
+	    <md-subheader>
+	    	<h3>Add A Tree</h3>
+	    </md-subheader>
+	</div>
+	<md-content>
+		<form class="form-horizontal" name="modal.addTreeForm">
+		    <div layout="row" layout-align="center center">
+		    	<div layout-align="start start">
+					<md-input-group class="long">
+					   <label>Tree Name</label>
+					   <md-input required name="newTreeName" ng-model="modal.newTreeName" autocapitalize="off"></md-input>
+					</md-input-group>
+				</div>
+				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.addTreeForm.newTreeName.$invalid" ng-cloak>
+					<i class="fa fa-warning"></i>
+					<md-tooltip>
+						This field is required
+					</md-tooltip>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center">
+		    	<div layout-align="start start">
+					<md-radio-group class="horizontal-radio-group" layout="row" ng-model="modal.timeframe">
+				      <md-radio-button value="monthly" aria-label="Monthly"> Monthly </md-radio-button>
+				      <md-radio-button value="yearly" artial-label="Yearly"> Yearly </md-radio-button>
+				    </md-radio-group>
+				</div>
+			</div>
+		</form>
+	<md-content>
+	<div class="md-actions" style="border-top: none;" layout="row" layout-align="center end">
+		<md-button class="md-raised md-warn" ng-click="modal.closeModal()" aria-label="cancel">Cancel</md-button>
+		<md-button class="md-raised md-primary" ng-click="modal.addTree()" aria-label="add">Add</md-button>
+		<md-progress-circular ng-if="modal.currentlySaving" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
+	</div>
+<md-dialog>
