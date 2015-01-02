@@ -19,7 +19,6 @@
                 });
             },
             formatTrees: function (trees) {
-
                 var formattedTrees = [];
                 var currentArray = [];
 
