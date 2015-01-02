@@ -153,12 +153,16 @@ ul.list-horizontal {
 }
 
 .organization-wrapper {
+	.centered-row {
+		padding: 0px 200px;
+	}
+
 	.tree-node {
 		padding: 20px 20px;
 		background-color: $grey;
 		@include border-radius(5px);
 		color: $white;
-		max-width: 200px;
+		width: 155px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -183,10 +187,10 @@ ul.list-horizontal {
 	}
 
 	.objective + .objective, .key-result + .key-result {
-		margin-left: 50px;
+		margin-left: 25px;
 	}
 
-	[layout-align="center center"], [layout-align="center"] {
+	[layout-align="center center"], [layout-align="center"], [layout-align="start center"] {
 		margin-top: 25px;
 	}
 

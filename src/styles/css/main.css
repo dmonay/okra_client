@@ -114,12 +114,15 @@ ul.list-horizontal li span.sub-text {
   max-height: 200px;
 }
 
+.organization-wrapper .centered-row {
+  padding: 0px 200px;
+}
 .organization-wrapper .tree-node {
   padding: 20px 20px;
   background-color: #c2c5c3;
   border-radius: 5px;
   color: white;
-  max-width: 200px;
+  width: 155px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -138,9 +141,9 @@ ul.list-horizontal li span.sub-text {
   margin-top: 10px;
 }
 .organization-wrapper .objective + .objective, .organization-wrapper .key-result + .key-result {
-  margin-left: 50px;
+  margin-left: 25px;
 }
-.organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"] {
+.organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
   margin-top: 25px;
 }
 .organization-wrapper .md-button {

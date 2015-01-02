@@ -35,10 +35,10 @@
 	</div> 
 	<!--Trees -->
 	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
-		<div layout="row" layout-align="center center" ng-repeat="treeRow in [1, 2, 3]">
-			<div class="objective" layout="row" layout-align="start" ng-repeat="node in [1, 2, 3, 4]">
+		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.formattedTrees">
+			<div class="objective" layout="row" layout-align="start" ng-repeat="tree in treeRow">
 				<div class="tree-node">
-					Tree #{{$index + 1}}
+					{{tree.Name}}
 				</div>
 				<div layout="column" layout-align="start end">
 		        	<md-button href class="md-raised md-primary" aria-label="edit">
