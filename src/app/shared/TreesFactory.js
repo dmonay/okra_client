@@ -17,6 +17,27 @@
                     userId: tree.userId,
                     username: tree.username
                 });
+            },
+            formatTrees: function (trees) {
+
+                var formattedTrees = [];
+                var currentArray = [];
+
+                _.forEach(trees, function (tree, index) {
+                    if ((index + 1) % 4 === 0) {
+                        currentArray.push(tree);
+                        formattedTrees.push(currentArray);
+                        currentArray = [];
+                    } else {
+                        currentArray.push(tree);
+                    }
+
+                    if (index + 1 === trees.length) {
+                        formattedTrees.push(currentArray);
+                    }
+                });
+
+                return formattedTrees;
             }
         };
 
