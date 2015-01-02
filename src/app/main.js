@@ -299,8 +299,10 @@
                 controller: 'AddTreeModalController',
                 controllerAs: 'modal'
             }).then(function (response) {
-                vm.trees.push(response);
-                vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
+                if (response) {
+                    vm.trees.push(response);
+                    vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
+                }
             });
         };
     }
