@@ -81,6 +81,13 @@ md-input-group.long > input {
 md-checkbox:focus .md-label {
 	border-color: transparent;
 }
+
+.horizontal-radio-group {
+
+	md-radio-button:first-child {
+		margin-top:15px;
+	}
+}
 //Global Styles ================================================================
 .error-msg {
 	color: $warningRed;

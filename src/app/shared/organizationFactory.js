@@ -3,12 +3,12 @@
 
     var app = angular.module('SharedFactories');
 
-    function OrganizationFactory($http, okraAPI) {
+    function OrganizationFactory($http, okraAPI, hardCoded) {
         var organizationAPI = {
             createOrganization: function (orgName) {
                 return $http.post(okraAPI.createOrg, {
                     organization: orgName,
-                    userId: "5491e2aebee23fc7375b789c"
+                    userId: hardCoded.userId
                 });
             },
             updateMission: function (orgName, mission) {

@@ -46,4 +46,10 @@
         getTreesInOrg: 'http://localhost:8080/get/trees/',
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/' //ORG/TREEID
     });
+
+    app.constant('hardCoded', {
+        userId: '5491e2aebee23fc7375b789c',
+        userName: 'john234',
+        org: 'someorg'
+    });
 })();

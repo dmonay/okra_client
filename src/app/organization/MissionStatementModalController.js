@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement) {
+    function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement, hardCoded) {
         var modal = this;
 
         modal.missionStatement = missionStatement;
@@ -12,9 +12,8 @@
         modal.saveMissionStatement = function () {
             modal.formSubmitted = true;
             if (modal.missionStatementForm.$valid) {
-                var hardCodedOrg = 'someorg';
                 modal.currentlySaving = true;
-                OrganizationFactory.updateMission(hardCodedOrg, modal.newMissionStatement)
+                OrganizationFactory.updateMission(hardCoded.org, modal.newMissionStatement)
                     .then(function (response) {
                         modal.currentlySaving = false;
                         modal.formSubmitted = false;
@@ -28,7 +27,9 @@
         };
     }
 
-    MissionStatementModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog', 'missionStatement'];
+    MissionStatementModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog', 'missionStatement',
+        'hardCoded'
+    ];
 
     app.controller('MissionStatementModalController', MissionStatementModalController);
 
