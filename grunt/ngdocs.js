@@ -7,7 +7,7 @@ module.exports = {
         title: "Okra Docs"
     },
     all: {
-        src: ['<%= meta.src %>/app/**/*.js'],
+        src: ['<%= meta.src %>/app/main.js'],
         title: 'Documentation'
     }
 };
