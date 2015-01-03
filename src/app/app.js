@@ -8,7 +8,6 @@
     angular.module('SharedServices', []);
     angular.module('SharedDirectives', []);
 
-
     var appDependencies = [
         'ui.router',
         'ngAnimate',

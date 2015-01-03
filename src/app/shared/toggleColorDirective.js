@@ -5,9 +5,9 @@
 
     /**
      * @ngdoc directive
-     * @name okToggleColor
-     *
+     * @name SharedDirectives.directive:ok-toggle-color
      * @restrict A
+     * @requires SharedDirectives.directive:ok-collapse
      *
      * @description
      * `ok-toggle-color`

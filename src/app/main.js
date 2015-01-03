@@ -8,7 +8,6 @@
     angular.module('SharedServices', []);
     angular.module('SharedDirectives', []);
 
-
     var appDependencies = [
         'ui.router',
         'ngAnimate',
@@ -450,14 +449,12 @@
 
     /**
      * @ngdoc directive
-     * @name okCollapse
-     *
+     * @name SharedDirectives.directive:ok-collapse
      * @restrict A
      *
      * @description
-     * `ok-collapse`
-     * @param {string=} linked-to Required by the directive to know which container/node it is linked to
-     * @param {binding=} all-linked-nodes Array required by the directive to keep track of all collapsable units
+     * @param {string} linked-to Required by the directive to know which container/node it is linked to
+     * @param {binding} all-linked-nodes Array required by the directive to keep track of all collapsable units
      *
      * @usage
      * <button ok-collapse linked-to="uniqueId" all-linked-nodes="['uniqueIdOne', 'uniqueIdTwo']"></button>
@@ -567,9 +564,9 @@
 
     /**
      * @ngdoc directive
-     * @name okToggleColor
-     *
+     * @name SharedDirectives.directive:ok-toggle-color
      * @restrict A
+     * @requires SharedDirectives.directive:ok-collapse
      *
      * @description
      * `ok-toggle-color`
