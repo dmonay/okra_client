@@ -37,6 +37,15 @@
     });
 
     //Constants
+    /**
+     * @ngdoc service
+     * @name okra.okraAPI
+     * @description
+     *
+     * # okraAPI
+     * An object containing all the endpoints for the restless backend.
+     *
+     */
     app.constant('okraAPI', {
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
