@@ -14,19 +14,23 @@
      */
 
     router.config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/404');
 
         $stateProvider
-        /**
-         * @ngdoc method
-         * @name login
-         * @description Route for logging in to the app.
-         * @methodOf uiRouter.states
-         * @param {string}
-         *     url /login
-         */
+            .state('404', {
+                url: '/404',
+                templateUrl: 'app/shared/404.tpl.html'
+            })
+            /**
+             * @ngdoc method
+             * @name login
+             * @description Route for logging in to the app.
+             * @methodOf uiRouter.states
+             * @param {string}
+             *     url /login
+             */
             .state('login', {
-                url: '/login',
+                url: '/',
                 templateUrl: 'app/login/login.tpl.html',
                 // controller: 'LoginController as vm'
             })
