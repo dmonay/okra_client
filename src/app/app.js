@@ -26,7 +26,10 @@
 
     //Manual Bootstrap
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['okra']);
+        if (document.body.className.indexOf('ng-app') === -1) {
+            angular.bootstrap(document, ['okra']);
+            document.body.className = document.body.className + ' ng-app';
+        }
     });
 
     /**
