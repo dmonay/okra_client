@@ -4,15 +4,18 @@ describe('AddOrganizationModalController', function () {
     var modalController;
     var element;
     var $httpBackend;
+    var hardCoded;
 
     beforeEach(function () {
         module('okra');
     });
 
     beforeEach(inject(function ($controller, $rootScope, _$http_, OrganizationFactory, _$httpBackend_,
-        $mdDialog, $compile) {
+        $mdDialog, $compile, _hardCoded_) {
         scope = $rootScope.$new();
         $httpBackend = _$httpBackend_;
+        //remove after AUTH update
+        hardCoded = _hardCoded_;
 
         //Mock out the modal
         modalController = $controller('AddOrganizationModalController', {

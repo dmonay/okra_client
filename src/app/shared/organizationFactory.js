@@ -4,6 +4,7 @@
     var app = angular.module('SharedFactories');
 
     function OrganizationFactory($http, okraAPI, hardCoded) {
+
         var organizationAPI = {
             createOrganization: function (orgName) {
                 return $http.post(okraAPI.createOrg, {
@@ -30,7 +31,7 @@
         return organizationAPI;
     }
 
-    OrganizationFactory.$inject = ['$http', 'okraAPI'];
+    OrganizationFactory.$inject = ['$http', 'okraAPI', 'hardCoded'];
 
     app.factory('OrganizationFactory', OrganizationFactory);
 
