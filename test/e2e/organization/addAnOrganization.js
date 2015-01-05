@@ -8,7 +8,7 @@ describe('Adding an Organization', function() {
     beforeEach(function() {
         ptor = protractor.getInstance(); //gets the instance of protractor
 
-        browser.get('http://localhost:3333/#/');
+        browser.get('http://localhost:3333/#/organization/someorg/trees');
 
         ptor.waitForAngular(); //waits for angular to bootstrap
 
