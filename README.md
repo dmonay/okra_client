@@ -30,7 +30,7 @@ The documentation can be viewed locally on your machine once cloned. Run:
 
 ```
 grunt docs
-open http://localhost:4444
+open http://localhost:4445
 ```
 
 To find out more about documenting with ngdocs, see:
@@ -100,6 +100,6 @@ End to end tests are written in jasmine and run with protractor, they are stored
 The following test commands are available:
 
 ```
-grunt e2e       # run e2e tests using localhost against a local browser
+grunt protractor       # run e2e tests using localhost against a local browser
 
 This list can also be seen by running `grunt test`.
