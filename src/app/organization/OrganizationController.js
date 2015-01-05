@@ -81,7 +81,7 @@
         vm.openAddTreeModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/organization/add-tree-modal.tpl.html',
+                templateUrl: 'app/tree/add-tree-modal.tpl.html',
                 controller: 'AddTreeModalController',
                 controllerAs: 'modal'
             }).then(function (response) {
