@@ -14,7 +14,7 @@
             })
             .state('organization/tree', {
                 url: '/organization/:organization/tree/:treeId',
-                templateUrl: 'app/organization/organization-tree.tpl.html',
+                templateUrl: 'app/tree/tree.tpl.html',
                 controller: 'OrganizationController as vm'
             })
             .state('organization', {
