@@ -53,7 +53,7 @@
             .state('organization/tree', {
                 url: '/organization/:organization/tree/:treeId',
                 templateUrl: 'app/tree/tree.tpl.html',
-                controller: 'OrganizationController as vm'
+                controller: 'TreeController as vm'
             })
             /**
              * @ngdoc method

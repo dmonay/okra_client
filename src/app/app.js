@@ -5,6 +5,7 @@
     angular.module('SharedFactories', []);
     angular.module('HeaderModule', []);
     angular.module('OrganizationModule', []);
+    angular.module('TreeModule', []);
     angular.module('SharedServices', []);
     angular.module('SharedDirectives', []);
 
@@ -19,6 +20,7 @@
         'SharedServices',
         'SharedDirectives',
         'OrganizationModule',
+        'TreeModule',
         'okra.routes'
     ];
 

@@ -5,6 +5,7 @@
     angular.module('SharedFactories', []);
     angular.module('HeaderModule', []);
     angular.module('OrganizationModule', []);
+    angular.module('TreeModule', []);
     angular.module('SharedServices', []);
     angular.module('SharedDirectives', []);
 
@@ -19,6 +20,7 @@
         'SharedServices',
         'SharedDirectives',
         'OrganizationModule',
+        'TreeModule',
         'okra.routes'
     ];
 
@@ -120,7 +122,7 @@
             .state('organization/tree', {
                 url: '/organization/:organization/tree/:treeId',
                 templateUrl: 'app/tree/tree.tpl.html',
-                controller: 'OrganizationController as vm'
+                controller: 'TreeController as vm'
             })
             /**
              * @ngdoc method
@@ -194,43 +196,6 @@
 
     var app = angular.module('OrganizationModule');
 
-    function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement, hardCoded) {
-        var modal = this;
-
-        modal.missionStatement = missionStatement;
-        modal.formSubmitted = false;
-
-        modal.saveMissionStatement = function () {
-            modal.formSubmitted = true;
-            if (modal.missionStatementForm.$valid) {
-                modal.currentlySaving = true;
-                OrganizationFactory.updateMission(hardCoded.org, modal.newMissionStatement)
-                    .then(function (response) {
-                        modal.currentlySaving = false;
-                        modal.formSubmitted = false;
-                        $mdDialog.hide(response.data);
-                    });
-            }
-        };
-
-        modal.closeModal = function () {
-            $mdDialog.hide();
-        };
-    }
-
-    MissionStatementModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog', 'missionStatement',
-        'hardCoded'
-    ];
-
-    app.controller('MissionStatementModalController', MissionStatementModalController);
-
-})();
-
-(function () {
-    'use strict';
-
-    var app = angular.module('OrganizationModule');
-
     function OrganizationController($scope, $mdDialog, TreeFactory) {
         var vm = this;
 
@@ -281,7 +246,7 @@
         vm.openMissionStatementModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/organization/mission-statement-modal.tpl.html',
+                templateUrl: 'app/shared/mission-statement-modal.tpl.html',
                 controller: 'MissionStatementModalController',
                 controllerAs: 'modal',
                 locals: {
@@ -367,6 +332,43 @@
     ];
 
     app.controller('OrganizationMembersModalController', OrganizationMembersModalController);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('OrganizationModule');
+
+    function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement, hardCoded) {
+        var modal = this;
+
+        modal.missionStatement = missionStatement;
+        modal.formSubmitted = false;
+
+        modal.saveMissionStatement = function () {
+            modal.formSubmitted = true;
+            if (modal.missionStatementForm.$valid) {
+                modal.currentlySaving = true;
+                OrganizationFactory.updateMission(hardCoded.org, modal.newMissionStatement)
+                    .then(function (response) {
+                        modal.currentlySaving = false;
+                        modal.formSubmitted = false;
+                        $mdDialog.hide(response.data);
+                    });
+            }
+        };
+
+        modal.closeModal = function () {
+            $mdDialog.hide();
+        };
+    }
+
+    MissionStatementModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog', 'missionStatement',
+        'hardCoded'
+    ];
+
+    app.controller('MissionStatementModalController', MissionStatementModalController);
 
 })();
 
@@ -753,9 +755,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     $templateCache.put("app/login/login.tpl.html",
         "<div class=\"green-overlay\" layout=\"column\" layout-align=\"center center\" flex=\"100\"><div layout=\"row\" layout-align=\"center center\"><h1>Login</h1></div><div class=\"well\" layout=\"row\" layout-align=\"center center\"><form name=\"vm.userLoginForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"center center\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"username\" ng-model=\"username\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.username.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Password</label><md-input required name=\"password\" ng-model=\"vm.password\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.password.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div class=\"md-actions-form\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised\" ng-click=\"optionsOpen = !optionsOpen;\" aria-label=\"log in\">More Options</md-button><md-button class=\"md-raised md-primary\" aria-label=\"log in\">Log in</md-button><md-progress-circular ng-if=\"vm.inProgress\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div></form></div><md-sidenav md-is-open=\"optionsOpen\" class=\"md-sidenav-right\"><md-toolbar><h1 class=\"md-toolbar-tools\">More Options</h1></md-toolbar><md-content class=\"md-padding\"><div layout=\"row\"><div flex=\"50\"><h5>Forgot Password?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Reset My Password</md-button></div></div><div layout=\"row\"><div flex=\"50\"><h5>Need An Account?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Create an Account</md-button></div></div></md-content><div layout=\"row\" layout-align=\"center end\"><md-button ng-click=\"optionsOpen = false;\" class=\"md-raised md-warn\">Dismiss</md-button></div></md-sidenav></div>"
     );
-    $templateCache.put("app/organization/mission-statement-modal.tpl.html",
-        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form class=\"form-horizontal\" name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
-    );
     $templateCache.put("app/organization/organization-members-modal.tpl.html",
         "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Role</label><md-input required name=\"newUserRole\" ng-model=\"modal.newUser.role\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
@@ -764,6 +763,9 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     );
     $templateCache.put("app/shared/404.tpl.html",
         "<div class=\"error-not-found\" layout=\"column\" align=\"center center\"><img src=\"assets/okra-404.jpg\"><h1>That's Strange...</h1><h2>Probably not what you were looking for right?</h2></div>"
+    );
+    $templateCache.put("app/shared/mission-statement-modal.tpl.html",
+        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form class=\"form-horizontal\" name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/tree/add-tree-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add A Tree</h3></md-subheader></div><md-content><form class=\"form-horizontal\" name=\"modal.addTreeForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Tree Name</label><md-input required name=\"newTreeName\" ng-model=\"modal.newTreeName\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.addTreeForm.newTreeName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.timeframe\"><md-radio-button value=\"monthly\" aria-label=\"Monthly\">Monthly</md-radio-button><md-radio-button value=\"yearly\" artial-label=\"Yearly\">Yearly</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addTree()\" aria-label=\"add\">Add</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
@@ -813,5 +815,50 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded'];
 
     app.controller('AddTreeModalController', AddTreeModalController);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('TreeModule');
+
+    function TreeController($scope, $mdDialog, TreeFactory) {
+        var vm = this;
+
+        vm.missionStatement =
+            'Monterey Bay Aquarium: The mission of the non-profit Monterey Bay Aquarium is to inspire conservation of the oceans.';
+
+        vm.orgMembers = [{
+            userName: "slacker",
+            userId: "fsdfdsfd8fds9f8ds8f7",
+            role: "boss"
+        }, {
+            userName: "pdiddy",
+            userId: "fsdfdsasdasd9f8ds8f7",
+            role: "denizen"
+        }];
+
+        vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+        vm.openMissionStatementModal = function ($event) {
+            $mdDialog.show({
+                targetEvent: $event,
+                templateUrl: 'app/shared/mission-statement-modal.tpl.html',
+                controller: 'MissionStatementModalController',
+                controllerAs: 'modal',
+                locals: {
+                    missionStatement: vm.missionStatement
+                }
+            }).then(function (response) {
+                vm.missionStatement = response;
+            });
+        };
+
+    }
+
+    TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];
+
+    app.controller('TreeController', TreeController);
 
 })();
