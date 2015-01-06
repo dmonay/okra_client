@@ -6,6 +6,8 @@
     function OrganizationController($scope, $mdDialog, TreeFactory, $state, hardCoded) {
         var vm = this;
 
+        vm.orgName = hardCoded.org;
+
         vm.missionStatement =
             'Monterey Bay Aquarium: The mission of the non-profit Monterey Bay Aquarium is to inspire conservation of the oceans.';
 
@@ -89,13 +91,6 @@
                     vm.trees.push(response);
                     vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
                 }
-            });
-        };
-
-        vm.viewTree = function (id) {
-            $state.go('organization/tree', {
-                treeId: id,
-                organization: hardCoded.org
             });
         };
     }
