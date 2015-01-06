@@ -12,7 +12,7 @@ module.exports = {
     },
     styles: {
         files: ['<%= meta.src %>/styles/sass/**/*.scss'],
-        tasks: ['sass:dev', 'autoprefixer:dev']
+        tasks: ['sass:dev', 'cssmin']
     },
     configFiles: {
         files: ['Gruntfile.js']
