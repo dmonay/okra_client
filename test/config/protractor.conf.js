@@ -8,9 +8,10 @@ exports.config = {
         '../e2e/**/*.js'
     ],
 
-    // suites: {
-    // test: 'test.js'
-    // },
+    suites: {
+        routes: '../e2e/routes.js',
+        organization: '../e2e/organization/*.js'
+    },
 
     // A base URL for your application under test
     baseUrl: 'http://localhost:3333',
