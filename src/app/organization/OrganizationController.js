@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog, TreeFactory) {
+    function OrganizationController($scope, $mdDialog, TreeFactory, $state, hardCoded) {
         var vm = this;
 
         vm.missionStatement =
@@ -91,9 +91,16 @@
                 }
             });
         };
+
+        vm.viewTree = function (id) {
+            $state.go('organization/tree', {
+                treeId: id,
+                organization: hardCoded.org
+            });
+        };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$state', 'hardCoded'];
 
     app.controller('OrganizationController', OrganizationController);
 
