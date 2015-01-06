@@ -84,6 +84,14 @@
         $urlRouterProvider.otherwise('/404');
 
         $stateProvider
+        /**
+         * @ngdoc method
+         * @name 404
+         * @description Route for a page not found error (404).
+         * @methodOf uiRouter.states
+         * @param {string}
+         *     url /404
+         */
             .state('404', {
                 url: '/404',
                 templateUrl: 'app/shared/404.tpl.html'
@@ -91,10 +99,10 @@
             /**
              * @ngdoc method
              * @name login
-             * @description Route for logging in to the app.
+             * @description Route for logging in to the app. (acts as the base url)
              * @methodOf uiRouter.states
              * @param {string}
-             *     url /login
+             *     url /
              */
             .state('login', {
                 url: '/',
