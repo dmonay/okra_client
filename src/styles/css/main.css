@@ -144,6 +144,7 @@ ul.list-horizontal li span.sub-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
