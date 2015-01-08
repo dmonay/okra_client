@@ -153,6 +153,15 @@ ul.list-horizontal li span.sub-text {
   text-overflow: ellipsis;
   text-decoration: none;
 }
+.organization-wrapper .tree-node md-input-group {
+  padding: 0px;
+  margin: 0px;
+}
+.organization-wrapper .tree-node md-input-group input.short {
+  width: 120px;
+  padding: 0px;
+  color: white;
+}
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
 .organization-wrapper .organization.active .tree-node {
