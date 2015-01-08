@@ -178,6 +178,19 @@ ul.list-horizontal {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-decoration: none;
+
+		md-input-group {
+			padding: 0px;
+			margin: 0px;
+
+			input.short {
+				width: 120px;
+				padding: 0px;
+				color: $white;
+			}
+		}
+
+
 	}
 
 	.objective.active, 
