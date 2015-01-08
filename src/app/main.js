@@ -708,6 +708,52 @@
 
     /**
      * @ngdoc directive
+     * @name SharedDirectives.directive:ok-edit-node
+     * @restrict A
+     *
+     * @description
+     * `ok-edit-node`
+     *
+     * Used for editing nodes should be placed in the same HTML hierachy of an element with the class
+     * of 'tree-node'.
+     * @usage
+     *
+     *  <div class="tree-node"></div>
+     *  <div layout="column" layout-align="start end" ok-edit-node>
+     *      <md-button href class="md-raised md-primary" aria-label="edit">
+     *          <i class="fa fa-pencil"></i>
+     *      </md-button>
+     *  </div>
+     */
+
+    function okEditNode() {
+        return {
+            restrict: 'A',
+            link: linkFunc
+        };
+
+        function linkFunc(scope, iElement, iAttrs) {
+
+
+            iElement.bind('click', function () {
+                console.log('hello');
+            });
+        }
+    }
+
+    // okEditNode.$inject = [];
+
+    app.directive('okEditNode', okEditNode);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('SharedDirectives');
+
+    /**
+     * @ngdoc directive
      * @name SharedDirectives.directive:ok-toggle-color
      * @restrict A
      * @requires SharedDirectives.directive:ok-collapse
@@ -807,7 +853,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.newUser.role\"><md-radio-button value=\"member\" aria-label=\"Member\">Member</md-radio-button><md-radio-button value=\"admin\" artial-label=\"Admin\">Admin</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/organization-trees-selection.tpl.html",
-        "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><i class=\"fa fa-tree\"></i><md-tooltip>Add a Tree</md-tooltip></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.formattedTrees\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow\"><a class=\"tree-node\" ui-sref=\"organization/tree({ treeId: tree.Id, organization: vm.orgName })\">{{tree.Name}}</a><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div></div></section>"
+        "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><i class=\"fa fa-tree\"></i><md-tooltip>Add a Tree</md-tooltip></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.formattedTrees\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow\"><a class=\"tree-node\" ui-sref=\"organization/tree({ treeId: tree.Id, organization: vm.orgName })\">{{tree.Name}}</a><div layout=\"column\" layout-align=\"start end\" ok-edit-node><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div></div></section>"
     );
     $templateCache.put("app/shared/404.tpl.html",
         "<div class=\"error-not-found\" layout=\"column\" align=\"center center\"><img src=\"assets/okra-404.jpg\"><h1>That's Strange...</h1><h2>Probably not what you were looking for right?</h2></div>"
