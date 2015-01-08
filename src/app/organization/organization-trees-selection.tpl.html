@@ -38,9 +38,15 @@
 		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.formattedTrees">
 			<div class="objective" layout="row" layout-align="start" ng-repeat="tree in treeRow">
 				<a class="tree-node" ui-sref="organization/tree({ treeId: tree.Id, organization: vm.orgName })">{{tree.Name}}</a>
-				<div layout="column" layout-align="start end" ok-edit-node>
-		        	<md-button href class="md-raised md-primary" aria-label="edit">
+				<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" node="tree">
+		        	<md-button ng-show="!tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
 						<i class="fa fa-pencil"></i>
+		        	</md-button>
+		        	<md-button ng-show="tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
+						<i class="fa fa-check"></i>
+		        	</md-button>
+		        	<md-button ng-show="tree.isEditMode" href class="md-raised md-warn fade-in" aria-label="edit">
+						<i class="fa fa-close"></i>
 		        	</md-button>
 		        </div>
 			</div>
