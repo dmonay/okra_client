@@ -153,6 +153,10 @@ ul.list-horizontal {
 		margin-right: 15px;
 	}
 }
+
+.fade-in.ng-enter, .fade-in.ng-leave {
+  @include fade-in();
+}
 // Organization ================================================================
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
 	@include collapse();

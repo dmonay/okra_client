@@ -121,6 +121,13 @@ ul.list-horizontal li span.sub-text {
   margin-right: 15px;
 }
 
+.fade-in.ng-enter, .fade-in.ng-leave {
+  -webkit-transition: opacity linear 0.5s;
+  -moz-transition: opacity linear 0.5s;
+  -ms-transition: opacity linear 0.5s;
+  transition: opacity linear 0.5s;
+}
+
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
   -webkit-transition: max-height ease-in-out 0.9s;
   -moz-transition: max-height ease-in-out 0.9s;

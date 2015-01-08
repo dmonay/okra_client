@@ -26,14 +26,29 @@
     function okEditNode() {
         return {
             restrict: 'A',
-            link: linkFunc
+            link: linkFunc,
+            scope: {
+                edit: '@',
+                cancel: '@',
+                node: '='
+            }
         };
 
         function linkFunc(scope, iElement, iAttrs) {
+            scope.node.isEditMode = false;
 
+            function switchToEdit() {
+                scope.node.isEditMode = !scope.node.isEditMode;
+                scope.$apply();
+            }
 
-            iElement.bind('click', function () {
-                console.log('hello');
+            _.each(iElement.children(), function (child) {
+                var childNode = angular.element(child);
+
+                if (childNode.find('i').hasClass(scope.cancel) || childNode.find('i').hasClass(
+                        scope.edit)) {
+                    childNode.bind('click', switchToEdit);
+                }
             });
         }
     }
