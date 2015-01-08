@@ -30,6 +30,7 @@
             scope: {
                 edit: '@',
                 cancel: '@',
+                save: '@',
                 node: '='
             }
         };
@@ -38,8 +39,14 @@
             scope.node.isEditMode = false;
 
             function switchToEdit() {
+                scope.node.newName = '';
                 scope.node.isEditMode = !scope.node.isEditMode;
                 scope.$apply();
+            }
+
+            function saveEdit() {
+                scope.node.Name = scope.node.newName;
+                switchToEdit();
             }
 
             _.each(iElement.children(), function (child) {
@@ -48,6 +55,10 @@
                 if (childNode.find('i').hasClass(scope.cancel) || childNode.find('i').hasClass(
                         scope.edit)) {
                     childNode.bind('click', switchToEdit);
+                }
+
+                if (childNode.find('i').hasClass(scope.save)) {
+                    childNode.bind('click', saveEdit);
                 }
             });
         }
