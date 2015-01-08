@@ -30,16 +30,10 @@
 			</div>
 			<div layout="row" layout-align="center center">
 		    	<div layout-align="start start">
-					<md-input-group class="long">
-					   <label>Role</label>
-					   <md-input required name="newUserRole" ng-model="modal.newUser.role" autocapitalize="off"></md-input>
-					</md-input-group>
-				</div>
-				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.newMemberForm.newUserRole.$invalid" ng-cloak>
-					<i class="fa fa-warning"></i>
-					<md-tooltip>
-						This field is required
-					</md-tooltip>
+					<md-radio-group class="horizontal-radio-group" layout="row" ng-model="modal.newUser.role">
+				      <md-radio-button value="member" aria-label="Member"> Member </md-radio-button>
+				      <md-radio-button value="admin" artial-label="Admin"> Admin </md-radio-button>
+				    </md-radio-group>
 				</div>
 			</div>
 		</form>

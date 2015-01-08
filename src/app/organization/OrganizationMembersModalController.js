@@ -34,7 +34,7 @@
     }
 
     OrganizationMembersModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog', 'members',
-        'MemberService'
+        'MemberService', 'hardCoded'
     ];
 
     app.controller('OrganizationMembersModalController', OrganizationMembersModalController);
