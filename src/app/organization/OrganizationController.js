@@ -52,20 +52,6 @@
 
         vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
 
-        vm.openMissionStatementModal = function ($event) {
-            $mdDialog.show({
-                targetEvent: $event,
-                templateUrl: 'app/shared/mission-statement-modal.tpl.html',
-                controller: 'MissionStatementModalController',
-                controllerAs: 'modal',
-                locals: {
-                    missionStatement: vm.missionStatement
-                }
-            }).then(function (response) {
-                vm.missionStatement = response;
-            });
-        };
-
         vm.openOrganizationMembersModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,

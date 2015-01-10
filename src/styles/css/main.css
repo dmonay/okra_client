@@ -162,6 +162,12 @@ ul.list-horizontal li span.sub-text {
   padding: 0px;
   color: white;
 }
+.organization-wrapper .tree-node:hover {
+  -webkit-box-shadow: 0px 2px 6px #888888;
+  -moz-box-shadow: 0px 2px 6px #888888;
+  -ms-box-shadow: 0px 2px 6px #888888;
+  box-shadow: 0px 2px 6px #888888;
+}
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
 .organization-wrapper .organization.active .tree-node {

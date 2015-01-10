@@ -14,7 +14,7 @@
         vm.openMissionStatementModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/shared/mission-statement-modal.tpl.html',
+                templateUrl: 'app/tree/mission-statement-modal.tpl.html',
                 controller: 'MissionStatementModalController',
                 controllerAs: 'modal',
                 locals: {
