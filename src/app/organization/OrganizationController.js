@@ -23,10 +23,9 @@
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
-        //Waiting to fix issue with backend get request CORS
-        // TreeFactory.getTrees('someorg').then(function (reponse) {
-        //     console.log(response);
-        // });
+        TreeFactory.getTrees('someorg').then(function (reponse) {
+            console.log(response);
+        });
 
         vm.trees = [{
             "Name": "Monthly 12/14",
