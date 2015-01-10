@@ -31,7 +31,7 @@
             "timeframe": "annual",
             "mission": "get money get paid",
             "objectives": [{
-                "name": "High Priority",
+                "Name": "High Priority",
                 "users": [
                     "Ayrab$$$", "ItsTejababy"
                 ],
@@ -39,7 +39,7 @@
                     "users": [
                         "Ayrab$$$", "ItsTejababy"
                     ],
-                    "name": "salary > 80K",
+                    "Name": "salary > 80K",
                     "body": "make sure you can pay the bills",
                     "completed": false,
                     "priority": "high",
@@ -47,7 +47,7 @@
                         "users": [
                             "ItsTejababy"
                         ],
-                        "name": "Some events up in here",
+                        "Name": "Some events up in here",
                         "body": "go to 5 meetups",
                         "completed": false,
                         "priority": "high"
@@ -55,14 +55,14 @@
                         "users": [
                             "ItsTejababy"
                         ],
-                        "name": "Make Bread",
+                        "Name": "Make Bread",
                         "body": "go to 5 meetups",
                         "completed": false,
                         "priority": "high"
                     }]
                 }]
             }, {
-                "name": "Get Stuff done before Christmas",
+                "Name": "Get Stuff done before Christmas",
                 "users": [
                     "ItsTejababy"
                 ],
@@ -70,7 +70,7 @@
                     "users": [
                         "Ayrab$$$", "ItsTejababy"
                     ],
-                    "name": "Networking",
+                    "Name": "Networking",
                     "body": "make sure you can pay the bills",
                     "completed": false,
                     "priority": "high",
@@ -78,7 +78,7 @@
                         "users": [
                             "Ayrab$$$"
                         ],
-                        "name": "Event 11/12/2015",
+                        "Name": "Event 11/12/2015",
                         "body": "go to 5 meetups",
                         "completed": false,
                         "priority": "high"
@@ -86,7 +86,7 @@
                         "users": [
                             "Ayrab$$$"
                         ],
-                        "name": "Do some cool stuff",
+                        "Name": "Do some cool stuff",
                         "body": "go to 5 meetups",
                         "completed": false,
                         "priority": "high"
@@ -95,7 +95,7 @@
                     "users": [
                         "Ayrab$$$", "ItsTejababy"
                     ],
-                    "name": "salary > 80K",
+                    "Name": "salary > 80K",
                     "body": "make sure you can pay the bills",
                     "completed": false,
                     "priority": "high",
@@ -103,7 +103,7 @@
                         "users": [
                             "Ayrab$$$"
                         ],
-                        "name": "Get Shit Done!",
+                        "Name": "Get Shit Done!",
                         "body": "go to 5 meetups",
                         "completed": false,
                         "priority": "high"

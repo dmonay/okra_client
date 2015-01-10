@@ -30,9 +30,9 @@
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.objectives">
 			<div class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
-				{{objective.name}}
+				{{objective.Name}}
 				<md-tooltip ng-if="objective.name.length > 14">
-					{{objective.name}}
+					{{objective.Name}}
 				</md-tooltip>
 			</div>
 			<div class="tree-node" layout-align="start" ng-show="objective.isEditMode">
@@ -69,9 +69,9 @@
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.key_results">
 			<div class="tree-node">
-				{{keyResult.name}}
+				{{keyResult.Name}}
 				<md-tooltip ng-if="keyResult.name.length > 14">
-					{{keyResult.name}}
+					{{keyResult.Name}}
 				</md-tooltip>
 			</div>
 			<div layout="column" layout-align="end end">
@@ -90,7 +90,7 @@
 		<div layout="row" layout-align="start center" ng-repeat="task in vm.currentKeyResult.tasks">
 			<md-checkbox ng-model="task.complete" aria-label></md-checkbox>
 			<div class="task-node">
-				{{task.name}}
+				{{task.Name}}
 			</div>
 		</div>
 	</div>
