@@ -837,7 +837,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form class=\"form-horizontal\" name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/tree/tree.tpl.html",
-        "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Tree #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in [1, 2, 3, 4]\"><div class=\"tree-node\" layout-align=\"start\">Objective {{$index + 1}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #1</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result\" layout=\"row\" layout-align=\"start\"><div class=\"tree-node\">Key Result #2</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"column\" class=\"collapse\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in [1, 2, 3, 4]\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">Task {{$index + 1}}</div></div></div></section>"
+        "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">{{vm.tree.orgName}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in vm.tree.objectives\"><div class=\"tree-node\" layout-align=\"start\">{{objective.name}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ng-click=\"vm.changeCurrentObjective(objective)\" ok-collapse ok-toggle-color linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\" ng-repeat=\"keyResult in vm.currentObjective.key_results\"><div class=\"tree-node\">{{keyResult.name}}</div><div layout=\"column\" layout-align=\"end end\"><md-button href class=\"md-raised\" ng-click=\"vm.changeCurrentKeyResult(keyResult)\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div></div><div layout=\"column\" class=\"collapse\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in vm.currentKeyResult.tasks\"><md-checkbox ng-model=\"vm.isChecked[$index]\" aria-label></md-checkbox><div class=\"task-node\">{{task.name}}</div></div></div></section>"
     );
 }]);
 
@@ -886,10 +886,119 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     function TreeController($scope, $mdDialog, TreeFactory) {
         var vm = this;
 
-        vm.missionStatement =
-            'Monterey Bay Aquarium: The mission of the non-profit Monterey Bay Aquarium is to inspire conservation of the oceans.';
-
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+
+        vm.tree = {
+            "orgName": "Creationary",
+            "members": [{
+                "userName": "Alap23",
+                "userId": "fsdfdsfd8fds9f8ds8f7",
+                "role": "employee"
+            }, {
+                "userName": "ItsTejababy",
+                "userId": "fsdfdsfd8fds9f8ds8f7",
+                "role": "employee"
+            }, {
+                "userName": "Ayrab",
+                "userId": "fsdfdsfd8fds9f8ds8f7",
+                "role": "admin"
+            }, {
+                "userName": "Swag",
+                "userId": "fsdfdsfd8fds9f8ds8f7",
+                "role": "admin"
+            }],
+            "active": true,
+            "timeframe": "annual",
+            "mission": "get money get paid",
+            "objectives": [{
+                "name": "High Priority",
+                "users": [
+                    "Ayrab$$$", "ItsTejababy"
+                ],
+                "key_results": [{
+                    "users": [
+                        "Ayrab$$$", "ItsTejababy"
+                    ],
+                    "name": "salary > 80K",
+                    "body": "make sure you can pay the bills",
+                    "status": "in_progress",
+                    "priority": "high",
+                    "tasks": [{
+                        "users": [
+                            "ItsTejababy"
+                        ],
+                        "name": "Some events up in here",
+                        "body": "go to 5 meetups",
+                        "status": "in_progress",
+                        "priority": "high"
+                    }, {
+                        "users": [
+                            "ItsTejababy"
+                        ],
+                        "name": "Make Bread",
+                        "body": "go to 5 meetups",
+                        "status": "in_progress",
+                        "priority": "high"
+                    }]
+                }]
+            }, {
+                "name": "Get Stuff done before Christmas",
+                "users": [
+                    "ItsTejababy"
+                ],
+                "key_results": [{
+                    "users": [
+                        "Ayrab$$$", "ItsTejababy"
+                    ],
+                    "name": "Networking",
+                    "body": "make sure you can pay the bills",
+                    "status": "in_progress",
+                    "priority": "high",
+                    "tasks": [{
+                        "users": [
+                            "Ayrab$$$"
+                        ],
+                        "name": "Event 11/12/2015",
+                        "body": "go to 5 meetups",
+                        "status": "in_progress",
+                        "priority": "high"
+                    }, {
+                        "users": [
+                            "Ayrab$$$"
+                        ],
+                        "name": "Do some cool stuff",
+                        "body": "go to 5 meetups",
+                        "status": "in_progress",
+                        "priority": "high"
+                    }]
+                }, {
+                    "users": [
+                        "Ayrab$$$", "ItsTejababy"
+                    ],
+                    "name": "salary > 80K",
+                    "body": "make sure you can pay the bills",
+                    "status": "in_progress",
+                    "priority": "high",
+                    "tasks": [{
+                        "users": [
+                            "Ayrab$$$"
+                        ],
+                        "name": "Get Shit Done!",
+                        "body": "go to 5 meetups",
+                        "status": "in_progress",
+                        "priority": "high"
+                    }]
+                }]
+            }]
+        };
+
+        vm.changeCurrentObjective = function (objective) {
+            vm.currentObjective = objective;
+        };
+
+        vm.changeCurrentKeyResult = function (keyResult) {
+            vm.currentKeyResult = keyResult;
+        };
 
         vm.openMissionStatementModal = function ($event) {
             $mdDialog.show({
@@ -898,10 +1007,10 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
                 controller: 'MissionStatementModalController',
                 controllerAs: 'modal',
                 locals: {
-                    missionStatement: vm.missionStatement
+                    missionStatement: vm.tree.mission
                 }
             }).then(function (response) {
-                vm.missionStatement = response;
+                vm.tree.mission = response;
             });
         };
 
