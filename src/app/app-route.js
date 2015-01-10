@@ -48,10 +48,10 @@
              * @description Route for interacting with / viewing a single tree.
              * @methodOf uiRouter.states
              * @param {string}
-             *     url /organization/:organization/tree/:treeId
+             *     url /organization/:organization/tree/:treeName
              */
             .state('organization/tree', {
-                url: '/organization/:organization/tree/:treeId',
+                url: '/organization/:organization/tree/:treeName',
                 templateUrl: 'app/tree/tree.tpl.html',
                 controller: 'TreeController as vm'
             })
