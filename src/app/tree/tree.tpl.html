@@ -1,7 +1,7 @@
 <section class="organization-wrapper">
 	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
 		<div class="tree-node">
-			Tree #1
+			{{vm.tree.orgName}}
 		</div>
 		<div layout="column" layout-align="start end">
 			<md-button href class="md-raised md-primary" 
@@ -25,20 +25,15 @@
 		    </md-button>
 	    </div>
 	</div> 
+
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
-
-		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in [1, 2, 3, 4]">
+		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.objectives">
 			<div class="tree-node" layout-align="start">
-				Objective {{$index + 1}}
+				{{objective.name}}
 			</div>
 			<div layout="column" layout-align="start end">
-	            <md-button href class="md-raised" 
-	            		ok-collapse
-	            		ok-toggle-color
-	            		linked-to="objectiveNode" 
-	            		all-linked-nodes="vm.linkedNodeIds"
-	            		aria-label="toggle">
+	            <md-button href class="md-raised" ng-click="vm.changeCurrentObjective(objective)" ok-collapse ok-toggle-color linked-to="objectiveNode"  all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
 	        	<md-button href class="md-raised md-primary" aria-label="edit">
@@ -46,44 +41,19 @@
 	        	</md-button>
 	        </div>
 		</div>
-
-
 	</div>
 
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
-		<div class="key-result" layout="row" layout-align="start">
+		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.key_results">
 			<div class="tree-node">
-				Key Result #1
+				{{keyResult.name}}
 			</div>
 			<div layout="column" layout-align="end end">
-				<md-button href class="md-raised" 
-						ok-collapse
-						ok-toggle-color 
-						linked-to="keyResultNode" 
-						all-linked-nodes="vm.linkedNodeIds"
-						aria-label="toggle">
+				<md-button href class="md-raised" ng-click="vm.changeCurrentKeyResult(keyResult)" ok-collapse ok-toggle-color linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
-	        	<md-button href class="md-raised md-primary" aria-label="edit">
-					<i class="fa fa-pencil"></i>
-	        	</md-button>
-	        </div>
-		</div>
-		<div class="key-result" layout="row" layout-align="start">
-			<div class="tree-node">
-				Key Result #2
-			</div>
-			<div layout="column" layout-align="start end">
-				<md-button href class="md-raised" 
-						ok-collapse
-						ok-toggle-color
-						linked-to="keyResultNode" 
-						all-linked-nodes="vm.linkedNodeIds"
-						aria-label="toggle">
-	            	<i class="fa fa-plus"></i>
-	        	</md-button>
-	        	<md-button href class="md-raised md-primary" aria-label="edit">
+	        	<md-button href class="md-raised md-primary fade-in" aria-label="edit">
 					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
@@ -91,16 +61,11 @@
 	</div>
 
 	<!-- Tasks -->
-	<div layout="column" class="collapse" 
-			ok-collapse 
-			linked-to="taskNode" 
-			layout-align="space-around center" 
-			all-linked-nodes="vm.linkedNodeIds"
-			id="taskNode">
-		<div layout="row" layout-align="start center" ng-repeat="task in [1, 2, 3, 4]">
+	<div layout="column" class="collapse" ok-collapse linked-to="taskNode" layout-align="space-around center" all-linked-nodes="vm.linkedNodeIds" id="taskNode">
+		<div layout="row" layout-align="start center" ng-repeat="task in vm.currentKeyResult.tasks">
 			<md-checkbox ng-model="vm.isChecked[$index]" aria-label></md-checkbox>
 			<div class="task-node">
-				Task {{$index + 1}}
+				{{task.name}}
 			</div>
 		</div>
 	</div>
