@@ -41,7 +41,7 @@
                     ],
                     "name": "salary > 80K",
                     "body": "make sure you can pay the bills",
-                    "status": "in_progress",
+                    "completed": false,
                     "priority": "high",
                     "tasks": [{
                         "users": [
@@ -49,7 +49,7 @@
                         ],
                         "name": "Some events up in here",
                         "body": "go to 5 meetups",
-                        "status": "in_progress",
+                        "completed": false,
                         "priority": "high"
                     }, {
                         "users": [
@@ -57,7 +57,7 @@
                         ],
                         "name": "Make Bread",
                         "body": "go to 5 meetups",
-                        "status": "in_progress",
+                        "completed": false,
                         "priority": "high"
                     }]
                 }]
@@ -72,7 +72,7 @@
                     ],
                     "name": "Networking",
                     "body": "make sure you can pay the bills",
-                    "status": "in_progress",
+                    "completed": false,
                     "priority": "high",
                     "tasks": [{
                         "users": [
@@ -80,7 +80,7 @@
                         ],
                         "name": "Event 11/12/2015",
                         "body": "go to 5 meetups",
-                        "status": "in_progress",
+                        "completed": false,
                         "priority": "high"
                     }, {
                         "users": [
@@ -88,7 +88,7 @@
                         ],
                         "name": "Do some cool stuff",
                         "body": "go to 5 meetups",
-                        "status": "in_progress",
+                        "completed": false,
                         "priority": "high"
                     }]
                 }, {
@@ -97,7 +97,7 @@
                     ],
                     "name": "salary > 80K",
                     "body": "make sure you can pay the bills",
-                    "status": "in_progress",
+                    "completed": false,
                     "priority": "high",
                     "tasks": [{
                         "users": [
@@ -105,7 +105,7 @@
                         ],
                         "name": "Get Shit Done!",
                         "body": "go to 5 meetups",
-                        "status": "in_progress",
+                        "completed": false,
                         "priority": "high"
                     }]
                 }]
