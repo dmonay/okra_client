@@ -10,7 +10,8 @@ exports.config = {
 
     suites: {
         routes: '../e2e/routes.js',
-        organization: '../e2e/organization/*.js'
+        organization: '../e2e/organization/*.js',
+        tree: '../e2e/tree/*.js'
     },
 
     // A base URL for your application under test
