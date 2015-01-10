@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Adding an Organization', function() {
+describe('Updating mission modal', function() {
     var ptor;
     var modal;
     var openModalBtn;
@@ -8,7 +8,7 @@ describe('Adding an Organization', function() {
     beforeEach(function() {
         ptor = protractor.getInstance(); //gets the instance of protractor
 
-        browser.get('http://localhost:3333/#/organization/someorg/trees');
+        browser.get('http://localhost:3333/#/organization/someorg/tree/someTree');
 
         ptor.waitForAngular(); //waits for angular to bootstrap
 
