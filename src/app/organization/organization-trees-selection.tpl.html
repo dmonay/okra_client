@@ -30,9 +30,14 @@
 	</div> 
 	<!--Trees -->
 	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
-		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.formattedTrees">
+		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.trees">
 			<div class="objective" layout="row" layout-align="start" ng-repeat="tree in treeRow">
-				<a class="tree-node" ng-hide="tree.isEditMode" ui-sref="organization/tree({ treeName: tree.Name, organization: vm.orgName })">{{tree.Name}}</a>
+				<a class="tree-node" ng-hide="tree.isEditMode" ui-sref="organization/tree({ treeName: tree.Name, organization: vm.orgName })">
+					{{tree.Name}}
+					<md-tooltip ng-if="tree.Name.length > 14">
+						{{tree.Name}}
+					</md-tooltip>
+				</a>
 				<div class="tree-node" ng-show="tree.isEditMode">
 					<md-input-group>
 					   <md-input required class="short" name="treeName" ng-model="tree.newName" autocapitalize="off"></md-input>
