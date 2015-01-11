@@ -31,7 +31,7 @@
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.objectives">
 			<div class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
 				{{objective.Name}}
-				<md-tooltip ng-if="objective.name.length > 14">
+				<md-tooltip ng-if="objective.Name.length > 14">
 					{{objective.Name}}
 				</md-tooltip>
 			</div>
@@ -39,12 +39,6 @@
 				<md-input-group>
 				   <md-input required class="short" name="treeName" ng-model="objective.newName" autocapitalize="off"></md-input>
 				</md-input-group>
-				<div class="error-msg ng-hide" layout-align="center end" ng-show="vm.formSubmitted && vm.objective.newName.$invalid" ng-cloak>
-					<i class="fa fa-warning"></i>
-					<md-tooltip>
-						This field is required
-					</md-tooltip>
-				</div>
 			</div>
 			<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="objective">
 	            <md-button href class="md-raised" ng-click="vm.changeCurrentObjective(objective)" ok-collapse ok-toggle-color linked-to="objectiveNode"  all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
@@ -68,18 +62,31 @@
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.key_results">
-			<div class="tree-node">
+			<div class="tree-node" ng-show="!keyResult.isEditMode">
 				{{keyResult.Name}}
-				<md-tooltip ng-if="keyResult.name.length > 14">
+				<md-tooltip ng-if="keyResult.Name.length > 14">
 					{{keyResult.Name}}
 				</md-tooltip>
 			</div>
-			<div layout="column" layout-align="end end">
+			<div class="tree-node" layout-align="start" ng-show="keyResult.isEditMode">
+				<md-input-group>
+				   <md-input required class="short" name="treeName" ng-model="keyResult.newName" autocapitalize="off"></md-input>
+				</md-input-group>
+			</div>
+			<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="keyResult">
 				<md-button href class="md-raised" ng-click="vm.changeCurrentKeyResult(keyResult)" ok-collapse ok-toggle-color linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
-	        	<md-button href class="md-raised md-primary fade-in" aria-label="edit">
+	        	<md-button href ng-show="!keyResult.isEditMode" class="md-raised md-primary fade-in" aria-label="edit">
 					<i class="fa fa-pencil"></i>
+	        	</md-button>
+	        </div>
+	        <div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="keyResult">
+	        	<md-button ng-show="keyResult.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
+					<i class="fa fa-check"></i>
+	        	</md-button>
+	        	<md-button ng-show="keyResult.isEditMode" href class="md-raised md-warn fade-in" aria-label="edit">
+					<i class="fa fa-close"></i>
 	        	</md-button>
 	        </div>
 		</div>
