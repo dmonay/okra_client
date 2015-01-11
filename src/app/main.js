@@ -781,7 +781,8 @@
                 var i;
                 for (i = 0; i < iconElements.length; i++) {
                     var currentElement = angular.element(iconElements[i]);
-                    if (currentElement.hasClass('fa') && !currentElement.hasClass('fa-pencil')) {
+                    if (currentElement.hasClass('fa') && currentElement.hasClass('fa-plus') ||
+                        currentElement.hasClass('fa-minus')) {
                         replaceClass('fa-minus', 'fa-plus', currentElement);
                         currentElement.parent().removeClass('md-warn');
                         currentElement.parent().removeClass('md-primary');
