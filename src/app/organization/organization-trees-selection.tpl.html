@@ -38,12 +38,6 @@
 					   <md-input required class="short" name="treeName" ng-model="tree.newName" autocapitalize="off"></md-input>
 					</md-input-group>
 				</div>
-				<div class="error-msg ng-hide" layout-align="center end" ng-show="vm.formSubmitted && tree.newName.$invalid" ng-cloak>
-					<i class="fa fa-warning"></i>
-					<md-tooltip>
-						This field is required
-					</md-tooltip>
-				</div>
 				<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="tree">
 		        	<md-button ng-show="!tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
 						<i class="fa fa-pencil"></i>
