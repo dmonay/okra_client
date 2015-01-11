@@ -51,7 +51,7 @@
              *     url /organization/:organization/tree/:treeName
              */
             .state('organization/tree', {
-                url: '/organization/:organization/tree/:treeName',
+                url: '/organization/:organization/tree/:treeIdEnc',
                 templateUrl: 'app/tree/tree.tpl.html',
                 controller: 'TreeController as vm'
             })

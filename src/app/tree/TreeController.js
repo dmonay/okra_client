@@ -3,114 +3,17 @@
 
     var app = angular.module('TreeModule');
 
-    function TreeController($scope, $mdDialog, TreeFactory) {
+    function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter) {
         var vm = this;
+
+        var treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
-        vm.tree = {
-            "orgName": "Creationary",
-            "members": [{
-                "userName": "Alap23",
-                "userId": "fsdfdsfd8fds9f8ds8f7",
-                "role": "employee"
-            }, {
-                "userName": "ItsTejababy",
-                "userId": "fsdfdsfd8fds9f8ds8f7",
-                "role": "employee"
-            }, {
-                "userName": "Ayrab",
-                "userId": "fsdfdsfd8fds9f8ds8f7",
-                "role": "admin"
-            }, {
-                "userName": "Swag",
-                "userId": "fsdfdsfd8fds9f8ds8f7",
-                "role": "admin"
-            }],
-            "active": true,
-            "timeframe": "annual",
-            "mission": "get money get paid",
-            "objectives": [{
-                "Name": "High Priority",
-                "users": [
-                    "Ayrab$$$", "ItsTejababy"
-                ],
-                "key_results": [{
-                    "users": [
-                        "Ayrab$$$", "ItsTejababy"
-                    ],
-                    "Name": "salary > 80K",
-                    "body": "make sure you can pay the bills",
-                    "completed": false,
-                    "priority": "high",
-                    "tasks": [{
-                        "users": [
-                            "ItsTejababy"
-                        ],
-                        "Name": "Some events up in here",
-                        "body": "go to 5 meetups",
-                        "completed": false,
-                        "priority": "high"
-                    }, {
-                        "users": [
-                            "ItsTejababy"
-                        ],
-                        "Name": "Make Bread",
-                        "body": "go to 5 meetups",
-                        "completed": false,
-                        "priority": "high"
-                    }]
-                }]
-            }, {
-                "Name": "Get Stuff done before Christmas",
-                "users": [
-                    "ItsTejababy"
-                ],
-                "key_results": [{
-                    "users": [
-                        "Ayrab$$$", "ItsTejababy"
-                    ],
-                    "Name": "Networking",
-                    "body": "make sure you can pay the bills",
-                    "completed": false,
-                    "priority": "high",
-                    "tasks": [{
-                        "users": [
-                            "Ayrab$$$"
-                        ],
-                        "Name": "Event 11/12/2015",
-                        "body": "go to 5 meetups",
-                        "completed": false,
-                        "priority": "high"
-                    }, {
-                        "users": [
-                            "Ayrab$$$"
-                        ],
-                        "Name": "Do some cool stuff",
-                        "body": "go to 5 meetups",
-                        "completed": false,
-                        "priority": "high"
-                    }]
-                }, {
-                    "users": [
-                        "Ayrab$$$", "ItsTejababy"
-                    ],
-                    "Name": "salary > 80K",
-                    "body": "make sure you can pay the bills",
-                    "completed": false,
-                    "priority": "high",
-                    "tasks": [{
-                        "users": [
-                            "Ayrab$$$"
-                        ],
-                        "Name": "Get Shit Done!",
-                        "body": "go to 5 meetups",
-                        "completed": false,
-                        "priority": "high"
-                    }]
-                }]
-            }]
-        };
+        TreeFactory.getSingleTree($stateParams.organization, treeId)
+            .then(function (response) {
+                vm.tree = response.data;
+            });
 
         vm.changeCurrentObjective = function (objective) {
             vm.currentObjective = objective;
@@ -136,7 +39,7 @@
 
     }
 
-    TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory'];
+    TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', '$filter'];
 
     app.controller('TreeController', TreeController);
 

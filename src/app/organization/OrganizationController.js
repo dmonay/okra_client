@@ -8,9 +8,6 @@
 
         vm.orgName = hardCoded.org;
 
-        vm.missionStatement =
-            'Monterey Bay Aquarium: The mission of the non-profit Monterey Bay Aquarium is to inspire conservation of the oceans.';
-
         vm.orgMembers = [{
             userName: "slacker",
             userId: "fsdfdsfd8fds9f8ds8f7",
@@ -23,9 +20,10 @@
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
-        TreeFactory.getTrees('someorg').then(function (response) {
-            vm.trees = TreeFactory.formatTrees(response.data);
-        });
+        TreeFactory.getTrees('someorg')
+            .then(function (response) {
+                vm.trees = TreeFactory.formatTrees(response.data);
+            });
 
         vm.openOrganizationMembersModal = function ($event) {
             $mdDialog.show({
