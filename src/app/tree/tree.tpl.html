@@ -1,7 +1,7 @@
 <section class="organization-wrapper">
 	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
 		<div class="tree-node">
-			{{vm.tree.orgName}}
+			{{vm.tree.TreeName}}
 		</div>
 		<div layout="column" layout-align="start end">
 			<md-button href class="md-raised md-primary" 
@@ -28,7 +28,7 @@
 
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
-		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.objectives">
+		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives">
 			<div class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
 				{{objective.Name}}
 				<md-tooltip ng-if="objective.Name.length > 14">

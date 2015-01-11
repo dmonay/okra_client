@@ -32,6 +32,22 @@
             },
             /**
              * @ngdoc method
+             * @name getSingleTree
+             * @description Gets a single tree object.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {string}
+             *     OrgName The name of the organzation currently active/authorized.
+             * @param {string}
+             *     TreeId The Id of the tree requested.
+             *
+             * @returns {object} An object containing objectives, key results and tasks assigned to the tree.
+             */
+            getSingleTree: function (orgName, treeId) {
+                var url = okraAPI.getSingleTreeInOrg + orgName + '/' + treeId;
+                return $http.get(url);
+            },
+            /**
+             * @ngdoc method
              * @name createTree
              * @description Creates a new tree.
              * @methodOf SharedFactories.TreeFactory

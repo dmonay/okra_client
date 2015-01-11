@@ -8,6 +8,7 @@
     angular.module('TreeModule', []);
     angular.module('SharedServices', []);
     angular.module('SharedDirectives', []);
+    angular.module('SharedFilters', []);
 
     var appDependencies = [
         'ui.router',
@@ -19,6 +20,7 @@
         'SharedFactories',
         'SharedServices',
         'SharedDirectives',
+        'SharedFilters',
         'OrganizationModule',
         'TreeModule',
         'okra.routes'
