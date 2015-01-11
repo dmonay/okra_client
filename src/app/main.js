@@ -608,6 +608,7 @@
         };
 
         function linkFunc(scope, iElement, iAttrs) {
+            var saveButton;
             scope.node.isEditMode = false;
 
             function switchToEdit() {
@@ -617,8 +618,10 @@
             }
 
             function saveEdit() {
-                scope.node.Name = scope.node.newName;
-                switchToEdit();
+                if (scope.node.newName.length > 0) {
+                    scope.node.Name = scope.node.newName;
+                    switchToEdit();
+                }
             }
 
             _.each(iElement.children(), function (child) {
@@ -631,8 +634,23 @@
 
                 if (childNode.find('i').hasClass(scope.save)) {
                     childNode.bind('click', saveEdit);
+                    childNode.attr('disabled', 'disabled');
+                    saveButton = childNode;
                 }
             });
+
+            scope.$watch(
+                function () {
+                    return scope.node.newName;
+                },
+                function (newName) {
+                    if (newName !== undefined && newName.length > 0 && saveButton) {
+                        saveButton.removeAttr('disabled');
+                    } else if (saveButton) {
+                        saveButton.attr('disabled', 'disabled');
+                    }
+                }
+            );
         }
     }
 
