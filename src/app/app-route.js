@@ -45,10 +45,10 @@
             /**
              * @ngdoc method
              * @name organization/tree
-             * @description Route for interacting with / viewing a single tree.
+             * @description Route for interacting with / viewing a single tree. Takes an AES encoded ID.
              * @methodOf uiRouter.states
              * @param {string}
-             *     url /organization/:organization/tree/:treeName
+             *     url /organization/:organization/tree/:treeIdEnc
              */
             .state('organization/tree', {
                 url: '/organization/:organization/tree/:treeIdEnc',
@@ -67,6 +67,19 @@
                 url: '/organization/:organization/trees',
                 templateUrl: 'app/organization/organization-trees-selection.tpl.html',
                 controller: 'OrganizationController as vm'
+            })
+            /**
+             * @ngdoc method
+             * @name organizations
+             * @description Route for interacting with / viewing all the organizations that belong to that user.
+             * @methodOf uiRouter.states
+             * @param {string}
+             *     url /organizations
+             */
+            .state('organizations', {
+                url: '/organizations',
+                templateUrl: 'app/organization/organization-selection.tpl.html',
+                controller: 'OrganizationSelectionController as vm'
             });
     });
 })();
