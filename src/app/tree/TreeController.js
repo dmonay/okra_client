@@ -12,7 +12,7 @@
 
         TreeFactory.getSingleTree($stateParams.organization, treeId)
             .then(function (response) {
-                vm.tree = response.data;
+                vm.tree = response.data.Success;
             });
 
         vm.changeCurrentObjective = function (objective) {

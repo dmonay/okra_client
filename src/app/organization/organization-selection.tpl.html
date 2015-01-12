@@ -1,10 +1,21 @@
-<md-list layout="row">
-  <md-item ng-repeat="item in [1, 2, 3]">
-    <md-item-content>
-      <md-button href class="md-raised md-accent" aria-label="Organization {{$index+1}}">Organization {{$index+1}}</md-button>
-    </md-item-content>
-  </md-item>
-  <md-item>
-    <md-button ng-click="vm.addOrganization()" class="md-raised md-primary" aria-label="add organization"><i class="fa fa-plus"></i></md-button>
-  </md-item>
-</md-list>
+<section class="organization-wrapper">
+	<div layout-align="center center" layout="row">
+		<h1>Organizations</h1>
+	</div>
+	<div class="centered-row" layout="row" layout-align="start center" ng-repeat="organizationRow in vm.organizations">
+		<div class="objective" layout="row" layout-align="start" ng-repeat="org in organizationRow">
+			<a class="tree-node">
+				{{org}}
+				<md-tooltip ng-if="org.length > 14">
+					{{org}}
+				</md-tooltip>
+			</a>
+		</div>
+	</div>
+	<div layout="row" layout-align="center center" ng-if="!vm.organizations || vm.organizations.length < 0" class="ng-hide">
+		New to Okra? That's alright. Click here to create an organization.
+		<md-button class="md-raised md-primary" ng-click="modal.closeModal()" aria-label="cancel">
+			Create an Organization <i class="fa fa-plus"></i>
+		</md-button>
+	</div>
+</section>
