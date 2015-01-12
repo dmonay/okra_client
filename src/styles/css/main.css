@@ -152,6 +152,7 @@ ul.list-horizontal li span.sub-text {
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
+  text-align: center;
 }
 .organization-wrapper .tree-node md-input-group {
   padding: 0px;
@@ -184,7 +185,7 @@ ul.list-horizontal li span.sub-text {
   min-width: 100px;
   margin-top: 10px;
 }
-.organization-wrapper .objective + .objective, .organization-wrapper .key-result + .key-result {
+.organization-wrapper .objective + .objective, .organization-wrapper .key-result + .key-result, .organization-wrapper .organization + .organization {
   margin-left: 25px;
 }
 .organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
