@@ -22,7 +22,7 @@
 
         TreeFactory.getTrees('someorg')
             .then(function (response) {
-                vm.trees = TreeFactory.formatTrees(response.data);
+                vm.trees = TreeFactory.formatTrees(response.data.Success);
             });
 
         vm.openOrganizationMembersModal = function ($event) {

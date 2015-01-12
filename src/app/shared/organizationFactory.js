@@ -65,6 +65,19 @@
                     updateTree: false,
                     members: members
                 });
+            },
+            /**
+             * @ngdoc method
+             * @name getOrganizations
+             * @description Updates the members that are part of the organization.
+             * @methodOf SharedFactories.OrganizationFactory
+             * @param {string}
+             *     userId Id of the user that is tied to the organizations
+             * @returns {Object} An HTTP promise.
+             */
+            getOrganizations: function (userId) {
+                var url = okraAPI.getOrganizations + userId;
+                return $http.get(url);
             }
         };
 

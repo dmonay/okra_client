@@ -57,13 +57,14 @@
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
         updateMembers: 'http://localhost:8080/update/members/',
+        getOrganizations: 'http://localhost:8080/get/orgs/',
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
-        getSingleTreeInOrg: 'http://localhost:8080/get/trees/' //ORG/TREEID
+        getSingleTreeInOrg: 'http://localhost:8080/get/trees/'
     });
 
     app.constant('hardCoded', {
-        userId: '5491e2aebee23fc7375b789c',
+        userId: '548e3feebee23fc7375b788b',
         userName: 'john234',
         org: 'someorg'
     });

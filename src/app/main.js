@@ -57,13 +57,14 @@
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
         updateMembers: 'http://localhost:8080/update/members/',
+        getOrganizations: 'http://localhost:8080/get/orgs/',
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
-        getSingleTreeInOrg: 'http://localhost:8080/get/trees/' //ORG/TREEID
+        getSingleTreeInOrg: 'http://localhost:8080/get/trees/'
     });
 
     app.constant('hardCoded', {
-        userId: '5491e2aebee23fc7375b789c',
+        userId: '548e3feebee23fc7375b788b',
         userName: 'john234',
         org: 'someorg'
     });
@@ -265,7 +266,7 @@
 
         TreeFactory.getTrees('someorg')
             .then(function (response) {
-                vm.trees = TreeFactory.formatTrees(response.data);
+                vm.trees = TreeFactory.formatTrees(response.data.Success);
             });
 
         vm.openOrganizationMembersModal = function ($event) {
@@ -351,8 +352,13 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationSelectionController($scope, $mdDialog, TreeFactory, hardCoded) {
+    function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, hardCoded, TreeFactory) {
         var vm = this;
+
+        OrganizationFactory.getOrganizations(hardCoded.userId)
+            .then(function (response) {
+                vm.organizations = TreeFactory.formatTrees(response.data.Success);
+            });
 
         vm.addOrganization = function ($event) {
             $mdDialog.show({
@@ -364,7 +370,9 @@
         };
     }
 
-    OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'TreeFactory', 'hardCoded'];
+    OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'OrganizationFactory', 'hardCoded',
+        'TreeFactory'
+    ];
 
     app.controller('OrganizationSelectionController', OrganizationSelectionController);
 
@@ -823,6 +831,19 @@
                     updateTree: false,
                     members: members
                 });
+            },
+            /**
+             * @ngdoc method
+             * @name getOrganizations
+             * @description Updates the members that are part of the organization.
+             * @methodOf SharedFactories.OrganizationFactory
+             * @param {string}
+             *     userId Id of the user that is tied to the organizations
+             * @returns {Object} An HTTP promise.
+             */
+            getOrganizations: function (userId) {
+                var url = okraAPI.getOrganizations + userId;
+                return $http.get(url);
             }
         };
 
@@ -942,7 +963,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.newUser.role\"><md-radio-button value=\"member\" aria-label=\"Member\">Member</md-radio-button><md-radio-button value=\"admin\" artial-label=\"Admin\">Admin</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/organization-selection.tpl.html",
-        "<md-list layout=\"row\"><md-item ng-repeat=\"item in [1, 2, 3]\"><md-item-content><md-button href class=\"md-raised md-accent\" aria-label=\"Organization {{$index+1}}\">Organization {{$index+1}}</md-button></md-item-content></md-item><md-item><md-button ng-click=\"vm.addOrganization()\" class=\"md-raised md-primary\" aria-label=\"add organization\"><i class=\"fa fa-plus\"></i></md-button></md-item></md-list>"
+        "<section class=\"organization-wrapper\"><div layout-align=\"center center\" layout=\"row\"><h1>Organizations</h1></div><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"organizationRow in vm.organizations\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"org in organizationRow\"><a class=\"tree-node\">{{org}}<md-tooltip ng-if=\"org.length > 14\">{{org}}</md-tooltip></a></div></div><div layout=\"row\" layout-align=\"center center\" ng-if=\"!vm.organizations || vm.organizations.length < 0\" class=\"ng-hide\">New to Okra? That's alright. Click here to create an organization.<md-button class=\"md-raised md-primary\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Create an Organization <i class=\"fa fa-plus\"></i></md-button></div></section>"
     );
     $templateCache.put("app/organization/organization-trees-selection.tpl.html",
         "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">Organization #1</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><i class=\"fa fa-tree\"></i><md-tooltip>Add a Tree</md-tooltip></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.trees\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow\"><a class=\"tree-node\" ng-hide=\"tree.isEditMode\" ui-sref=\"organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.orgName })\">{{tree.Name}}<md-tooltip ng-if=\"tree.Name.length > 14\">{{tree.Name}}</md-tooltip></a><div class=\"tree-node\" ng-show=\"tree.isEditMode\"><md-input-group><md-input required class=\"short\" name=\"treeName\" ng-model=\"tree.newName\" autocapitalize=\"off\"></md-input></md-input-group></div><div layout=\"column\" layout-align=\"start end\" ok-edit-node edit=\"fa-pencil\" cancel=\"fa-close\" save=\"fa-check\" node=\"tree\"><md-button ng-show=\"!tree.isEditMode\" href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button><md-button ng-show=\"tree.isEditMode\" href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-check\"></i></md-button><md-button ng-show=\"tree.isEditMode\" href class=\"md-raised md-warn fade-in\" aria-label=\"edit\"><i class=\"fa fa-close\"></i></md-button></div></div></div></div></section>"
@@ -1009,7 +1030,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
 
         TreeFactory.getSingleTree($stateParams.organization, treeId)
             .then(function (response) {
-                vm.tree = response.data;
+                vm.tree = response.data.Success;
             });
 
         vm.changeCurrentObjective = function (objective) {
