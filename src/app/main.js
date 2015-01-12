@@ -161,6 +161,22 @@
 
     var app = angular.module('HeaderModule');
 
+    function HeaderController($scope, $mdDialog) {
+        var vm = this;
+
+    }
+
+    HeaderController.$inject = ['$scope', '$mdDialog'];
+
+    app.controller('HeaderController', HeaderController);
+
+})();
+
+(function () {
+    'use strict';
+
+    var app = angular.module('HeaderModule');
+
     function AddOrganizationModalController($scope, OrganizationFactory, $mdDialog) {
         var modal = this;
 
@@ -168,7 +184,7 @@
             modal.formSubmitted = true;
             if (modal.organizationForm.$valid) {
                 OrganizationFactory.createOrganization(name).then(function (response) {
-                    console.log(response);
+                    $mdDialog.hide(response);
                 });
             }
         };
@@ -180,22 +196,6 @@
     AddOrganizationModalController.$inject = ['$scope', 'OrganizationFactory', '$mdDialog'];
 
     app.controller('AddOrganizationModalController', AddOrganizationModalController);
-
-})();
-
-(function () {
-    'use strict';
-
-    var app = angular.module('HeaderModule');
-
-    function HeaderController($scope, $mdDialog) {
-        var vm = this;
-
-    }
-
-    HeaderController.$inject = ['$scope', '$mdDialog'];
-
-    app.controller('HeaderController', HeaderController);
 
 })();
 
@@ -355,19 +355,31 @@
     function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, hardCoded, TreeFactory) {
         var vm = this;
 
-        OrganizationFactory.getOrganizations(hardCoded.userId)
-            .then(function (response) {
-                vm.organizations = TreeFactory.formatTrees(response.data.Success);
-            });
+        function getOrganizations() {
+            OrganizationFactory.getOrganizations(hardCoded.userId)
+                .then(function (response) {
+                    vm.organizations = TreeFactory.formatTrees(response.data.Success);
+                });
+        }
 
         vm.addOrganization = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/header/add-organization-modal.tpl.html',
+                templateUrl: 'app/organization/add-organization-modal.tpl.html',
                 controller: 'AddOrganizationModalController',
                 controllerAs: 'modal'
+            }).then(function (response) {
+                if (response) {
+                    getOrganizations();
+                }
             });
         };
+
+        function init() {
+            getOrganizations();
+        }
+
+        init();
     }
 
     OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'OrganizationFactory', 'hardCoded',
@@ -377,7 +389,6 @@
     app.controller('OrganizationSelectionController', OrganizationSelectionController);
 
 })();
-
 (function () {
     'use strict';
 
@@ -950,11 +961,11 @@
 })();
 
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
-    $templateCache.put("app/header/add-organization-modal.tpl.html",
-        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Organization Name</label><md-input required name=\"organizationName\" ng-model=\"modal.organizationName\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.organizationForm.organizationName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
-    );
     $templateCache.put("app/login/login.tpl.html",
         "<div class=\"green-overlay\" layout=\"column\" layout-align=\"center center\" flex=\"100\"><div layout=\"row\" layout-align=\"center center\"><h1>Login</h1></div><div class=\"well\" layout=\"row\" layout-align=\"center center\"><form name=\"vm.userLoginForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"center center\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"username\" ng-model=\"username\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.username.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Password</label><md-input required name=\"password\" ng-model=\"vm.password\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.password.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div class=\"md-actions-form\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised\" ng-click=\"optionsOpen = !optionsOpen;\" aria-label=\"log in\">More Options</md-button><md-button class=\"md-raised md-primary\" aria-label=\"log in\">Log in</md-button><md-progress-circular ng-if=\"vm.inProgress\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div></form></div><md-sidenav md-is-open=\"optionsOpen\" class=\"md-sidenav-right\"><md-toolbar><h1 class=\"md-toolbar-tools\">More Options</h1></md-toolbar><md-content class=\"md-padding\"><div layout=\"row\"><div flex=\"50\"><h5>Forgot Password?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Reset My Password</md-button></div></div><div layout=\"row\"><div flex=\"50\"><h5>Need An Account?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Create an Account</md-button></div></div></md-content><div layout=\"row\" layout-align=\"center end\"><md-button ng-click=\"optionsOpen = false;\" class=\"md-raised md-warn\">Dismiss</md-button></div></md-sidenav></div>"
+    );
+    $templateCache.put("app/organization/add-organization-modal.tpl.html",
+        "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Organization Name</label><md-input required name=\"organizationName\" ng-model=\"modal.organizationName\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.organizationForm.organizationName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/add-tree-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add A Tree</h3></md-subheader></div><md-content><form class=\"form-horizontal\" name=\"modal.addTreeForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Tree Name</label><md-input required name=\"newTreeName\" ng-model=\"modal.newTreeName\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.addTreeForm.newTreeName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.timeframe\"><md-radio-button value=\"monthly\" aria-label=\"Monthly\">Monthly</md-radio-button><md-radio-button value=\"yearly\" artial-label=\"Yearly\">Yearly</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addTree()\" aria-label=\"add\">Add</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
