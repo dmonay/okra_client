@@ -178,6 +178,7 @@ ul.list-horizontal {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-decoration: none;
+		text-align: center;
 
 		md-input-group {
 			padding: 0px;
@@ -213,7 +214,7 @@ ul.list-horizontal {
 		margin-top: 10px;
 	}
 
-	.objective + .objective, .key-result + .key-result {
+	.objective + .objective, .key-result + .key-result, .organization + .organization {
 		margin-left: 25px;
 	}
 

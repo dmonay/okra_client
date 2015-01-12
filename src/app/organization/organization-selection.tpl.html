@@ -3,12 +3,17 @@
 		<h1>Organizations</h1>
 	</div>
 	<div class="centered-row" layout="row" layout-align="start center" ng-repeat="organizationRow in vm.organizations">
-		<div class="objective" layout="row" layout-align="start" ng-repeat="org in organizationRow">
+		<div class="organization" layout="row" layout-align="start center" ng-repeat="org in organizationRow">
 			<a href class="tree-node" ui-sref="organization({ organization: org })">
 				{{org}}
 				<md-tooltip ng-if="org.length > 14">
 					{{org}}
 				</md-tooltip>
+			</a>
+		</div>
+		<div class="organization active" layout="row" layout-align="start center" ng-if="organizationRow.length < 4">
+			<a href class="tree-node" ng-click="vm.addOrganization()" aria-label="cancel">
+				Add <i class="fa fa-plus"></i>
 			</a>
 		</div>
 	</div>
