@@ -57,6 +57,11 @@
 	        	</md-button>
 	        </div>
 		</div>
+		<div class="objective" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
+			<div class="tree-node" layout-align="start">
+				Add Objective <i class="fa fa-plus"></i>
+			</div>
+		</div>
 	</div>
 
 	<!-- key results -->
@@ -89,6 +94,11 @@
 					<i class="fa fa-close"></i>
 	        	</md-button>
 	        </div>
+		</div>
+		<div class="key-result" layout="row" layout-align="start" ng-if="vm.tree.currentObjective.key_results.length !== 4">
+			<div class="tree-node" layout-align="start">
+				Add Key Result <i class="fa fa-plus"></i>
+			</div>
 		</div>
 	</div>
 
