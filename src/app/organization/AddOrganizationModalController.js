@@ -10,7 +10,7 @@
             modal.formSubmitted = true;
             if (modal.organizationForm.$valid) {
                 OrganizationFactory.createOrganization(name).then(function (response) {
-                    console.log(response);
+                    $mdDialog.hide(response);
                 });
             }
         };

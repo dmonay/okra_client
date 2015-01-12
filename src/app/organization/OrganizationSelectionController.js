@@ -6,19 +6,31 @@
     function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, hardCoded, TreeFactory) {
         var vm = this;
 
-        OrganizationFactory.getOrganizations(hardCoded.userId)
-            .then(function (response) {
-                vm.organizations = TreeFactory.formatTrees(response.data.Success);
-            });
+        function getOrganizations() {
+            OrganizationFactory.getOrganizations(hardCoded.userId)
+                .then(function (response) {
+                    vm.organizations = TreeFactory.formatTrees(response.data.Success);
+                });
+        }
 
         vm.addOrganization = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/header/add-organization-modal.tpl.html',
+                templateUrl: 'app/organization/add-organization-modal.tpl.html',
                 controller: 'AddOrganizationModalController',
                 controllerAs: 'modal'
+            }).then(function (response) {
+                if (response) {
+                    getOrganizations();
+                }
             });
         };
+
+        function init() {
+            getOrganizations();
+        }
+
+        init();
     }
 
     OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'OrganizationFactory', 'hardCoded',
