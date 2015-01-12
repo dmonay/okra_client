@@ -568,6 +568,19 @@
 
     var app = angular.module('SharedFilters');
 
+    /**
+     * @ngdoc filter
+     * @name SharedFilters.okDecrypt
+     * @description
+     *
+     * # Routes
+     * A filter used to decrypt a string with AES encryption.
+     *
+     * @usage
+     *
+     * <div> {{name | okDecrypt}} </div>
+     */
+
     app.filter('okDecrypt', function () {
 
         return function (encryptedString) {
@@ -676,6 +689,19 @@
 
     var app = angular.module('SharedFilters');
 
+    /**
+     * @ngdoc filter
+     * @name SharedFilters.okEncrypt
+     * @description
+     *
+     * # Routes
+     * A filter used to encrypt a string with AES encryption.
+     *
+     * @usage
+     *
+     * <div> {{name | okEncrypt}} </div>
+     */
+
     function okEncrypt() {
 
         return function (string) {
@@ -688,6 +714,7 @@
 
     app.filter('okEncrypt', okEncrypt);
 })();
+
 (function () {
     'use strict';
 
