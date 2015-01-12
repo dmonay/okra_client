@@ -21,7 +21,8 @@ module.exports = function(config) {
             'src/components/angular-mocks/angular-mocks.js',
             'src/app/**/*.js',
             'src/components/angular-material/angular-material.css',
-            'src/styles/css/okra-theme.css'
+            'src/styles/css/okra-theme.css',
+            'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js'
         ],
 
 
