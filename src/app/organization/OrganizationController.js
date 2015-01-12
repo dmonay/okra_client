@@ -3,10 +3,10 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog, TreeFactory, $state, hardCoded) {
+    function OrganizationController($scope, $mdDialog, TreeFactory, $stateParams) {
         var vm = this;
 
-        vm.orgName = hardCoded.org;
+        vm.organization = $stateParams.organization;
 
         vm.orgMembers = [{
             userName: "slacker",
@@ -54,7 +54,7 @@
         };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$state', 'hardCoded'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams'];
 
     app.controller('OrganizationController', OrganizationController);
 
