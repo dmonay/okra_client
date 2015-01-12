@@ -10,15 +10,27 @@
      *
      * @description
      * `ok-edit-node`
-     *
      * Used for editing nodes should be placed in the same HTML hierachy of an element with the class
      * of 'tree-node'.
+     *
+     * @param {string} edit The icon class that corresponds to the edit button
+     * @param {string} cancel The icon class that corresponds to the cancel/close button
+     * @param {string} save The icon class that corresponds to the save button
+     * @param {object} node Object to pass in that directly binds to that node (required for changing the edit mode)
+     *
+     *
      * @usage
      *
      *  <div class="tree-node"></div>
-     *  <div layout="column" layout-align="start end" ok-edit-node>
-     *      <md-button href class="md-raised md-primary" aria-label="edit">
+     *  <div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="objective">
+     *      <md-button href ng-show="!objective.isEditMode" class="md-raised md-primary" aria-label="edit">
      *          <i class="fa fa-pencil"></i>
+     *      </md-button>
+     *      <md-button href ng-show="objective.isEditMode" class="md-raised md-primary" aria-label="cancel">
+     *          <i class="fa fa-close"></i>
+     *      </md-button>
+     *      <md-button href ng-show="objective.isEditMode" class="md-raised md-primary" aria-label="save">
+     *          <i class="fa fa-check"></i>
      *      </md-button>
      *  </div>
      */
