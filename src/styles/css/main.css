@@ -12,6 +12,46 @@
 /*=Organization ==============149=============================*/
 /*=Login =====================202=============================*/
 /*=404Error===================239=============================*/
+@-webkit-keyframes glowGreen {
+  0% {
+    color: #0d8120;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+@-moz-keyframes glowGreen {
+  0% {
+    color: #0d8120;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+@-ms-keyframes glowGreen {
+  0% {
+    color: #0d8120;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+@keyframes glowGreen {
+  0% {
+    color: #0d8120;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
 md-item {
   margin: 0px 10px;
 }
@@ -119,6 +159,14 @@ ul.list-horizontal li span.sub-text {
 }
 .md-actions-form button {
   margin-right: 15px;
+}
+
+.glowing-green {
+  -webkit-animation: glowGreen 1s infinite alternate;
+  -moz-animation: glowGreen 1s infinite alternate;
+  -ms-animation: glowGreen 1s infinite alternate;
+  -o-animation: glowGreen 1s infinite alternate;
+  animation: glowGreen 1s infinite alternate;
 }
 
 .fade-in.ng-enter, .fade-in.ng-leave {

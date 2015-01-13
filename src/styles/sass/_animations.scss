@@ -1,0 +1,23 @@
+@mixin animation-name($name) {
+  -webkit-animation: $name 1s infinite alternate;
+  -moz-animation: $name 1s infinite alternate;
+  -ms-animation: $name 1s infinite alternate;
+  -o-animation: $name 1s infinite alternate;
+  animation: $name 1s infinite alternate;
+}
+
+// keyframes mixin
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}

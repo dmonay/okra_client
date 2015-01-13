@@ -20,7 +20,7 @@
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
-        TreeFactory.getTrees('someorg')
+        TreeFactory.getTrees(vm.organization)
             .then(function (response) {
                 vm.trees = TreeFactory.formatTrees(response.data.Success);
             });
