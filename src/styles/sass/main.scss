@@ -15,6 +15,7 @@
 
 //Imports
 @import "transitions.scss";
+@import "animations.scss";
 // Variables ====================================================================
 $white  : #ffffff;
 $black : #000000;
@@ -37,6 +38,16 @@ $warningRed : #ef5350;
     -ms-box-shadow: $horizontal $vertical $spread $color;
 	box-shadow: $horizontal $vertical $spread $color;
 }
+//Animations ======================================================================
+@include keyframes(glowGreen) {
+  0% {
+    color: $okraGreen;
+  }
+  100% {
+    color: $white;
+  } 
+}
+
 
 // Toolbar Styles =================================================================
 md-item {
@@ -152,6 +163,10 @@ ul.list-horizontal {
 	button {
 		margin-right: 15px;
 	}
+}
+
+.glowing-green {
+	@include animation-name(glowGreen);
 }
 
 .fade-in.ng-enter, .fade-in.ng-leave {

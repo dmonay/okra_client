@@ -20,7 +20,7 @@
 	    	<md-button class="md-raised md-primary" ng-click="vm.openOrganizationMembersModal()" aria-label="members">
 		    	<i class="fa fa-users"></i>
 		    </md-button>
-		    <md-button class="md-raised md-primary" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
+		    <md-button class="md-raised md-primary" ng-class="{'glowing-green': vm.trees.length === 0}" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
 		    	<i class="fa fa-tree"></i>
 		    	<md-tooltip>
 					Add a Tree
