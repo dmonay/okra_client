@@ -85,7 +85,7 @@ md-toast {
 	text-transform: none;
 }
 // Input and form fields =======================================================
-md-input-group.long > input {
+md-input-container.long > input {
     width: 264px; 
 }
 
@@ -195,9 +195,10 @@ ul.list-horizontal {
 		text-decoration: none;
 		text-align: center;
 
-		md-input-group {
+		md-input-container {
 			padding: 0px;
 			margin: 0px;
+			height: 20px;
 
 			input.short {
 				width: 120px;
