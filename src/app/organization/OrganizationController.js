@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog, TreeFactory, $stateParams) {
+    function OrganizationController($scope, $mdDialog, TreeFactory, $stateParams, OrganizationFactory) {
         var vm = this;
 
         vm.organization = $stateParams.organization;
@@ -34,7 +34,7 @@
                 locals: {
                     members: vm.orgMembers,
                     apiFactory: OrganizationFactory,
-                    organization: vm.organization
+                    node: vm.organization
                 }
             }).then(function (response) {
                 vm.orgMembers = response;
@@ -61,7 +61,7 @@
         };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', 'OrganizationFactory'];
 
     app.controller('OrganizationController', OrganizationController);
 

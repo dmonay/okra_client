@@ -247,7 +247,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationController($scope, $mdDialog, TreeFactory, $stateParams) {
+    function OrganizationController($scope, $mdDialog, TreeFactory, $stateParams, OrganizationFactory) {
         var vm = this;
 
         vm.organization = $stateParams.organization;
@@ -278,7 +278,7 @@
                 locals: {
                     members: vm.orgMembers,
                     apiFactory: OrganizationFactory,
-                    organization: vm.organization
+                    node: vm.organization
                 }
             }).then(function (response) {
                 vm.orgMembers = response;
@@ -305,7 +305,7 @@
         };
     }
 
-    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams'];
+    OrganizationController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', 'OrganizationFactory'];
 
     app.controller('OrganizationController', OrganizationController);
 
@@ -359,12 +359,14 @@
 
     var app = angular.module('OrganizationModule');
 
-    function MembersModalController($scope, apiFactory, $mdDialog, members, MemberService, organization) {
+    function MembersModalController($scope, apiFactory, $mdDialog, members, MemberService, node) {
         var modal = this;
 
         modal.members = members;
 
-        modal.newUser = {};
+        modal.newUser = {
+            role: "member"
+        };
 
         modal.addMember = function () {
             modal.formSubmitted = true;
@@ -376,20 +378,21 @@
 
                 newMembersArray.push(newMember);
 
-                apiFactory.updateMembers(organization, newMembersArray).then(function (response) {
+                apiFactory.updateMembers(node, newMembersArray).then(function (response) {
                     modal.currentlySaving = false;
                     modal.formSubmitted = false;
+                    $mdDialog.hide(newMember);
                 });
             }
         };
 
         modal.closeModal = function () {
-            $mdDialog.hide(modal.members);
+            $mdDialog.hide();
         };
     }
 
     MembersModalController.$inject = ['$scope', 'apiFactory', '$mdDialog', 'members',
-        'MemberService', 'organization'
+        'MemberService', 'node'
     ];
 
     app.controller('MembersModalController', MembersModalController);
@@ -475,11 +478,11 @@
              *     Members Array of members being added (doesn't have to include all members)
              * @returns {object} A response from the server containing a new tree.
              */
-            updateTreeMembers: function (tree, members) {
-                var url = okraAPI.updateMembers + treeName;
+            updateMembers: function (tree, members) {
+                var url = okraAPI.updateMembers + tree.OrgName;
                 return $http.post(url, {
                     updateTree: true,
-                    treeName: tree.Name,
+                    treeName: tree.TreeName,
                     treeId: tree.Id,
                     members: members
                 });
@@ -523,6 +526,7 @@
     app.factory('TreeFactory', TreeFactory);
 
 })();
+
 (function () {
     'use strict';
 
@@ -1006,7 +1010,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<div class=\"error-not-found\" layout=\"column\" align=\"center center\"><img src=\"assets/okra-404.jpg\"><h1>That's Strange...</h1><h2>Probably not what you were looking for right?</h2></div>"
     );
     $templateCache.put("app/shared/members-modal.tpl.html",
-        "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Organization Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.newUser.role\"><md-radio-button value=\"member\" aria-label=\"Member\">Member</md-radio-button><md-radio-button value=\"admin\" artial-label=\"Admin\">Admin</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
+        "<md-dialog flex=\"50\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Members</h3></md-subheader></div><div layout=\"row\" layout-align=\"start center\"><ul class=\"list-horizontal\"><li ng-repeat=\"member in modal.members\"><h3>{{member.userName}}</h3><span class=\"sub-text\">{{member.role}}</span></li></ul></div><md-content><form class=\"form-horizontal\" name=\"modal.newMemberForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>Username</label><md-input required name=\"newUserName\" ng-model=\"modal.newUser.name\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.newMemberForm.newUserName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.newUser.role\"><md-radio-button value=\"member\" aria-label=\"Member\">Member</md-radio-button><md-radio-button value=\"admin\" artial-label=\"Admin\">Admin</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Close</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addMember()\" aria-label=\"add\">Add Member</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/tree/mission-statement-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Mission Statement</h3></md-subheader></div><div layout=\"row\" layout-align=\"center center\">{{modal.missionStatement}}</div><md-content><form class=\"form-horizontal\" name=\"modal.missionStatementForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-group class=\"long\"><label>New Mission Statement</label><md-input required name=\"newMissionStatement\" ng-model=\"modal.newMissionStatement\" autocapitalize=\"off\"></md-input></md-input-group></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.missionStatementForm.newMissionStatement.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.saveMissionStatement()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
@@ -1101,10 +1105,13 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
                 locals: {
                     members: vm.tree.Members,
                     apiFactory: TreeFactory,
-                    organization: $stateParams.organization
+                    node: vm.tree
                 }
             }).then(function (response) {
-                vm.orgMembers = response;
+                if (response) {
+                    console.log(response);
+                    vm.tree.Members.push(response);
+                }
             });
         };
 

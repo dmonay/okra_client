@@ -46,10 +46,13 @@
                 locals: {
                     members: vm.tree.Members,
                     apiFactory: TreeFactory,
-                    organization: $stateParams.organization
+                    node: vm.tree
                 }
             }).then(function (response) {
-                vm.orgMembers = response;
+                if (response) {
+                    console.log(response);
+                    vm.tree.Members.push(response);
+                }
             });
         };
 
