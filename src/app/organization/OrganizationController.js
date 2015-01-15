@@ -8,16 +8,6 @@
 
         vm.organization = $stateParams.organization;
 
-        vm.orgMembers = [{
-            userName: "slacker",
-            userId: "fsdfdsfd8fds9f8ds8f7",
-            role: "boss"
-        }, {
-            userName: "pdiddy",
-            userId: "fsdfdsasdasd9f8ds8f7",
-            role: "denizen"
-        }];
-
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
         TreeFactory.getTrees(vm.organization)

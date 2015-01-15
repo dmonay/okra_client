@@ -60,7 +60,8 @@
         getOrganizations: 'http://localhost:8080/get/orgs/',
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
-        getSingleTreeInOrg: 'http://localhost:8080/get/trees/'
+        getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
+        createObjective: 'http://localhost:8080/create/objective/'
     });
 
     app.constant('hardCoded', {

@@ -75,7 +75,7 @@
              *     Tree The tree that the member is being added to.
              * @param {array}
              *     Members Array of members being added (doesn't have to include all members)
-             * @returns {object} A response from the server containing a new tree.
+             * @returns {object} A response from the server containing a success message.
              */
             updateMembers: function (tree, members) {
                 var url = okraAPI.updateMembers + tree.OrgName;
@@ -84,6 +84,29 @@
                     treeName: tree.TreeName,
                     treeId: tree.Id,
                     members: members
+                });
+            },
+            /**
+             * @ngdoc method
+             * @name createObjective
+             * @description Adds Objective to the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new objective.
+             */
+            createObjective: function (tree, objective) {
+                var url = okraAPI.createObjective + tree.OrgName;
+                return $http.post(url, {
+                    id: objective.Id,
+                    treeId: tree.Id,
+                    name: objective.Name,
+                    body: objective.body,
+                    completed: false,
+                    members: objective.members
                 });
             },
             /**

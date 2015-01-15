@@ -50,7 +50,6 @@
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log(response);
                     vm.tree.Members.push(response);
                 }
             });

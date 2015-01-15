@@ -60,7 +60,8 @@
         getOrganizations: 'http://localhost:8080/get/orgs/',
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
-        getSingleTreeInOrg: 'http://localhost:8080/get/trees/'
+        getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
+        createObjective: 'http://localhost:8080/create/objective/'
     });
 
     app.constant('hardCoded', {
@@ -251,16 +252,6 @@
         var vm = this;
 
         vm.organization = $stateParams.organization;
-
-        vm.orgMembers = [{
-            userName: "slacker",
-            userId: "fsdfdsfd8fds9f8ds8f7",
-            role: "boss"
-        }, {
-            userName: "pdiddy",
-            userId: "fsdfdsasdasd9f8ds8f7",
-            role: "denizen"
-        }];
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
@@ -476,7 +467,7 @@
              *     Tree The tree that the member is being added to.
              * @param {array}
              *     Members Array of members being added (doesn't have to include all members)
-             * @returns {object} A response from the server containing a new tree.
+             * @returns {object} A response from the server containing a success message.
              */
             updateMembers: function (tree, members) {
                 var url = okraAPI.updateMembers + tree.OrgName;
@@ -485,6 +476,29 @@
                     treeName: tree.TreeName,
                     treeId: tree.Id,
                     members: members
+                });
+            },
+            /**
+             * @ngdoc method
+             * @name createObjective
+             * @description Adds Objective to the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new objective.
+             */
+            createObjective: function (tree, objective) {
+                var url = okraAPI.createObjective + tree.OrgName;
+                return $http.post(url, {
+                    id: objective.Id,
+                    treeId: tree.Id,
+                    name: objective.Name,
+                    body: objective.body,
+                    completed: false,
+                    members: objective.members
                 });
             },
             /**
@@ -526,7 +540,6 @@
     app.factory('TreeFactory', TreeFactory);
 
 })();
-
 (function () {
     'use strict';
 
@@ -1109,7 +1122,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log(response);
                     vm.tree.Members.push(response);
                 }
             });
