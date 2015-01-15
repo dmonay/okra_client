@@ -466,6 +466,26 @@
             },
             /**
              * @ngdoc method
+             * @name updateMembers
+             * @description Updates the members in a tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree that the member is being added to.
+             * @param {array}
+             *     Members Array of members being added (doesn't have to include all members)
+             * @returns {object} A response from the server containing a new tree.
+             */
+            updateTreeMembers: function (tree, members) {
+                var url = okraAPI.updateMembers + treeName;
+                return $http.post(url, {
+                    updateTree: true,
+                    treeName: tree.Name,
+                    treeId: tree.Id,
+                    members: members
+                });
+            },
+            /**
+             * @ngdoc method
              * @name formatTrees
              * @description Creates a new member object.
              * @methodOf SharedFactories.TreeFactory
@@ -503,7 +523,6 @@
     app.factory('TreeFactory', TreeFactory);
 
 })();
-
 (function () {
     'use strict';
 
