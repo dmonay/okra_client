@@ -30,10 +30,26 @@
                 controller: 'MissionStatementModalController',
                 controllerAs: 'modal',
                 locals: {
-                    missionStatement: vm.tree.mission
+                    missionStatement: vm.tree.Mission
                 }
             }).then(function (response) {
-                vm.tree.mission = response;
+                vm.tree.Mission = response;
+            });
+        };
+
+        vm.openTreeMembersModal = function ($event) {
+            $mdDialog.show({
+                targetEvent: $event,
+                templateUrl: 'app/shared/members-modal.tpl.html',
+                controller: 'MembersModalController',
+                controllerAs: 'modal',
+                locals: {
+                    members: vm.tree.Members,
+                    apiFactory: TreeFactory,
+                    organization: $stateParams.organization
+                }
+            }).then(function (response) {
+                vm.orgMembers = response;
             });
         };
 

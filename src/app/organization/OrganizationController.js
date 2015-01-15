@@ -23,17 +23,18 @@
         TreeFactory.getTrees(vm.organization)
             .then(function (response) {
                 vm.trees = TreeFactory.formatTrees(response.data.Success);
-                console.log(vm.trees);
             });
 
         vm.openOrganizationMembersModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/organization/organization-members-modal.tpl.html',
-                controller: 'OrganizationMembersModalController',
+                templateUrl: 'app/shared/members-modal.tpl.html',
+                controller: 'MembersModalController',
                 controllerAs: 'modal',
                 locals: {
-                    members: vm.orgMembers
+                    members: vm.orgMembers,
+                    apiFactory: OrganizationFactory,
+                    organization: vm.organization
                 }
             }).then(function (response) {
                 vm.orgMembers = response;
