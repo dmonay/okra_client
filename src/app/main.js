@@ -40,7 +40,16 @@
      * Theme Configuration
      */
     app.config(function ($mdThemingProvider) {
-        $mdThemingProvider.setDefaultTheme('okra');
+        // Extend the red theme with a few different colors
+        var okraGreen = $mdThemingProvider.extendPalette('green', {
+            '500': '#0d8120'
+        });
+
+        // Register the new color palette map with the name <code>neonRed</code>
+        $mdThemingProvider.definePalette('okraGreen', okraGreen);
+        // Use that theme for the primary intentions
+        $mdThemingProvider.theme('default')
+            .primaryColor('okraGreen');
     });
 
     //Constants
@@ -70,7 +79,6 @@
         org: 'someorg'
     });
 })();
-
 (function () {
     'use strict';
 
