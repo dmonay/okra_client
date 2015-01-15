@@ -3,12 +3,14 @@
 
     var app = angular.module('OrganizationModule');
 
-    function MembersModalController($scope, apiFactory, $mdDialog, members, MemberService, organization) {
+    function MembersModalController($scope, apiFactory, $mdDialog, members, MemberService, node) {
         var modal = this;
 
         modal.members = members;
 
-        modal.newUser = {};
+        modal.newUser = {
+            role: "member"
+        };
 
         modal.addMember = function () {
             modal.formSubmitted = true;
@@ -20,20 +22,21 @@
 
                 newMembersArray.push(newMember);
 
-                apiFactory.updateMembers(organization, newMembersArray).then(function (response) {
+                apiFactory.updateMembers(node, newMembersArray).then(function (response) {
                     modal.currentlySaving = false;
                     modal.formSubmitted = false;
+                    $mdDialog.hide(newMember);
                 });
             }
         };
 
         modal.closeModal = function () {
-            $mdDialog.hide(modal.members);
+            $mdDialog.hide();
         };
     }
 
     MembersModalController.$inject = ['$scope', 'apiFactory', '$mdDialog', 'members',
-        'MemberService', 'organization'
+        'MemberService', 'node'
     ];
 
     app.controller('MembersModalController', MembersModalController);

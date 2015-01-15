@@ -77,11 +77,11 @@
              *     Members Array of members being added (doesn't have to include all members)
              * @returns {object} A response from the server containing a new tree.
              */
-            updateTreeMembers: function (tree, members) {
-                var url = okraAPI.updateMembers + treeName;
+            updateMembers: function (tree, members) {
+                var url = okraAPI.updateMembers + tree.OrgName;
                 return $http.post(url, {
                     updateTree: true,
-                    treeName: tree.Name,
+                    treeName: tree.TreeName,
                     treeId: tree.Id,
                     members: members
                 });
