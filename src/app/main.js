@@ -204,7 +204,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded) {
+    function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded, organization) {
         var modal = this;
 
         modal.timeframe = 'monthly';
@@ -222,11 +222,11 @@
                     username: hardCoded.userName
                 };
 
-                TreeFactory.createTree(hardCoded.org, tree)
+                TreeFactory.createTree(organization, tree)
                     .then(function (response) {
                         modal.currentlySaving = false;
                         modal.formSubmitted = false;
-                        // $mdDialog.hide(response.data);
+                        $mdDialog.hide(response.data);
                     });
             }
         };
@@ -236,7 +236,7 @@
         };
     }
 
-    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded'];
+    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded', 'organization'];
 
     app.controller('AddTreeModalController', AddTreeModalController);
 
@@ -267,6 +267,7 @@
         TreeFactory.getTrees(vm.organization)
             .then(function (response) {
                 vm.trees = TreeFactory.formatTrees(response.data.Success);
+                console.log(vm.trees);
             });
 
         vm.openOrganizationMembersModal = function ($event) {
@@ -288,11 +289,16 @@
                 targetEvent: $event,
                 templateUrl: 'app/organization/add-tree-modal.tpl.html',
                 controller: 'AddTreeModalController',
-                controllerAs: 'modal'
+                controllerAs: 'modal',
+                locals: {
+                    organization: vm.organization
+                }
             }).then(function (response) {
-                if (response) {
-                    vm.trees.push(response);
-                    vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
+                if (response.Success) {
+                    vm.formattedTrees = angular.copy(vm.trees);
+                    vm.formattedTrees.push(response.Success);
+                    vm.formattedTrees = _.flatten(vm.formattedTrees);
+                    vm.trees = TreeFactory.formatTrees(vm.formattedTrees);
                 }
             });
         };
