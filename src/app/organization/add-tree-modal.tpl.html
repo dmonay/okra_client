@@ -8,10 +8,10 @@
 		<form class="form-horizontal" name="modal.addTreeForm">
 		    <div layout="row" layout-align="center center">
 		    	<div layout-align="start start">
-					<md-input-group class="long">
+					<md-input-container class="long">
 					   <label>Tree Name</label>
 					   <md-input required name="newTreeName" ng-model="modal.newTreeName" autocapitalize="off"></md-input>
-					</md-input-group>
+					</md-input-container>
 				</div>
 				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.addTreeForm.newTreeName.$invalid" ng-cloak>
 					<i class="fa fa-warning"></i>

@@ -79,7 +79,7 @@ md-toast .md-button {
   text-transform: none;
 }
 
-md-input-group.long > input {
+md-input-container.long > input {
   width: 264px;
 }
 
@@ -202,11 +202,12 @@ ul.list-horizontal li span.sub-text {
   text-decoration: none;
   text-align: center;
 }
-.organization-wrapper .tree-node md-input-group {
+.organization-wrapper .tree-node md-input-container {
   padding: 0px;
   margin: 0px;
+  height: 20px;
 }
-.organization-wrapper .tree-node md-input-group input.short {
+.organization-wrapper .tree-node md-input-container input.short {
   width: 120px;
   padding: 0px;
   color: white;

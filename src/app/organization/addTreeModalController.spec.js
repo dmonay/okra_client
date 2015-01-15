@@ -24,10 +24,10 @@ describe('AddTreeModalController', function () {
 
         element = angular.element(
             '<form name="addTreeForm">' +
-            '<md-input-group>' +
+            '<md-input-container>' +
             '<label>Tree Name</label>' +
             '<md-input required name="newTreeName" ng-model="newTreeName" autocapitalize="off"></md-input>' +
-            '</md-input-group>' +
+            '</md-input-container>' +
             '<md-radio-group class="horizontal-radio-group" layout="row" ng-model="timeframe">' +
             '<md-radio-button value="monthly" aria-label="Monthly"> Monthly </md-radio-button>' +
             '<md-radio-button value="yearly" artial-label="Yearly"> Yearly </md-radio-button>' +

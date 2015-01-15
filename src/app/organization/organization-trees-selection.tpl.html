@@ -36,9 +36,9 @@
 					</md-tooltip>
 				</a>
 				<div class="tree-node" ng-show="tree.isEditMode">
-					<md-input-group>
+					<md-input-container>
 					   <md-input required class="short" name="treeName" ng-model="tree.newName" autocapitalize="off"></md-input>
-					</md-input-group>
+					</md-input-container>
 				</div>
 				<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="tree">
 		        	<md-button ng-show="!tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">

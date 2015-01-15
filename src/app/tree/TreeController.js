@@ -4,9 +4,8 @@
     var app = angular.module('TreeModule');
 
     function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter) {
-        var vm = this;
-
-        var treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
+        var vm = this,
+            treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
@@ -51,6 +50,24 @@
             }).then(function (response) {
                 if (response) {
                     vm.tree.Members.push(response);
+                }
+            });
+        };
+
+        vm.openNodeModalDashboard = function ($event, editMode, nodeType, node) {
+            $mdDialog.show({
+                targetEvent: $event,
+                templateUrl: 'app/tree/node-modal-dashboard.tpl.html',
+                controller: 'NodeModalDashboardController',
+                controllerAs: 'modal',
+                locals: {
+                    editMode: editMode,
+                    nodeType: nodeType,
+                    node: node
+                }
+            }).then(function (response) {
+                if (response) {
+                    // vm.tree.Members.push(response);
                 }
             });
         };

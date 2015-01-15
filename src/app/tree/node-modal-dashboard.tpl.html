@@ -1,0 +1,44 @@
+<md-dialog flex="30">
+	<div layout="row" layout-align="center">
+	    <md-subheader>
+	    	<h3>Create {{modal.name}}</h3>
+	    </md-subheader>
+	</div>
+	<md-content>
+		<form class="form-horizontal" name="modal.nodeForm">
+		    <div layout="row" layout-align="center center">
+		    	<div layout-align="start start" flex="100">
+					<md-input-container flex>
+					   <label>Name</label>
+					   <md-input required name="nodeName" ng-model="node.name" autocapitalize="off"></md-input>
+					</md-input-container>
+				</div>
+				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.nodeForm.nodeName.$invalid" ng-cloak>
+					<i class="fa fa-warning"></i>
+					<md-tooltip>
+						This field is required
+					</md-tooltip>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center">
+		    	<div layout-align="start start" flex="100">
+					<md-input-container flex>
+				        <label>Description</label>
+				    	<textarea required name="nodeBody" ng-model="node.body" columns="1" md-maxlength="150"></textarea>
+				    </md-input-container>
+				</div>
+				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.nodeForm.nodeBody.$invalid" ng-cloak>
+					<i class="fa fa-warning"></i>
+					<md-tooltip>
+						This field is required
+					</md-tooltip>
+				</div>
+			</div>
+		</form>
+	<md-content>
+	<div class="md-actions" style="border-top: none;" layout="row" layout-align="center end">
+		<md-button class="md-raised md-warn" ng-click="modal.closeModal()" aria-label="cancel">Cancel</md-button>
+		<md-button class="md-raised md-primary" ng-click="modal.createNode()" aria-label="add">Add Node</md-button>
+		<md-progress-circular ng-if="modal.currentlySaving" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
+	</div>
+<md-dialog>
