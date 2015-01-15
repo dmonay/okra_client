@@ -23,6 +23,7 @@
         TreeFactory.getTrees(vm.organization)
             .then(function (response) {
                 vm.trees = TreeFactory.formatTrees(response.data.Success);
+                console.log(vm.trees);
             });
 
         vm.openOrganizationMembersModal = function ($event) {
@@ -44,11 +45,16 @@
                 targetEvent: $event,
                 templateUrl: 'app/organization/add-tree-modal.tpl.html',
                 controller: 'AddTreeModalController',
-                controllerAs: 'modal'
+                controllerAs: 'modal',
+                locals: {
+                    organization: vm.organization
+                }
             }).then(function (response) {
-                if (response) {
-                    vm.trees.push(response);
-                    vm.formattedTrees = TreeFactory.formatTrees(vm.trees);
+                if (response.Success) {
+                    vm.formattedTrees = angular.copy(vm.trees);
+                    vm.formattedTrees.push(response.Success);
+                    vm.formattedTrees = _.flatten(vm.formattedTrees);
+                    vm.trees = TreeFactory.formatTrees(vm.formattedTrees);
                 }
             });
         };

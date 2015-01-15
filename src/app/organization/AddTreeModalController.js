@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded) {
+    function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded, organization) {
         var modal = this;
 
         modal.timeframe = 'monthly';
@@ -21,11 +21,11 @@
                     username: hardCoded.userName
                 };
 
-                TreeFactory.createTree(hardCoded.org, tree)
+                TreeFactory.createTree(organization, tree)
                     .then(function (response) {
                         modal.currentlySaving = false;
                         modal.formSubmitted = false;
-                        // $mdDialog.hide(response.data);
+                        $mdDialog.hide(response.data);
                     });
             }
         };
@@ -35,7 +35,7 @@
         };
     }
 
-    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded'];
+    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded', 'organization'];
 
     app.controller('AddTreeModalController', AddTreeModalController);
 
