@@ -79,6 +79,7 @@
         org: 'someorg'
     });
 })();
+
 (function () {
     'use strict';
 
@@ -294,7 +295,7 @@
                     organization: vm.organization
                 }
             }).then(function (response) {
-                if (response.Success) {
+                if (response && !response.Error) {
                     vm.formattedTrees = angular.copy(vm.trees);
                     vm.formattedTrees.push(response.Success);
                     vm.formattedTrees = _.flatten(vm.formattedTrees);
