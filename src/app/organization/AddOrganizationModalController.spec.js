@@ -68,7 +68,7 @@ describe('AddOrganizationModalController', function () {
         it('Should send the right data to the backend', function () {
             $httpBackend.expectPOST('http://localhost:8080/create/organization', {
                     organization: 'testOrg',
-                    userId: '5491e2aebee23fc7375b789c'
+                    userId: hardCoded.userId
                 })
                 .respond(200, {
                     message: 'Success',

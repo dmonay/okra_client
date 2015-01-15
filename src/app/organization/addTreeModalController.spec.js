@@ -4,6 +4,8 @@ describe('AddTreeModalController', function () {
     var modalController;
     var element;
     var $httpBackend;
+    var organization;
+    var hardCoded;
 
     beforeEach(function () {
         module('okra');
@@ -13,13 +15,17 @@ describe('AddTreeModalController', function () {
         $mdDialog, $compile, _hardCoded_) {
         scope = $rootScope.$new();
         $httpBackend = _$httpBackend_;
+        hardCoded = _hardCoded_;
+
+        organization = 'someorg';
 
         //Mock out the modal
         modalController = $controller('AddTreeModalController', {
             $scope: scope,
             TreeFactory: TreeFactory,
             $mdDialog: $mdDialog,
-            hardCoded: _hardCoded_
+            hardCoded: hardCoded,
+            organization: organization
         });
 
         element = angular.element(
@@ -71,8 +77,8 @@ describe('AddTreeModalController', function () {
             $httpBackend.expectPOST('http://localhost:8080/create/tree/someorg', {
                     treeName: 'testTree',
                     timeframe: 'monthly',
-                    userId: '5491e2aebee23fc7375b789c',
-                    username: 'john234'
+                    userId: hardCoded.userId,
+                    username: hardCoded.userName
                 })
                 .respond(200, {
                     message: 'Success',
