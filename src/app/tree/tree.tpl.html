@@ -57,8 +57,8 @@
 	        	</md-button>
 	        </div>
 		</div>
-		<div class="objective" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
-			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', false)" class="tree-node" layout-align="start">
+		<div class="objective active" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
+			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {})" class="tree-node" layout-align="start">
 				Add Objective <i class="fa fa-plus"></i>
 			</a>
 		</div>

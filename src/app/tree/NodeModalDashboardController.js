@@ -12,9 +12,32 @@
 
         modal.members = angular.copy(tree.Members);
 
+        modal.node = node;
+        modal.node.members = [];
+
         modal.createNode = function () {
-            console.log('needs logic');
             modal.formSubmitted = true;
+
+            if (modal.nodeForm.$valid) {
+                modal.node.id = 'obj' + (tree.Objectives.length + 1);
+                var apiMethod = 'create' + nodeType;
+                TreeFactory[apiMethod](tree, node)
+                    .then(function (response) {
+                        if (response.data.Success) {
+                            $mdDialog.hide(response.data.Success);
+                        }
+                    });
+            }
+        };
+
+        modal.addMember = function (member, added) {
+            if (added) {
+                node.members.push(member);
+            } else {
+                node.members = _.reject(node.members, function (singleMember) {
+                    return singleMember === member;
+                });
+            }
         };
 
         modal.closeModal = function () {
@@ -27,5 +50,4 @@
     ];
 
     app.controller('NodeModalDashboardController', NodeModalDashboardController);
-
 })();

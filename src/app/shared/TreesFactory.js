@@ -101,9 +101,9 @@
             createObjective: function (tree, objective) {
                 var url = okraAPI.createObjective + tree.OrgName;
                 return $http.post(url, {
-                    id: objective.Id,
+                    id: objective.id,
                     treeId: tree.Id,
-                    name: objective.Name,
+                    name: objective.name,
                     body: objective.body,
                     completed: false,
                     members: objective.members
