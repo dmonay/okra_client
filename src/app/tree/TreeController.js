@@ -63,7 +63,8 @@
                 locals: {
                     editMode: editMode,
                     nodeType: nodeType,
-                    node: node
+                    node: node,
+                    tree: vm.tree
                 }
             }).then(function (response) {
                 if (response) {

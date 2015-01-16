@@ -34,6 +34,13 @@
 					</md-tooltip>
 				</div>
 			</div>
+			<div layout="row" layout-align="center center">
+		    	<div layout-align="start start" layout="row" flex="100">
+					<md-checkbox class="horizontal-checkbox" ng-model="member.isChecked" aria-label="{{member.userName}}" ng-repeat="member in modal.members">
+					  {{member.userName}}
+					</md-checkbox>
+				</div>
+			</div>
 		</form>
 	<md-content>
 	<div class="md-actions" style="border-top: none;" layout="row" layout-align="center end">
