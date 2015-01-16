@@ -68,7 +68,8 @@
                 }
             }).then(function (response) {
                 if (response) {
-                    vm.tree[nodeType].push(response);
+                    vm.tree[nodeType + 's'] = [];
+                    vm.tree[nodeType + 's'].push(response);
                 }
             });
         };

@@ -227,6 +227,12 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .organization.active .tree-node {
   background-color: #0d8120;
 }
+.organization-wrapper .add-node {
+  font-weight: 600;
+}
+.organization-wrapper .add-node .tree-node {
+  color: #139e2a;
+}
 .organization-wrapper .task-node {
   background-color: #139e2a;
   padding: 10px 10px;
