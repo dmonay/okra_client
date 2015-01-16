@@ -225,6 +225,14 @@ ul.list-horizontal {
 		}
 	}
 
+	.add-node {
+		font-weight: 600;
+
+		.tree-node {
+			color: $okraLightGreen;
+		}
+	}
+
 	.task-node {
 		background-color: $okraLightGreen;
 		padding: 10px 10px;
