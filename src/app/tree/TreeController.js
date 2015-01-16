@@ -7,12 +7,14 @@
         var vm = this,
             treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
 
-        vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+        function getTree() {
+            TreeFactory.getSingleTree($stateParams.organization, treeId)
+                .then(function (response) {
+                    vm.tree = response.data.Success;
+                });
+        }
 
-        TreeFactory.getSingleTree($stateParams.organization, treeId)
-            .then(function (response) {
-                vm.tree = response.data.Success;
-            });
+        vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
         vm.changeCurrentObjective = function (objective) {
             vm.currentObjective = objective;
@@ -54,7 +56,7 @@
             });
         };
 
-        vm.openNodeModalDashboard = function ($event, editMode, nodeType, node) {
+        vm.openNodeModalDashboard = function ($event, editMode, nodeType, node, parentNode) {
             $mdDialog.show({
                 targetEvent: $event,
                 templateUrl: 'app/tree/node-modal-dashboard.tpl.html',
@@ -64,20 +66,24 @@
                     editMode: editMode,
                     nodeType: nodeType,
                     node: node,
-                    tree: vm.tree
+                    tree: vm.tree,
+                    parentNode: parentNode
                 }
             }).then(function (response) {
-                if (response) {
-                    vm.tree[nodeType + 's'] = [];
-                    vm.tree[nodeType + 's'].push(response);
+                if (response && response.Success) {
+                    getTree();
                 }
             });
         };
 
+        function init() {
+            getTree();
+        }
+
+        init();
     }
 
     TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', '$filter'];
 
     app.controller('TreeController', TreeController);
-
 })();

@@ -233,6 +233,9 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .add-node .tree-node {
   color: #139e2a;
 }
+.organization-wrapper .key-result.add-node {
+  font-size: 14px;
+}
 .organization-wrapper .task-node {
   background-color: #139e2a;
   padding: 10px 10px;
@@ -286,4 +289,9 @@ ul.list-horizontal li span.sub-text {
 .error-not-found img {
   margin: 15px auto;
   width: 300px;
+}
+
+[layout=row] md-checkbox:first-child {
+  margin-left: 0px;
+  margin-top: 15px !important;
 }
