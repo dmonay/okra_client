@@ -233,6 +233,10 @@ ul.list-horizontal {
 		}
 	}
 
+	.key-result.add-node {
+		font-size: 14px;
+	}
+
 	.task-node {
 		background-color: $okraLightGreen;
 		padding: 10px 10px;
@@ -294,3 +298,9 @@ ul.list-horizontal {
 		width: 300px;
 	}
 }
+// Temp Fixes to ngmaterial css =====================================
+[layout=row] md-checkbox:first-child {
+	margin-left: 0px;
+	margin-top: 15px !important;
+}
+

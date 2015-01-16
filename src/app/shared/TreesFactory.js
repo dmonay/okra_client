@@ -111,6 +111,32 @@
             },
             /**
              * @ngdoc method
+             * @name createKeyResult
+             * @description Adds key result to the specified objective of the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the key result is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             * @param {object}
+             *     KeyResult Object containing the key result information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new key result.
+             */
+            createKeyResult: function (tree, keyResult, objective) {
+                var url = okraAPI.createKeyResult + tree.OrgName + '/' + objective.Id;
+                return $http.post(url, {
+                    id: keyResult.id,
+                    treeId: tree.Id,
+                    name: keyResult.name,
+                    body: keyResult.body,
+                    priority: keyResult.priority,
+                    completed: false,
+                    members: keyResult.members
+                });
+            },
+            /**
+             * @ngdoc method
              * @name formatTrees
              * @description Creates a new member object.
              * @methodOf SharedFactories.TreeFactory

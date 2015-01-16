@@ -3,28 +3,34 @@
 
     var app = angular.module('TreeModule');
 
-    function NodeModalDashboardController($scope, TreeFactory, $mdDialog, editMode, nodeType, node, tree) {
+    function NodeModalDashboardController($scope, TreeFactory, $mdDialog, editMode, nodeType, node, tree,
+        parentNode) {
         var modal = this;
 
+        modal.nodeType = nodeType;
         modal.name = editMode ? node.Name : nodeType;
-
         modal.formSubmitted = false;
-
         modal.members = angular.copy(tree.Members);
-
         modal.node = node;
         modal.node.members = [];
+
+        if (nodeType === 'Objective') {
+            modal.node.id = 'obj' + (tree.Objectives.length + 1);
+        }
+        if (nodeType === 'Key Result') {
+            modal.node.id = 'kr' + (parentNode.KeyResults.length + 1);
+            modal.node.priority = 'Low';
+        }
 
         modal.createNode = function () {
             modal.formSubmitted = true;
 
             if (modal.nodeForm.$valid) {
-                modal.node.id = 'obj' + (tree.Objectives.length + 1);
-                var apiMethod = 'create' + nodeType;
-                TreeFactory[apiMethod](tree, node)
+                var apiMethod = 'create' + nodeType.replace(' ', '');
+                TreeFactory[apiMethod](tree, node, parentNode)
                     .then(function (response) {
                         if (response.data.Success) {
-                            $mdDialog.hide(response.data.Success);
+                            $mdDialog.hide(response.data);
                         }
                     });
             }
@@ -46,7 +52,7 @@
     }
 
     NodeModalDashboardController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'editMode', 'nodeType', 'node',
-        'tree'
+        'tree', 'parentNode'
     ];
 
     app.controller('NodeModalDashboardController', NodeModalDashboardController);
