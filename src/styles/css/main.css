@@ -227,6 +227,27 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .organization.active .tree-node {
   background-color: #0d8120;
 }
+.organization-wrapper .objective:after {
+  content: "OBJ";
+}
+.organization-wrapper .key-result:after {
+  content: "KR";
+}
+.organization-wrapper .tree:after {
+  content: "TR";
+}
+.organization-wrapper .objective:after, .organization-wrapper .key-result:after, .organization-wrapper .tree:after {
+  font-size: 12px;
+  position: relative;
+  margin-left: -28px;
+  left: -40px;
+  top: 5px;
+  font-weight: 600;
+  color: #139e2a;
+}
+.organization-wrapper .objective.add-node:after, .organization-wrapper .key-result.add-node:after {
+  content: "";
+}
 .organization-wrapper .add-node {
   font-weight: 600;
 }
@@ -247,7 +268,10 @@ ul.list-horizontal li span.sub-text {
   min-width: 100px;
   margin-top: 10px;
 }
-.organization-wrapper .objective + .objective, .organization-wrapper .key-result + .key-result, .organization-wrapper .organization + .organization {
+.organization-wrapper .objective + .objective,
+.organization-wrapper .key-result + .key-result,
+.organization-wrapper .organization + .organization,
+.organization-wrapper .tree + .tree {
   margin-left: 25px;
 }
 .organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
