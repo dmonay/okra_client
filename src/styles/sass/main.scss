@@ -225,6 +225,32 @@ ul.list-horizontal {
 		}
 	}
 
+	.objective:after {
+		content: "OBJ";
+	}
+
+	.key-result:after {
+		content: "KR";
+	}
+
+	.tree:after {
+		content: "TR"
+	}
+
+	.objective:after, .key-result:after, .tree:after {
+		font-size: 12px;
+		position: relative;
+		margin-left: -28px;
+		left: -40px;
+		top: 5px;
+		font-weight: 600;
+		color: $okraLightGreen;
+	}
+
+	.objective.add-node:after, .key-result.add-node:after {
+		content: "";
+	}
+
 	.add-node {
 		font-weight: 600;
 
@@ -246,7 +272,10 @@ ul.list-horizontal {
 		margin-top: 10px;
 	}
 
-	.objective + .objective, .key-result + .key-result, .organization + .organization {
+	.objective + .objective, 
+	.key-result + .key-result, 
+	.organization + .organization,
+	.tree + .tree  {
 		margin-left: 25px;
 	}
 
