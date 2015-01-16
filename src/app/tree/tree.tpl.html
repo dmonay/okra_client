@@ -2,6 +2,9 @@
 	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
 		<div class="tree-node">
 			{{vm.tree.TreeName}}
+			<md-tooltip ng-if="vm.tree.TreeName.length > 14">
+				{{vm.tree.TreeName}}
+			</md-tooltip>
 		</div>
 		<div layout="column" layout-align="start end">
 			<md-button href class="md-raised md-primary" 
@@ -29,12 +32,12 @@
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives">
-			<div class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
+			<a href ng-click="vm.openNodeModalDashboard($event, true, 'Objective', objective, false)" class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
 				{{objective.Name}}
 				<md-tooltip ng-if="objective.Name.length > 14">
 					{{objective.Name}}
 				</md-tooltip>
-			</div>
+			</a>
 			<div class="tree-node" layout-align="start" ng-show="objective.isEditMode">
 				<md-input-container>
 				   <md-input required class="short" name="treeName" ng-model="objective.newName" autocapitalize="off"></md-input>
