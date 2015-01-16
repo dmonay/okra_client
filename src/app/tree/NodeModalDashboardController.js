@@ -7,19 +7,29 @@
         parentNode) {
         var modal = this;
 
+        modal.editMode = editMode;
         modal.nodeType = nodeType;
         modal.name = editMode ? node.Name : nodeType;
         modal.formSubmitted = false;
         modal.members = angular.copy(tree.Members);
         modal.node = node;
-        modal.node.members = [];
 
         if (nodeType === 'Objective') {
-            modal.node.id = 'obj' + (tree.Objectives.length + 1);
+            modal.node.Id = 'obj' + (tree.Objectives.length + 1);
         }
         if (nodeType === 'Key Result') {
-            modal.node.id = 'kr' + (parentNode.KeyResults.length + 1);
+            modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
             modal.node.priority = 'Low';
+        }
+
+        if (!editMode) {
+            modal.node.Members = [];
+        } else {
+            _.each(modal.members, function (member, index) {
+                if (modal.node.Members[index] && modal.node.Members[index].userName === member.userName) {
+                    member.isChecked = true;
+                }
+            });
         }
 
         modal.createNode = function () {
@@ -38,9 +48,9 @@
 
         modal.addMember = function (member, added) {
             if (added) {
-                node.members.push(member);
+                node.Members.push(member);
             } else {
-                node.members = _.reject(node.members, function (singleMember) {
+                node.Members = _.reject(node.Members, function (singleMember) {
                     return singleMember === member;
                 });
             }

@@ -101,12 +101,12 @@
             createObjective: function (tree, objective) {
                 var url = okraAPI.createObjective + tree.OrgName;
                 return $http.post(url, {
-                    id: objective.id,
+                    id: objective.Id,
                     treeId: tree.Id,
-                    name: objective.name,
-                    body: objective.body,
+                    name: objective.Name,
+                    body: objective.Body,
                     completed: false,
-                    members: objective.members
+                    members: objective.Members
                 });
             },
             /**
@@ -126,13 +126,13 @@
             createKeyResult: function (tree, keyResult, objective) {
                 var url = okraAPI.createKeyResult + tree.OrgName + '/' + objective.Id;
                 return $http.post(url, {
-                    id: keyResult.id,
+                    id: keyResult.Id,
                     treeId: tree.Id,
-                    name: keyResult.name,
-                    body: keyResult.body,
+                    name: keyResult.Name,
+                    body: keyResult.Body,
                     priority: keyResult.priority,
                     completed: false,
-                    members: keyResult.members
+                    members: keyResult.Members
                 });
             },
             /**
