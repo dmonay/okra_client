@@ -8,7 +8,7 @@ describe('Adding an Organization', function() {
     beforeEach(function() {
         ptor = protractor.getInstance(); //gets the instance of protractor
 
-        browser.get('http://localhost:3333/#/organization/someorg/trees');
+        browser.get('http://localhost:3333/#/organizations');
 
         ptor.waitForAngular(); //waits for angular to bootstrap
 
@@ -18,7 +18,7 @@ describe('Adding an Organization', function() {
     it('Should open the modal and close the modal', function() {
         modal = element(by.css('.md-dialog-container'));
         expect(modal.isPresent()).toBeFalsy();
-        expect(browser.getLocationAbsUrl()).toMatch('/');
+        expect(browser.getLocationAbsUrl()).toMatch('/organizations');
         openModalBtn.click();
         expect(modal.isPresent()).toBeTruthy();
         element(by.css('[ng-click="modal.closeModal()"]')).click();
@@ -36,8 +36,7 @@ describe('Adding an Organization', function() {
       	expect(browser.helpers.hasClass(errorMsg, 'ng-hide')).toBeFalsy();
 
       	orgNameInput.sendKeys('SomeOrg');
-      	submitFormBtn.click();
-      	expect(browser.helpers.hasClass(errorMsg, 'ng-hide')).toBeTruthy();
+        expect(browser.helpers.hasClass(errorMsg, 'ng-hide')).toBeTruthy();
     });
 
 });
