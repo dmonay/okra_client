@@ -8,7 +8,11 @@ describe('Updating mission modal', function() {
     beforeEach(function() {
         ptor = protractor.getInstance(); //gets the instance of protractor
 
-        browser.get('http://localhost:3333/#/organization/someorg/tree/someTree');
+        browser.get('http://localhost:3333/#/organization/someorg/trees');
+
+        element(by.css('a[ok-collapse=""]')).click();
+
+        element.all(by.repeater('tree in treeRow')).get(0).click();
 
         ptor.waitForAngular(); //waits for angular to bootstrap
 
@@ -16,6 +20,7 @@ describe('Updating mission modal', function() {
     });
 
     it('Should open the modal and close the modal', function() {
+
         modal = element(by.css('.md-dialog-container'));
         expect(modal.isPresent()).toBeFalsy();
         openModalBtn.click();
