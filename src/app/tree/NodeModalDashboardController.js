@@ -19,7 +19,7 @@
         }
         if (nodeType === 'Key Result') {
             modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
-            modal.node.priority = 'Low';
+            modal.node.priority = node.Priority ? node.Priority : 'Low';
         }
 
         if (!editMode) {
