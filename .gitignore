@@ -136,3 +136,4 @@ docs
 src/app/templates.js
 .tmp
 coverage
+src/components
