@@ -10,7 +10,7 @@
 		    	<div layout-align="start start" flex="100">
 					<md-input-container flex>
 					   <label>Name</label>
-					   <md-input required name="nodeName" ng-model="node.name" autocapitalize="off"></md-input>
+					   <md-input required name="nodeName" ng-model="modal.node.name" autocapitalize="off"></md-input>
 					</md-input-container>
 				</div>
 				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.nodeForm.nodeName.$invalid" ng-cloak>
@@ -24,7 +24,7 @@
 		    	<div layout-align="start start" flex="100">
 					<md-input-container flex>
 				        <label>Description</label>
-				    	<textarea required name="nodeBody" ng-model="node.body" columns="1" md-maxlength="150"></textarea>
+				    	<textarea required name="nodeBody" ng-model="modal.node.body" columns="1" md-maxlength="150"></textarea>
 				    </md-input-container>
 				</div>
 				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.nodeForm.nodeBody.$invalid" ng-cloak>
@@ -36,7 +36,7 @@
 			</div>
 			<div layout="row" layout-align="center center">
 		    	<div layout-align="start start" layout="row" flex="100">
-					<md-checkbox class="horizontal-checkbox" ng-model="member.isChecked" aria-label="{{member.userName}}" ng-repeat="member in modal.members">
+					<md-checkbox class="horizontal-checkbox" ng-change="modal.addMember(member, member.isChecked)" ng-model="member.isChecked" aria-label="{{member.userName}}" ng-repeat="member in modal.members">
 					  {{member.userName}}
 					</md-checkbox>
 				</div>

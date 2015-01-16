@@ -68,7 +68,7 @@
                 }
             }).then(function (response) {
                 if (response) {
-                    // vm.tree.Members.push(response);
+                    vm.tree[nodeType].push(response);
                 }
             });
         };
