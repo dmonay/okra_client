@@ -47,7 +47,11 @@ module.exports = function (grunt) {
         'protractor:e2e-local'
     ]);
 
-
+    grunt.registerTask('test:full', [
+        'shell:prep-db',
+        'karma:unit',
+        'protractor'
+    ]);
 
     /**
      * Docs tasks

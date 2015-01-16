@@ -176,6 +176,10 @@ ul.list-horizontal li span.sub-text {
   transition: opacity linear 0.5s;
 }
 
+.horizontal-checkbox {
+  float: left;
+}
+
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
   -webkit-transition: max-height ease-in-out 0.9s;
   -moz-transition: max-height ease-in-out 0.9s;
