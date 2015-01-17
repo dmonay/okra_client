@@ -75,8 +75,8 @@
     });
 
     app.constant('hardCoded', {
-        userId: '548e3feebee23fc7375b788b',
-        userName: 'john234',
+        userId: '54b45bcb96a47c239a333a2d',
+        userName: 'auserbro',
         org: 'someorg'
     });
 })();
