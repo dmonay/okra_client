@@ -12,18 +12,18 @@
         modal.name = editMode ? node.Name : nodeType;
         modal.formSubmitted = false;
         modal.members = angular.copy(tree.Members);
-        modal.node = node;
-
-        if (nodeType === 'Objective') {
-            modal.node.Id = 'obj' + (tree.Objectives.length + 1);
-        }
-        if (nodeType === 'Key Result') {
-            modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
-            modal.node.priority = node.Priority ? node.Priority : 'Low';
-        }
+        modal.node = angular.copy(node);
 
         if (!editMode) {
             modal.node.Members = [];
+
+            if (nodeType === 'Objective') {
+                modal.node.Id = 'obj' + (tree.Objectives.length + 1);
+            }
+            if (nodeType === 'Key Result') {
+                modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
+                modal.node.priority = node.Priority ? node.Priority : 'Low';
+            }
         } else {
             _.each(modal.members, function (member, index) {
                 if (modal.node.Members[index] && modal.node.Members[index].userName === member.userName) {
@@ -37,7 +37,21 @@
 
             if (modal.nodeForm.$valid) {
                 var apiMethod = 'create' + nodeType.replace(' ', '');
-                TreeFactory[apiMethod](tree, node, parentNode)
+                TreeFactory[apiMethod](tree, modal.node, parentNode)
+                    .then(function (response) {
+                        if (response.data.Success) {
+                            $mdDialog.hide(response.data);
+                        }
+                    });
+            }
+        };
+
+        modal.updateNode = function () {
+            modal.formSubmitted = true;
+
+            if (modal.nodeForm.$valid) {
+                var apiMethod = 'update' + nodeType.replace(' ', '');
+                TreeFactory[apiMethod](tree, modal.node)
                     .then(function (response) {
                         if (response.data.Success) {
                             $mdDialog.hide(response.data);
@@ -48,9 +62,9 @@
 
         modal.addMember = function (member, added) {
             if (added) {
-                node.Members.push(member);
+                modal.node.Members.push(member);
             } else {
-                node.Members = _.reject(node.Members, function (singleMember) {
+                modal.node.Members = _.reject(node.Members, function (singleMember) {
                     return singleMember === member;
                 });
             }
