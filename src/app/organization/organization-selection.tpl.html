@@ -2,8 +2,8 @@
 	<div layout-align="center center" layout="row">
 		<h1>Organizations</h1>
 	</div>
-	<div class="centered-row" layout="row" layout-align="start center" ng-repeat="organizationRow in vm.organizations">
-		<div class="organization" layout="row" layout-align="start center" ng-repeat="org in organizationRow">
+	<div class="centered-row" layout="row" layout-align="start center" ng-repeat="organizationRow in vm.organizations track by $index">
+		<div class="organization" layout="row" layout-align="start center" ng-repeat="org in organizationRow track by $index">
 			<a href class="tree-node" ui-sref="organization({ organization: org })">
 				{{org}}
 				<md-tooltip ng-if="org.length > 14">
@@ -17,7 +17,7 @@
 			</a>
 		</div>
 	</div>
-	<div layout="row" layout-align="center center" ng-if="!vm.organizations || vm.organizations.length < 0" class="ng-hide">
+	<div layout="row" layout-align="center center" ng-if="vm.organizations.length === 0 || !vm.organizations">
 		New to Okra? That's alright. Click here to create an organization.
 		<md-button class="md-raised md-primary" ng-click="vm.addOrganization()" aria-label="cancel">
 			Create an Organization <i class="fa fa-plus"></i>

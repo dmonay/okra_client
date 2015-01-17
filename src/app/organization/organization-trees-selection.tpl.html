@@ -27,8 +27,8 @@
 	</div> 
 	<!--Trees -->
 	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
-		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.trees">
-			<div class="tree" layout="row" layout-align="start" ng-repeat="tree in treeRow">
+		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.trees track by $index">
+			<div class="tree" layout="row" layout-align="start" ng-repeat="tree in treeRow track by $index">
 				<a class="tree-node" ng-hide="tree.isEditMode" ui-sref="organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.organization })">
 					{{tree.Name}}
 					<md-tooltip ng-if="tree.Name.length > 14">
