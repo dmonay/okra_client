@@ -71,6 +71,7 @@
         getTreesInOrg: 'http://localhost:8080/get/trees/',
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
         createObjective: 'http://localhost:8080/create/objective/', //objective name
+        updateObjective: 'http://localhost:8080/update/objective/properties/', // orgName / treeID / objID
         createKeyResult: 'http://localhost:8080/create/kr/' //keyresult name / objective name
     });
 

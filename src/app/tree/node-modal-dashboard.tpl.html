@@ -53,7 +53,7 @@
 	<div class="md-actions" style="border-top: none;" layout="row" layout-align="center end">
 		<md-button class="md-raised md-warn" ng-click="modal.closeModal()" aria-label="cancel">Cancel</md-button>
 		<md-button ng-if="!modal.editMode" class="md-raised md-primary" ng-click="modal.createNode()" aria-label="add">Add {{modal.name}}</md-button>
-		<md-button ng-if="modal.editMode"class="md-raised md-primary" ng-click="modal.saveNode()" aria-label="add">Save</md-button>
+		<md-button ng-if="modal.editMode"class="md-raised md-primary" ng-click="modal.updateNode()" aria-label="add">Save</md-button>
 		<md-progress-circular ng-if="modal.currentlySaving" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
 	</div>
 <md-dialog>

@@ -111,6 +111,27 @@
             },
             /**
              * @ngdoc method
+             * @name updateObjective
+             * @description Updates Objective to the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new objective.
+             */
+            updateObjective: function (tree, objective) {
+                var url = okraAPI.updateObjective + tree.OrgName + '/' + tree.Id + '/' + objective.Id;
+                return $http.post(url, {
+                    objName: objective.Name,
+                    objbody: objective.Body,
+                    completed: false
+                        // members: objective.Members
+                });
+            },
+            /**
+             * @ngdoc method
              * @name createKeyResult
              * @description Adds key result to the specified objective of the specified tree.
              * @methodOf SharedFactories.TreeFactory
