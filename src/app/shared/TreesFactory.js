@@ -112,7 +112,7 @@
             /**
              * @ngdoc method
              * @name updateObjective
-             * @description Updates Objective to the specified tree.
+             * @description Updates Objective of the specified tree.
              * @methodOf SharedFactories.TreeFactory
              * @param {object}
              *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
@@ -126,7 +126,7 @@
                 return $http.post(url, {
                     objName: objective.Name,
                     objbody: objective.Body,
-                    completed: false
+                    completed: objective.Completed
                         // members: objective.Members
                 });
             },
@@ -154,6 +154,30 @@
                     priority: keyResult.priority,
                     completed: false,
                     members: keyResult.Members
+                });
+            },
+            /**
+             * @ngdoc method
+             * @name updateKeyResult
+             * @description Updates Key Result of the specified tree and objective.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new objective.
+             */
+            updateKeyResult: function (tree, keyResult, objective) {
+                var keyResultIndex = parseFloat(keyResult.Id[2]) - 1;
+                var url = okraAPI.updateKeyResult + tree.OrgName + '/' + tree.Id + '/' + objective.Id +
+                    '/' + keyResultIndex;
+                return $http.post(url, {
+                    krName: keyResult.Name,
+                    krbody: keyResult.Body,
+                    priority: keyResult.priority,
+                    completed: keyResult.Completed,
+                    // members: objective.Members
                 });
             },
             /**
