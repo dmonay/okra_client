@@ -333,3 +333,8 @@ ul.list-horizontal {
 	margin-top: 15px !important;
 }
 
+md-radio-group {
+	md-radio-button:first-child {
+		margin-top: 15px !important;
+	}
+}
