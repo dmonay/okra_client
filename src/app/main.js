@@ -59,14 +59,14 @@
      * @description
      *
      * # okraAPI
-     * An object containing all the endpoints for the restless backend.
+     * An object containing all the endpoints for the restful API backend.
      *
      */
     app.constant('okraAPI', {
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
         updateMembers: 'http://localhost:8080/update/members/',
-        getOrganizations: 'http://localhost:8080/get/orgs/',
+        getOrganizations: 'http://localhost:8080/get/orgs/all/',
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
