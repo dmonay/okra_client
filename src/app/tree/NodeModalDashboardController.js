@@ -22,7 +22,6 @@
             }
             if (nodeType === 'Key Result') {
                 modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
-                modal.node.priority = node.Priority ? node.Priority : 'Low';
             }
         } else {
             _.each(modal.members, function (member, index) {
@@ -30,6 +29,10 @@
                     member.isChecked = true;
                 }
             });
+        }
+
+        if (nodeType === 'Key Result') {
+            modal.node.priority = node.Priority ? node.Priority : 'Low';
         }
 
         modal.createNode = function () {
@@ -51,7 +54,7 @@
 
             if (modal.nodeForm.$valid) {
                 var apiMethod = 'update' + nodeType.replace(' ', '');
-                TreeFactory[apiMethod](tree, modal.node)
+                TreeFactory[apiMethod](tree, modal.node, parentNode)
                     .then(function (response) {
                         if (response.data.Success) {
                             $mdDialog.hide(response.data);

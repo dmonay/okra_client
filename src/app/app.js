@@ -72,7 +72,8 @@
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
         createObjective: 'http://localhost:8080/create/objective/', //objective name
         updateObjective: 'http://localhost:8080/update/objective/properties/', // orgName / treeID / objID
-        createKeyResult: 'http://localhost:8080/create/kr/' //keyresult name / objective name
+        createKeyResult: 'http://localhost:8080/create/kr/', //keyresult name / objective name
+        updateKeyResult: 'http://localhost:8080/update/kr/properties/' // orgName / treeid / objID / krID
     });
 
     app.constant('hardCoded', {

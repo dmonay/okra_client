@@ -72,7 +72,8 @@
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
         createObjective: 'http://localhost:8080/create/objective/', //objective name
         updateObjective: 'http://localhost:8080/update/objective/properties/', // orgName / treeID / objID
-        createKeyResult: 'http://localhost:8080/create/kr/' //keyresult name / objective name
+        createKeyResult: 'http://localhost:8080/create/kr/', //keyresult name / objective name
+        updateKeyResult: 'http://localhost:8080/update/kr/properties/' // orgName / treeid / objID / krID
     });
 
     app.constant('hardCoded', {
@@ -515,7 +516,7 @@
             /**
              * @ngdoc method
              * @name updateObjective
-             * @description Updates Objective to the specified tree.
+             * @description Updates Objective of the specified tree.
              * @methodOf SharedFactories.TreeFactory
              * @param {object}
              *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
@@ -529,7 +530,7 @@
                 return $http.post(url, {
                     objName: objective.Name,
                     objbody: objective.Body,
-                    completed: false
+                    completed: objective.Completed
                         // members: objective.Members
                 });
             },
@@ -557,6 +558,30 @@
                     priority: keyResult.priority,
                     completed: false,
                     members: keyResult.Members
+                });
+            },
+            /**
+             * @ngdoc method
+             * @name updateKeyResult
+             * @description Updates Key Result of the specified tree and objective.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the objective is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new objective.
+             */
+            updateKeyResult: function (tree, keyResult, objective) {
+                var keyResultIndex = parseFloat(keyResult.Id[2]) - 1;
+                var url = okraAPI.updateKeyResult + tree.OrgName + '/' + tree.Id + '/' + objective.Id +
+                    '/' + keyResultIndex;
+                return $http.post(url, {
+                    krName: keyResult.Name,
+                    krbody: keyResult.Body,
+                    priority: keyResult.priority,
+                    completed: keyResult.Completed,
+                    // members: objective.Members
                 });
             },
             /**
@@ -1158,7 +1183,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
             }
             if (nodeType === 'Key Result') {
                 modal.node.Id = 'kr' + (parentNode.KeyResults.length + 1);
-                modal.node.priority = node.Priority ? node.Priority : 'Low';
             }
         } else {
             _.each(modal.members, function (member, index) {
@@ -1166,6 +1190,10 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
                     member.isChecked = true;
                 }
             });
+        }
+
+        if (nodeType === 'Key Result') {
+            modal.node.priority = node.Priority ? node.Priority : 'Low';
         }
 
         modal.createNode = function () {
@@ -1187,7 +1215,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
 
             if (modal.nodeForm.$valid) {
                 var apiMethod = 'update' + nodeType.replace(' ', '');
-                TreeFactory[apiMethod](tree, modal.node)
+                TreeFactory[apiMethod](tree, modal.node, parentNode)
                     .then(function (response) {
                         if (response.data.Success) {
                             $mdDialog.hide(response.data);
