@@ -193,6 +193,7 @@ ul.list-horizontal li span.sub-text {
 }
 .organization-wrapper .tree-node {
   padding: 20px 20px;
+  position: relative;
   background-color: #c2c5c3;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -227,25 +228,24 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .organization.active .tree-node {
   background-color: #0d8120;
 }
-.organization-wrapper .objective:after {
+.organization-wrapper .objective .tree-node:after {
   content: "OBJ";
 }
-.organization-wrapper .key-result:after {
+.organization-wrapper .key-result .tree-node:after {
   content: "KR";
 }
-.organization-wrapper .tree:after {
+.organization-wrapper .tree .tree-node:after {
   content: "TR";
 }
-.organization-wrapper .objective:after, .organization-wrapper .key-result:after, .organization-wrapper .tree:after {
+.organization-wrapper .objective .tree-node:after, .organization-wrapper .key-result .tree-node:after, .organization-wrapper .tree .tree-node:after {
   font-size: 12px;
-  position: relative;
-  margin-left: -28px;
-  left: -40px;
-  top: 5px;
+  position: absolute;
+  top: 7%;
+  right: 5%;
   font-weight: 600;
   color: #139e2a;
 }
-.organization-wrapper .objective.add-node:after, .organization-wrapper .key-result.add-node:after {
+.organization-wrapper .objective.add-node .tree-node:after, .organization-wrapper .key-result.add-node .tree-node:after {
   content: "";
 }
 .organization-wrapper .add-node {
