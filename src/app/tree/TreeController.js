@@ -14,6 +14,12 @@
                 });
         }
 
+        function getNodeIndex(array, id) {
+            return _.findIndex(array, function (node) {
+                return node.Id === id;
+            });
+        }
+
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
         vm.changeCurrentObjective = function (objective) {
@@ -70,8 +76,34 @@
                     parentNode: parentNode
                 }
             }).then(function (response) {
-                if (response && response.Success) {
-                    getTree();
+                if (response) {
+                    var node = response.node,
+                        parentNode = response.parentNode;
+
+                    if (editMode) {
+                        var objectiveIndex;
+                        if (nodeType === 'Objective') {
+                            objectiveIndex = getNodeIndex(vm.tree.Objectives, node.Id);
+                            vm.tree.Objectives[objectiveIndex].Name = node.Name;
+                            vm.tree.Objectives[objectiveIndex].Body = node.Body;
+                        } else {
+                            var keyResultIndex = getNodeIndex(parentNode.KeyResults, node.Id);
+                            objectiveIndex = getNodeIndex(vm.tree.Objectives, parentNode.Id);
+                            vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Name =
+                                node.Name;
+                            vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Body =
+                                node.Body;
+                            vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Priority =
+                                node.priority;
+                        }
+                    } else {
+                        if (nodeType === 'Objective') {
+                            vm.tree.Objectives.push(node);
+                        } else {
+                            vm.currentObjective.KeyResults.push(node);
+                        }
+
+                    }
                 }
             });
         };

@@ -43,7 +43,10 @@
                 TreeFactory[apiMethod](tree, modal.node, parentNode)
                     .then(function (response) {
                         if (response.data.Success) {
-                            $mdDialog.hide(response.data);
+                            $mdDialog.hide({
+                                node: modal.node,
+                                parentNode: parentNode
+                            });
                         }
                     });
             }
@@ -57,7 +60,10 @@
                 TreeFactory[apiMethod](tree, modal.node, parentNode)
                     .then(function (response) {
                         if (response.data.Success) {
-                            $mdDialog.hide(response.data);
+                            $mdDialog.hide({
+                                node: modal.node,
+                                parentNode: parentNode
+                            });
                         }
                     });
             }
