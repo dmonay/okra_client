@@ -56,14 +56,14 @@ md-item {
   margin: 0px 10px;
 }
 
-.md-dialog-container md-dialog:first-child {
-  padding: 15px;
-}
 .md-dialog-container md-content {
   padding-bottom: 0px;
 }
 .md-dialog-container md-tooltip .md-background {
   height: 30px;
+}
+.md-dialog-container .md-subheader.md-default-theme {
+  background-color: transparent;
 }
 
 md-toast .md-button {
@@ -178,6 +178,15 @@ ul.list-horizontal li span.sub-text {
 
 .horizontal-checkbox {
   float: left;
+}
+
+.completed {
+  background-color: #0d8120 !important;
+  background-image: linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.5) 50%);
+  background-size: 40px 50px;
+}
+.completed .md-subheader {
+  color: white;
 }
 
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {

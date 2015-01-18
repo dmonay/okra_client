@@ -55,9 +55,6 @@ md-item {
 }
 // Dialog/modal styles =========================================================
 .md-dialog-container {
-	md-dialog:first-child {
-		padding: 15px;
-	}
 
 	md-content {
 		padding-bottom: 0px;
@@ -67,6 +64,10 @@ md-item {
 		.md-background {
 			height: 30px;
 		}
+	}
+
+	.md-subheader.md-default-theme {
+		background-color: transparent;
 	}
 }
 // Toast Styles ================================================================
@@ -175,6 +176,16 @@ ul.list-horizontal {
 
 .horizontal-checkbox {
 	float: left;
+}
+
+.completed {
+	background-color: $okraGreen !important;
+	background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.5) 50%);
+	background-size: 40px 50px;
+
+	.md-subheader {
+		color: $white;
+	}
 }
 // Organization ================================================================
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
