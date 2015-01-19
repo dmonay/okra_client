@@ -63,7 +63,6 @@
         };
 
         vm.openNodeModalDashboard = function ($event, editMode, nodeType, node, parentNode, secondaryParentNode) {
-            console.log(secondaryParentNode);
             $mdDialog.show({
                 targetEvent: $event,
                 templateUrl: 'app/tree/node-modal-dashboard.tpl.html',
