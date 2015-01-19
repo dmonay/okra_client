@@ -62,7 +62,8 @@
             });
         };
 
-        vm.openNodeModalDashboard = function ($event, editMode, nodeType, node, parentNode) {
+        vm.openNodeModalDashboard = function ($event, editMode, nodeType, node, parentNode, secondaryParentNode) {
+            console.log(secondaryParentNode);
             $mdDialog.show({
                 targetEvent: $event,
                 templateUrl: 'app/tree/node-modal-dashboard.tpl.html',
@@ -73,7 +74,8 @@
                     nodeType: nodeType,
                     node: node,
                     tree: vm.tree,
-                    parentNode: parentNode
+                    parentNode: parentNode,
+                    secondaryParentNode: secondaryParentNode
                 }
             }).then(function (response) {
                 if (response) {
@@ -103,9 +105,10 @@
                         if (nodeType === 'Objective') {
                             node.KeyResults = [];
                             vm.tree.Objectives.push(node);
-                        } else {
-                            console.log(node);
+                        } else if (nodeType === 'Key Result') {
                             vm.currentObjective.KeyResults.push(node);
+                        } else {
+                            vm.currentKeyResult.Tasks.push(node);
                         }
 
                     }
