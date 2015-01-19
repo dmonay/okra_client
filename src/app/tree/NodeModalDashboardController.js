@@ -32,7 +32,7 @@
         }
 
         if (nodeType === 'Key Result') {
-            modal.node.priority = node.Priority ? node.Priority : 'Low';
+            modal.node.Priority = node.Priority ? node.Priority : 'Low';
         }
 
         modal.createNode = function () {
