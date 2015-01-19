@@ -7,7 +7,6 @@
         parentNode, secondaryParentNode) {
         var modal = this;
         var secondParentNode;
-        console.log(parentNode);
         modal.editMode = editMode;
         modal.nodeType = nodeType;
         modal.name = editMode ? node.Name : nodeType;

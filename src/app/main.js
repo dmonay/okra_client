@@ -1195,7 +1195,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         parentNode, secondaryParentNode) {
         var modal = this;
         var secondParentNode;
-        console.log(parentNode);
         modal.editMode = editMode;
         modal.nodeType = nodeType;
         modal.name = editMode ? node.Name : nodeType;
@@ -1349,7 +1348,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         };
 
         vm.openNodeModalDashboard = function ($event, editMode, nodeType, node, parentNode, secondaryParentNode) {
-            console.log(secondaryParentNode);
             $mdDialog.show({
                 targetEvent: $event,
                 templateUrl: 'app/tree/node-modal-dashboard.tpl.html',
