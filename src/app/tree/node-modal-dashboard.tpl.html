@@ -1,5 +1,5 @@
 <md-dialog flex="30">
-	<div layout="row" layout-align="center">
+	<div layout="row" layout-align="center" ng-class="{completed: modal.node.Completed === true}">
 	    <md-subheader>
 	    	<h3><span ng-if="!modal.editMode">Create</span> {{modal.name}}</h3>
 	    </md-subheader>
@@ -54,6 +54,7 @@
 		<md-button class="md-raised md-warn" ng-click="modal.closeModal()" aria-label="cancel">Cancel</md-button>
 		<md-button ng-if="!modal.editMode" class="md-raised md-primary" ng-click="modal.createNode()" aria-label="add">Add {{modal.name}}</md-button>
 		<md-button ng-if="modal.editMode"class="md-raised md-primary" ng-click="modal.updateNode()" aria-label="add">Save</md-button>
+		<md-checkbox ng-model="modal.node.Completed" aria-label="completed">Completed?</md-checkbox> 
 		<md-progress-circular ng-if="modal.currentlySaving" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
 	</div>
 <md-dialog>
