@@ -32,13 +32,13 @@
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives">
-			<a href ng-click="vm.openNodeModalDashboard($event, true, 'Objective', objective, false)" class="tree-node" layout-align="start" ng-show="!objective.isEditMode">
+			<a href ng-click="vm.openNodeModalDashboard($event, true, 'Objective', objective, false)" class="tree-node" ng-class="{completed: objective.Completed === true}" layout-align="start" ng-show="!objective.isEditMode">
 				{{objective.Name}}
 				<md-tooltip ng-if="objective.Name.length > 14">
 					{{objective.Name}}
 				</md-tooltip>
 			</a>
-			<div class="tree-node" layout-align="start" ng-show="objective.isEditMode">
+			<div class="tree-node" ng-class="{completed: objective.Completed === true}" layout-align="start" ng-show="objective.isEditMode">
 				<md-input-container>
 				   <md-input required class="short" name="treeName" ng-model="objective.newName" autocapitalize="off"></md-input>
 				</md-input-container>
@@ -70,13 +70,13 @@
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.KeyResults">
-			<a href ng-click="vm.openNodeModalDashboard($event, true, 'Key Result', keyResult, vm.currentObjective)" class="tree-node" ng-show="!keyResult.isEditMode">
+			<a href ng-click="vm.openNodeModalDashboard($event, true, 'Key Result', keyResult, vm.currentObjective)" class="tree-node" ng-class="{completed: keyResult.Completed === true}" ng-show="!keyResult.isEditMode">
 				{{keyResult.Name}}
 				<md-tooltip ng-if="keyResult.Name.length > 14">
 					{{keyResult.Name}}
 				</md-tooltip>
 			</a>
-			<div class="tree-node" layout-align="start" ng-show="keyResult.isEditMode">
+			<div class="tree-node" ng-class="{completed: keyResult.Completed === true}" layout-align="start" ng-show="keyResult.isEditMode">
 				<md-input-container>
 				   <md-input required class="short" name="treeName" ng-model="keyResult.newName" autocapitalize="off"></md-input>
 				</md-input-container>

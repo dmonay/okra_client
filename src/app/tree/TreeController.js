@@ -86,6 +86,7 @@
                             objectiveIndex = getNodeIndex(vm.tree.Objectives, node.Id);
                             vm.tree.Objectives[objectiveIndex].Name = node.Name;
                             vm.tree.Objectives[objectiveIndex].Body = node.Body;
+                            vm.tree.Objectives[objectiveIndex].Completed = node.Completed;
                         } else {
                             var keyResultIndex = getNodeIndex(parentNode.KeyResults, node.Id);
                             objectiveIndex = getNodeIndex(vm.tree.Objectives, parentNode.Id);
@@ -95,6 +96,8 @@
                                 node.Body;
                             vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Priority =
                                 node.Priority;
+                            vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Completed =
+                                node.Completed;
                         }
                     } else {
                         if (nodeType === 'Objective') {
