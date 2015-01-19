@@ -94,12 +94,14 @@
                             vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Body =
                                 node.Body;
                             vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Priority =
-                                node.priority;
+                                node.Priority;
                         }
                     } else {
                         if (nodeType === 'Objective') {
+                            node.KeyResults = [];
                             vm.tree.Objectives.push(node);
                         } else {
+                            console.log(node);
                             vm.currentObjective.KeyResults.push(node);
                         }
 
