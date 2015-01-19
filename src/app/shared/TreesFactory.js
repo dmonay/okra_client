@@ -96,7 +96,7 @@
              * @param {object}
              *     Objective Object containing the objective information (name, body, completion status, id, members)
              *
-             * @returns {object} A response from the server containing a new objective.
+             * @returns {object} A response from the server.
              */
             createObjective: function (tree, objective) {
                 var url = okraAPI.createObjective + tree.OrgName;
@@ -119,7 +119,7 @@
              * @param {object}
              *     Objective Object containing the objective information (name, body, completion status, id, members)
              *
-             * @returns {object} A response from the server containing a new objective.
+             * @returns {object} A response from the server.
              */
             updateObjective: function (tree, objective) {
                 var url = okraAPI.updateObjective + tree.OrgName + '/' + tree.Id + '/' + objective.Id;
@@ -142,7 +142,7 @@
              * @param {object}
              *     KeyResult Object containing the key result information (name, body, completion status, id, members)
              *
-             * @returns {object} A response from the server containing a new key result.
+             * @returns {object} A response from the server.
              */
             createKeyResult: function (tree, keyResult, objective) {
                 var url = okraAPI.createKeyResult + tree.OrgName + '/' + objective.Id;
@@ -166,7 +166,7 @@
              * @param {object}
              *     Objective Object containing the objective information (name, body, completion status, id, members)
              *
-             * @returns {object} A response from the server containing a new objective.
+             * @returns {object} A response from the server.
              */
             updateKeyResult: function (tree, keyResult, objective) {
                 var keyResultIndex = parseFloat(keyResult.Id[2]) - 1;
@@ -178,6 +178,33 @@
                     priority: keyResult.priority,
                     completed: keyResult.Completed,
                     // members: objective.Members
+                });
+            },
+            /**
+             * @ngdoc method
+             * @name createTask
+             * @description Adds a task to the specified key result of the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the key result is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             * @param {object}
+             *     KeyResult Object containing the key result information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new key result.
+             */
+            createTask: function (tree, task, objective, keyResult) {
+                var keyResultIndex = parseFloat(keyResult.Id[2]) - 1;
+                var url = okraAPI.createTask + tree.OrgName + '/' + objective.Id + '/' + keyResultIndex;
+                return $http.post(url, {
+                    id: task.Id,
+                    treeId: tree.Id,
+                    name: task.Name,
+                    body: task.Body,
+                    priority: task.priority,
+                    completed: false,
+                    members: task.Members
                 });
             },
             /**
