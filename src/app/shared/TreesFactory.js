@@ -209,6 +209,34 @@
             },
             /**
              * @ngdoc method
+             * @name updateTask
+             * @description Updates a task tied to the specified key result of the specified tree.
+             * @methodOf SharedFactories.TreeFactory
+             * @param {object}
+             *     Tree The tree object that the key result is tied to (includes tree id, name and orgname).
+             * @param {object}
+             *     Objective Object containing the objective information (name, body, completion status, id, members)
+             * @param {object}
+             *     KeyResult Object containing the key result information (name, body, completion status, id, members)
+             *
+             * @returns {object} A response from the server containing a new key result.
+             */
+            updateTask: function (tree, task, objective, keyResult) {
+                var keyResultIndex = parseFloat(keyResult.Id[2]) - 1,
+                    taskIndex = parseFloat(task.Id[4]) - 1,
+                    url = okraAPI.updateTask + tree.OrgName + '/' + tree.Id + '/' + objective.Id + '/' +
+                    keyResultIndex + '/' + taskIndex;
+
+                return $http.post(url, {
+                    taskname: task.Name,
+                    taskbody: task.Body,
+                    priority: task.priority,
+                    completed: false,
+                    // members: task.Members
+                });
+            },
+            /**
+             * @ngdoc method
              * @name formatTrees
              * @description Creates a new member object.
              * @methodOf SharedFactories.TreeFactory

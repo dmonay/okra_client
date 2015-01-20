@@ -276,6 +276,7 @@ ul.list-horizontal li span.sub-text {
   border-radius: 5px;
   min-width: 100px;
   margin-top: 10px;
+  text-decoration: none;
 }
 .organization-wrapper .objective + .objective,
 .organization-wrapper .key-result + .key-result,

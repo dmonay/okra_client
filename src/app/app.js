@@ -70,11 +70,12 @@
         createTree: 'http://localhost:8080/create/tree/',
         getTreesInOrg: 'http://localhost:8080/get/trees/',
         getSingleTreeInOrg: 'http://localhost:8080/get/trees/',
-        createObjective: 'http://localhost:8080/create/objective/', //objective name
+        createObjective: 'http://localhost:8080/create/objective/', // objective name
         updateObjective: 'http://localhost:8080/update/objective/properties/', // orgName / treeID / objID
-        createKeyResult: 'http://localhost:8080/create/kr/', //keyresult name / objective name
+        createKeyResult: 'http://localhost:8080/create/kr/', // keyresult name / objective name
         updateKeyResult: 'http://localhost:8080/update/kr/properties/', // orgName / treeid / objID / krIndex
-        createTask: 'http://localhost:8080/create/task/' // orgName / objId / taskIndex
+        createTask: 'http://localhost:8080/create/task/', // orgName / objId / taskIndex
+        updateTask: 'http://localhost:8080/update/task/properties/' // orgName / treeId / objId / krIndex / taskIndex
     });
 
     app.constant('hardCoded', {

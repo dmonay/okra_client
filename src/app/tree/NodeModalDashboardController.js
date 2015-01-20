@@ -25,7 +25,6 @@
             }
             if (nodeType === 'Task') {
                 modal.node.Id = 'task' + (secondaryParentNode.Tasks.length + 1);
-                secondParentNode = secondaryParentNode;
             }
         } else {
             _.each(modal.members, function (member, index) {
@@ -37,6 +36,9 @@
 
         if (nodeType === 'Key Result' || nodeType === 'Task') {
             modal.node.Priority = node.Priority ? node.Priority : 'Low';
+        }
+        if (nodeType === 'Task') {
+            secondParentNode = secondaryParentNode;
         }
 
         modal.createNode = function () {
@@ -58,10 +60,9 @@
 
         modal.updateNode = function () {
             modal.formSubmitted = true;
-
             if (modal.nodeForm.$valid) {
                 var apiMethod = 'update' + nodeType.replace(' ', '');
-                TreeFactory[apiMethod](tree, modal.node, parentNode)
+                TreeFactory[apiMethod](tree, modal.node, parentNode, secondParentNode)
                     .then(function (response) {
                         if (response.data.Success) {
                             $mdDialog.hide({

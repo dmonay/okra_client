@@ -291,6 +291,7 @@ ul.list-horizontal {
 		@include border-radius(5px);
 		min-width: 100px;
 		margin-top: 10px;
+		text-decoration: none;
 	}
 
 	.objective + .objective, 
