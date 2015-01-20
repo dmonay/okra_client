@@ -106,14 +106,14 @@
 	</div>
 
 	<!-- Tasks -->
-	<div layout="column" class="collapse" ok-collapse linked-to="taskNode" layout-align="space-around center" all-linked-nodes="vm.linkedNodeIds" id="taskNode">		
+	<div layout="column" class="collapse task-column" ok-collapse linked-to="taskNode" layout-align="space-around center" all-linked-nodes="vm.linkedNodeIds" id="taskNode">		
 		<div layout="row" layout-align="start center" ng-repeat="task in vm.currentKeyResult.Tasks">
-			<md-checkbox ng-model="task.complete" aria-label></md-checkbox>
+			<md-checkbox ng-model="task.Completed" aria-label></md-checkbox>
 			<a href class="task-node" ng-click="vm.openNodeModalDashboard($event, true, 'Task', task, vm.currentObjective, vm.currentKeyResult)">
 				{{task.Name}}
 			</a>
 		</div>
-		<div layout="row" layout-align="start center" ng-if="vm.currentKeyResult.Tasks.length !== 9">
+		<div class="task-row" layout="row" layout-align="start center" ng-if="vm.currentKeyResult.Tasks.length !== 9">
 			<md-button ng-click="vm.openNodeModalDashboard($event, false, 'Task', {}, vm.currentObjective, vm.currentKeyResult)"class="md-primary md-raised">Add Task <i class="fa fa-plus"></i></md-button>
 		</div>
 	</div>

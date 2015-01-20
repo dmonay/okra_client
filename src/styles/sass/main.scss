@@ -301,6 +301,11 @@ ul.list-horizontal {
 		margin-left: 25px;
 	}
 
+	.task-column {
+		max-height: 100%;
+		margin-bottom: 20px;
+	}
+
 	[layout-align="center center"], [layout-align="center"], [layout-align="start center"] {
 		margin-top: 25px;
 	}
