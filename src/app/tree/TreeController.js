@@ -88,7 +88,7 @@
                             vm.tree.Objectives[objectiveIndex].Name = node.Name;
                             vm.tree.Objectives[objectiveIndex].Body = node.Body;
                             vm.tree.Objectives[objectiveIndex].Completed = node.Completed;
-                        } else {
+                        } else if (nodeType === 'Key Result') {
                             var keyResultIndex = getNodeIndex(parentNode.KeyResults, node.Id);
                             objectiveIndex = getNodeIndex(vm.tree.Objectives, parentNode.Id);
                             vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Name =
@@ -99,6 +99,12 @@
                                 node.Priority;
                             vm.tree.Objectives[objectiveIndex].KeyResults[keyResultIndex].Completed =
                                 node.Completed;
+                        } else {
+                            var taskIndex = getNodeIndex(vm.currentKeyResult.Tasks, node.Id);
+                            vm.currentKeyResult.Tasks[taskIndex].Name = node.Name;
+                            vm.currentKeyResult.Tasks[taskIndex].Body = node.Body;
+                            vm.currentKeyResult.Tasks[taskIndex].Priority = node.Priority;
+                            vm.currentKeyResult.Tasks[taskIndex].Completed = node.Completed;
                         }
                     } else {
                         if (nodeType === 'Objective') {

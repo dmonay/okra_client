@@ -231,7 +231,7 @@
                     taskname: task.Name,
                     taskbody: task.Body,
                     priority: task.priority,
-                    completed: false,
+                    completed: task.Completed,
                     // members: task.Members
                 });
             },
