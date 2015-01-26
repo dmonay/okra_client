@@ -43,7 +43,14 @@
 				   <md-input required class="short" name="treeName" ng-model="objective.newName" autocapitalize="off"></md-input>
 				</md-input-container>
 			</div>
-			<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="objective">
+			<div layout="column" layout-align="start end" 
+				ok-edit-node 
+				edit="fa-pencil" 
+				cancel="fa-close" 
+				save="fa-check" 
+				node="objective"
+				tree="vm.tree"
+				node-type="Objective">
 	            <md-button href class="md-raised" ng-click="vm.changeCurrentObjective(objective)" ok-collapse ok-toggle-color linked-to="objectiveNode"  all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
@@ -51,7 +58,14 @@
 					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
-	        <div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="objective">
+	        <div layout="column" layout-align="start end" 
+	        	ok-edit-node 
+	        	edit="fa-pencil" 
+	        	cancel="fa-close" 
+	        	save="fa-check" 
+	        	node="objective"
+	        	tree="vm.tree"
+	        	node-type="Objective">
 	        	<md-button ng-show="objective.isEditMode" href class="md-raised md-primary fade-in" aria-label="save">
 					<i class="fa fa-check"></i>
 	        	</md-button>
@@ -81,7 +95,15 @@
 				   <md-input required class="short" name="treeName" ng-model="keyResult.newName" autocapitalize="off"></md-input>
 				</md-input-container>
 			</div>
-			<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="keyResult">
+			<div layout="column" layout-align="start end" 
+				ok-edit-node 
+				edit="fa-pencil" 
+				cancel="fa-close" 
+				save="fa-check" 
+				node="keyResult"
+				tree="vm.tree"
+	        	node-type="KeyResult"
+	        	parent="vm.currentObjective">
 				<md-button href class="md-raised" ng-click="vm.changeCurrentKeyResult(keyResult)" ok-collapse ok-toggle-color linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
@@ -89,7 +111,15 @@
 					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
-	        <div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="keyResult">
+	        <div layout="column" layout-align="start end" 
+	        	 ok-edit-node 
+	        	 edit="fa-pencil" 
+	        	 cancel="fa-close" 
+	        	 save="fa-check" 
+	        	 node="keyResult"
+				 tree="vm.tree"
+	        	 node-type="KeyResult"
+	        	 parent="vm.currentObjective">
 	        	<md-button ng-show="keyResult.isEditMode" href class="md-raised md-primary fade-in" aria-label="save">
 					<i class="fa fa-check"></i>
 	        	</md-button>
