@@ -101,13 +101,11 @@ md-checkbox:focus .md-label {
 	}
 }
 //Global Styles ================================================================
-body {
-	color: $white;
-}
 
 md-content {
 	height: 100vh;
-	background: url('../../assets/texture2.png') !important;
+	// background: url('../../assets/nn.png') !important;
+	background-color: #2E2E2E !important;
 }
 
 .error-msg {
