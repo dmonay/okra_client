@@ -14,7 +14,7 @@
 /*=404Error===================239=============================*/
 @-webkit-keyframes glowGreen {
   0% {
-    color: #0d8120;
+    color: #99b742;
   }
 
   100% {
@@ -23,7 +23,7 @@
 }
 @-moz-keyframes glowGreen {
   0% {
-    color: #0d8120;
+    color: #99b742;
   }
 
   100% {
@@ -32,7 +32,7 @@
 }
 @-ms-keyframes glowGreen {
   0% {
-    color: #0d8120;
+    color: #99b742;
   }
 
   100% {
@@ -41,7 +41,7 @@
 }
 @keyframes glowGreen {
   0% {
-    color: #0d8120;
+    color: #99b742;
   }
 
   100% {
@@ -182,7 +182,7 @@ ul.list-horizontal li span.sub-text {
 }
 
 .completed {
-  background-color: #0d8120 !important;
+  background-color: #99b742 !important;
   background-image: linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.5) 50%);
   background-size: 40px 50px;
 }
@@ -236,7 +236,7 @@ ul.list-horizontal li span.sub-text {
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
 .organization-wrapper .organization.active .tree-node {
-  background-color: #0d8120;
+  background-color: #99b742;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
@@ -262,13 +262,13 @@ ul.list-horizontal li span.sub-text {
   font-weight: 600;
 }
 .organization-wrapper .add-node .tree-node {
-  color: #139e2a;
+  color: #99b742;
 }
 .organization-wrapper .key-result.add-node {
   font-size: 14px;
 }
 .organization-wrapper .task-node {
-  background-color: #139e2a;
+  background-color: #99b742;
   padding: 10px 10px;
   color: white;
   -webkit-border-radius: 5px;
@@ -301,8 +301,8 @@ ul.list-horizontal li span.sub-text {
 }
 
 .green-overlay {
-  background-color: #0d8120;
-  color: #0d8120;
+  background-color: #99b742;
+  color: #99b742;
   height: 100%;
   position: fixed !important;
   top: 0;
@@ -315,7 +315,7 @@ ul.list-horizontal li span.sub-text {
   color: white;
 }
 .green-overlay input {
-  color: #0d8120;
+  color: #99b742;
 }
 .green-overlay .side-nav-btn {
   margin: 0.85em 0;
