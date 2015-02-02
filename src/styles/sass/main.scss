@@ -19,8 +19,8 @@
 // Variables ====================================================================
 $white  : #ffffff;
 $black : #000000;
-$okraGreen : #0D8120;
-$okraLightGreen : #139E2A;
+$okraGreen : #99b742;
+$okraLightGreen : #99b742;
 $grey : #C2C5C3;
 $warningRed : #ef5350;
 
@@ -104,7 +104,6 @@ md-checkbox:focus .md-label {
 
 md-content {
 	height: 100vh;
-	// background: url('../../assets/nn.png') !important;
 	background-color: #2E2E2E !important;
 }
 
