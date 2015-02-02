@@ -42,7 +42,7 @@
     app.config(function ($mdThemingProvider) {
         // Extend the red theme with a few different colors
         var okraGreen = $mdThemingProvider.extendPalette('green', {
-            '500': '#0d8120'
+            '500': '#99b742'
         });
 
         // Register the new color palette map with the name <code>neonRed</code>
