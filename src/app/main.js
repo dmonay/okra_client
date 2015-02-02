@@ -993,8 +993,6 @@
     app.filter('okEncrypt', okEncrypt);
 })();
 
-
-
 (function () {
     'use strict';
 
@@ -1461,6 +1459,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
                             node.KeyResults = [];
                             vm.tree.Objectives.push(node);
                         } else if (nodeType === 'Key Result') {
+                            node.Tasks = [];
                             vm.currentObjective.KeyResults.push(node);
                         } else {
                             vm.currentKeyResult.Tasks.push(node);
