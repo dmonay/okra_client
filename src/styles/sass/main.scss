@@ -101,6 +101,15 @@ md-checkbox:focus .md-label {
 	}
 }
 //Global Styles ================================================================
+body {
+	color: $white;
+}
+
+md-content {
+	height: 100vh;
+	background: url('../../assets/footer_lodyas.png') !important;
+}
+
 .error-msg {
 	color: $warningRed;
 	opacity: 1;
