@@ -111,6 +111,7 @@
                             node.KeyResults = [];
                             vm.tree.Objectives.push(node);
                         } else if (nodeType === 'Key Result') {
+                            node.Tasks = [];
                             vm.currentObjective.KeyResults.push(node);
                         } else {
                             vm.currentKeyResult.Tasks.push(node);
