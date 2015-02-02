@@ -21,6 +21,7 @@
     color: white;
   }
 }
+
 @-moz-keyframes glowGreen {
   0% {
     color: #0d8120;
@@ -30,6 +31,7 @@
     color: white;
   }
 }
+
 @-ms-keyframes glowGreen {
   0% {
     color: #0d8120;
@@ -39,6 +41,7 @@
     color: white;
   }
 }
+
 @keyframes glowGreen {
   0% {
     color: #0d8120;
@@ -48,12 +51,15 @@
     color: white;
   }
 }
+
 md-item {
   margin: 0px 10px;
 }
 
 .md-dialog-container md-content {
   padding-bottom: 0px;
+  background-color: white !important;
+  height: initial;
 }
 .md-dialog-container md-tooltip .md-background {
   height: 30px;
@@ -85,6 +91,10 @@ md-checkbox:focus .md-label {
 
 .horizontal-radio-group md-radio-button:first-child {
   margin-top: 15px;
+}
+
+body {
+  color: white;
 }
 
 md-content {
