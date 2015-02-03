@@ -10,14 +10,30 @@
         <link rel="stylesheet" type="text/css" href="components/angular-material/angular-material.min.css">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="styles/css/main.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Raleway:700,400' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div layout="column" layout-fill>
           <md-toolbar ng-controller="HeaderController as vm">
             <div class="md-toolbar-tools">
               <img style="width: 100px;" src="assets/okra-white-logo.png">
+              <div class="organization-widget">
+                <img class="logo" src="http://img4.wikia.nocookie.net/__cb20140723203502/thehungergames/images/b/b9/House_stark_by_azraeuz-d61daf1.png">
+                <div class="org-name">Winterfell Clan</div>
+                <div>
+                  <md-button class="md-raised" aria-label="members">
+                    Members                    
+                  </md-button>
+                </div>
+              </div>
+
               <!-- fill up the space between left and right area -->
-              <span flex></span>
+              <h1 class="username" flex>
+                Jon Snow
+              </h1>
+              <md-button aria-label="settings">
+                    <i class="fa fa-cog"></i>                    
+              </md-button>
               <md-button aria-label="user profile">
                     <i class="fa fa-user"></i>                    
               </md-button>

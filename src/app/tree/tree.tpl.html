@@ -76,7 +76,8 @@
 		</div>
 		<div class="objective add-node" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
 			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)" class="tree-node" layout-align="start">
-				Add Objective <i class="fa fa-plus"></i>
+				<div>Add</div> 
+				<div>Objective <i class="fa fa-plus"></i></div>
 			</a>
 		</div>
 	</div>
@@ -130,7 +131,8 @@
 		</div>
 		<div class="key-result add-node" layout="row" layout-align="start" ng-if="vm.currentObjective.KeyResults.length !== 4">
 			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)" class="tree-node" layout-align="start">
-				Add Key Result <i class="fa fa-plus"></i>
+				<div>Add</div>
+				<div>Key Result <i class="fa fa-plus"></i></div>
 			</a>
 		</div>
 	</div>
