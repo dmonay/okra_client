@@ -45,11 +45,16 @@
             '500': '#99b742'
         });
 
-        // Register the new color palette map with the name <code>neonRed</code>
+        var okraRed = $mdThemingProvider.extendPalette('red', {
+            '500': '#EF7652'
+        });
+
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
+        $mdThemingProvider.definePalette('okraRed', okraRed);
         // Use that theme for the primary intentions
         $mdThemingProvider.theme('default')
-            .primaryColor('okraGreen');
+            .primaryColor('okraGreen')
+            .warnColor('okraRed');
     });
 
     //Constants
