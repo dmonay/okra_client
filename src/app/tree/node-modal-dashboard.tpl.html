@@ -10,7 +10,7 @@
 		    	<div layout-align="start start" flex="100">
 					<md-input-container flex>
 					   <label>Name</label>
-					   <md-input required name="nodeName" ng-model="modal.node.Name" autocapitalize="off"></md-input>
+					   <md-input required name="nodeName" md-maxlength="30" ng-model="modal.node.Name" autocapitalize="off"></md-input>
 					</md-input-container>
 				</div>
 				<div class="error-msg ng-hide" layout-align="center end" ng-show="modal.formSubmitted && modal.nodeForm.nodeName.$invalid" ng-cloak>
