@@ -84,8 +84,8 @@
     });
 
     app.constant('hardCoded', {
-        userId: '54b45bcb96a47c239a333a2d',
-        userName: 'auserbro'
+        userId: '54d55f11673e6cfceef7e097',
+        userName: 'someuser123'
     });
 })();
 
@@ -830,143 +830,6 @@
 })();
 
 (function () {
-    'use strict';
-
-    var app = angular.module('SharedDirectives');
-
-    /**
-     * @ngdoc directive
-     * @name SharedDirectives.directive:ok-edit-node
-     * @restrict A
-     *
-     * @description
-     * `ok-edit-node`
-     * Used for editing nodes should be placed in the same HTML hierachy of an element with the class
-     * of 'tree-node'.
-     *
-     * @param {string} edit The icon class that corresponds to the edit button
-     * @param {string} cancel The icon class that corresponds to the cancel/close button
-     * @param {string} save The icon class that corresponds to the save button
-     * @param {object} node Object to pass in that directly binds to that node (required for changing the edit mode)
-     * @param {object} parent Object to pass in that is the parent of the node being edited (optional)
-     * @param {object} tree Object that the node is attached to (required).
-     * @param {string} nodeType Type of node being edited  (required, options are KeyResult and Objective).
-     *
-     *
-     * @usage
-     *
-     *  <div class="tree-node"></div>
-     *  <div layout="column" layout-align="start end"
-     *       ok-edit-node
-     *       edit="fa-pencil"
-     *       cancel="fa-close"
-     *       save="fa-check"
-     *       node="objective"
-     *       nodeType="Objective"
-     *       parent=""
-     *       tree="vm.tree">
-     *      <md-button href ng-show="!objective.isEditMode" class="md-raised md-primary" aria-label="edit">
-     *          <i class="fa fa-pencil"></i>
-     *      </md-button>
-     *      <md-button href ng-show="objective.isEditMode" class="md-raised md-primary" aria-label="cancel">
-     *          <i class="fa fa-close"></i>
-     *      </md-button>
-     *      <md-button href ng-show="objective.isEditMode" class="md-raised md-primary" aria-label="save">
-     *          <i class="fa fa-check"></i>
-     *      </md-button>
-     *  </div>
-     */
-
-    function okEditNode(TreeFactory) {
-        return {
-            restrict: 'A',
-            link: linkFunc,
-            scope: {
-                edit: '@',
-                cancel: '@',
-                save: '@',
-                node: '=',
-                parent: '=',
-                nodeType: '@',
-                tree: '='
-            }
-        };
-
-        function linkFunc(scope, iElement, iAttrs) {
-            var saveButton;
-            var edit = false;
-
-            scope.node.isEditMode = false;
-
-            function switchToEdit() {
-                scope.node.newName = '';
-                scope.node.isEditMode = !scope.node.isEditMode;
-                if (!edit) {
-                    scope.$apply();
-                } else {
-                    edit = false;
-                }
-            }
-
-            function saveEdit() {
-                if (scope.node.newName.length > 0) {
-                    scope.node.Name = scope.node.newName;
-                    if (!scope.nodeType) {
-                        throw 'No nodeType for ok-edit-node';
-                    } else if (scope.nodeType === 'Objective') {
-                        TreeFactory.updateObjective(scope.tree, scope.node).then(function (response) {
-                            edit = true;
-                            switchToEdit();
-                        });
-                    } else if (scope.nodeType === 'KeyResult') {
-                        TreeFactory.updateKeyResult(scope.tree, scope.node, scope.parent).then(function (
-                            response) {
-                            edit = true;
-                            switchToEdit();
-                        });
-                    } else {
-                        throw 'Invalid nodeType for ok-edit-node';
-                    }
-                }
-            }
-
-            _.each(iElement.children(), function (child) {
-                var childNode = angular.element(child);
-
-                if (childNode.find('i').hasClass(scope.cancel) || childNode.find('i').hasClass(
-                        scope.edit)) {
-                    childNode.bind('click', switchToEdit);
-                }
-
-                if (childNode.find('i').hasClass(scope.save)) {
-                    childNode.bind('click', saveEdit);
-                    childNode.attr('disabled', 'disabled');
-                    saveButton = childNode;
-                }
-            });
-
-            scope.$watch(
-                function () {
-                    return scope.node.newName;
-                },
-                function (newName) {
-                    if (newName !== undefined && newName.length > 0 && saveButton) {
-                        saveButton.removeAttr('disabled');
-                    } else if (saveButton) {
-                        saveButton.attr('disabled', 'disabled');
-                    }
-                }
-            );
-        }
-    }
-
-    okEditNode.$inject = ['TreeFactory'];
-
-    app.directive('okEditNode', okEditNode);
-
-})();
-
-(function () {
 
     'use strict';
 
@@ -1194,10 +1057,10 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add A Tree</h3></md-subheader></div><md-content><form class=\"form-horizontal\" name=\"modal.addTreeForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-container class=\"long\"><label>Tree Name</label><md-input required name=\"newTreeName\" ng-model=\"modal.newTreeName\" autocapitalize=\"off\"></md-input></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.addTreeForm.newTreeName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-radio-group class=\"horizontal-radio-group\" layout=\"row\" ng-model=\"modal.timeframe\"><md-radio-button value=\"monthly\" aria-label=\"Monthly\">Monthly</md-radio-button><md-radio-button value=\"yearly\" artial-label=\"Yearly\">Yearly</md-radio-button></md-radio-group></div></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.addTree()\" aria-label=\"add\">Add</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/organization/organization-selection.tpl.html",
-        "<section class=\"organization-wrapper\"><div layout-align=\"center center\" layout=\"row\"><h1>Organizations</h1></div><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"organizationRow in vm.organizations track by $index\"><div class=\"organization\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"org in organizationRow track by $index\"><a href class=\"tree-node\" ui-sref=\"organization({ organization: org })\">{{org}}<md-tooltip ng-if=\"org.length > 14\">{{org}}</md-tooltip></a></div><div class=\"organization add-node\" layout=\"row\" layout-align=\"start center\" ng-if=\"organizationRow.length < 4\"><a href class=\"tree-node\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\">Add <i class=\"fa fa-plus\"></i></a></div></div><div layout=\"row\" class=\"ng-hide\" layout-align=\"center center\" ng-if=\"vm.organizations.length === 0 || !vm.organizations\">New to Okra? That's alright. Click here to create an organization.<md-button class=\"md-raised md-primary\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\">Create an Organization <i class=\"fa fa-plus\"></i></md-button></div></section>"
+        "<section class=\"organization-wrapper\"><div layout-align=\"center center\" layout=\"row\"><h1>Organizations</h1></div><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"organizationRow in vm.organizations track by $index\"><div class=\"organization\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"org in organizationRow track by $index\"><a href class=\"tree-node\" ui-sref=\"organization({ organization: org })\">{{org}}<md-tooltip ng-if=\"org.length > 14\">{{org}}</md-tooltip></a></div><div class=\"organization add-node\" layout=\"row\" layout-align=\"start center\" ng-if=\"organizationRow.length < 4\"><a href class=\"tree-node\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\">Add <i class=\"fa fa-plus\"></i></a></div></div><div layout=\"row\" layout-align=\"center center\" ng-if=\"vm.organizations.length === 0 || !vm.organizations\">New to Okra? That's alright. Click here to create an organization.<md-button class=\"md-raised md-primary\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\">Create an Organization <i class=\"fa fa-plus\"></i></md-button></div></section>"
     );
     $templateCache.put("app/organization/organization-trees-selection.tpl.html",
-        "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">{{vm.organization}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-class=\"{'glowing-green': vm.trees.length === 0}\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><i class=\"fa fa-tree\"></i><md-tooltip>Add a Tree</md-tooltip></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.trees track by $index\"><div class=\"tree\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow track by $index\"><a class=\"tree-node\" ng-hide=\"tree.isEditMode\" ui-sref=\"organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.organization })\">{{tree.Name}}<md-tooltip ng-if=\"tree.Name.length > 14\">{{tree.Name}}</md-tooltip></a><div class=\"tree-node\" ng-show=\"tree.isEditMode\"><md-input-container><md-input required class=\"short\" name=\"treeName\" ng-model=\"tree.newName\" autocapitalize=\"off\"></md-input></md-input-container></div><div layout=\"column\" layout-align=\"start end\" ok-edit-node edit=\"fa-pencil\" cancel=\"fa-close\" save=\"fa-check\" node=\"tree\"><md-button ng-show=\"!tree.isEditMode\" href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button><md-button ng-show=\"tree.isEditMode\" href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-check\"></i></md-button><md-button ng-show=\"tree.isEditMode\" href class=\"md-raised md-warn fade-in\" aria-label=\"edit\"><i class=\"fa fa-close\"></i></md-button></div></div></div></div></section>"
+        "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">{{vm.organization}}</div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"['organizationNode', 'treesNode']\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button></div></div><div layout=\"column\" style=\"max-height: 100000px\" class=\"collapse\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.trees track by $index\"><div class=\"tree\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow track by $index\"><a class=\"tree-node\" ng-hide=\"tree.isEditMode\" ui-sref=\"organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.organization })\">{{tree.Name}}<md-tooltip ng-if=\"tree.Name.length > 14\">{{tree.Name}}</md-tooltip></a><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary fade-in\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"tree add-node\" layout-align=\"start\" ng-if=\"treeRow.length < 4\"><button href class=\"tree-node\" ng-click=\"vm.openAddTreeModal()\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><div>Add</div><div>A Tree <i class=\"fa fa-plus\"></i></div></button></div></div></div></section>"
     );
     $templateCache.put("app/shared/404.tpl.html",
         "<div class=\"error-not-found\" layout=\"column\" align=\"center center\"><img src=\"assets/okra-404.jpg\"><h1>That's Strange...</h1><h2>Probably not what you were looking for right?</h2></div>"

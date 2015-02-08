@@ -17,12 +17,6 @@
 	    	<md-button class="md-raised md-primary" ng-click="vm.openOrganizationMembersModal()" aria-label="members">
 		    	<i class="fa fa-users"></i>
 		    </md-button>
-		    <md-button class="md-raised md-primary" ng-class="{'glowing-green': vm.trees.length === 0}" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
-		    	<i class="fa fa-tree"></i>
-		    	<md-tooltip>
-					Add a Tree
-				</md-tooltip>
-		    </md-button>
 	    </div>
 	</div> 
 	<!--Trees -->
@@ -35,22 +29,20 @@
 						{{tree.Name}}
 					</md-tooltip>
 				</a>
-				<div class="tree-node" ng-show="tree.isEditMode">
-					<md-input-container>
-					   <md-input required class="short" name="treeName" ng-model="tree.newName" autocapitalize="off"></md-input>
-					</md-input-container>
-				</div>
-				<div layout="column" layout-align="start end" ok-edit-node edit="fa-pencil" cancel="fa-close" save="fa-check" node="tree">
-		        	<md-button ng-show="!tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
+				<div layout="column" layout-align="start end">
+		        	<md-button href class="md-raised md-primary fade-in" aria-label="edit">
 						<i class="fa fa-pencil"></i>
 		        	</md-button>
-		        	<md-button ng-show="tree.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
-						<i class="fa fa-check"></i>
-		        	</md-button>
-		        	<md-button ng-show="tree.isEditMode" href class="md-raised md-warn fade-in" aria-label="edit">
-						<i class="fa fa-close"></i>
-		        	</md-button>
 		        </div>
+			</div>
+			<div class="tree add-node" layout-align="start" ng-if="treeRow.length < 4">
+				<button href class="tree-node" ng-click="vm.openAddTreeModal()" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
+					<div> Add </div>
+					<div>
+						A Tree
+						<i class="fa fa-plus"></i>
+					</div>
+				</button>
 			</div>
 		</div>
 	</div>
