@@ -8,7 +8,7 @@ $okraGreen : #99b742;
 $nodeColor : #3C3A3A;
 $bgColor: #2E2E2E;
 $grey : #C2C5C3;
-$warningRed : #ef5350;
+$warningRed : #F44336;
 
 // Mixins ========================================================================
 @mixin border-radius($radius) {
@@ -24,17 +24,6 @@ $warningRed : #ef5350;
     -ms-box-shadow: $horizontal $vertical $spread $color;
 	box-shadow: $horizontal $vertical $spread $color;
 }
-//Animations ======================================================================
-@include keyframes(glowGreen) {
-  0% {
-    color: $okraGreen;
-  }
-  100% {
-    color: $white;
-  } 
-}
-
-
 // Toolbar Styles =================================================================
 md-item {
 	margin: 0px 10px;
@@ -208,10 +197,6 @@ ul.list-horizontal {
 	}
 }
 
-.glowing-green {
-	@include animation-name(glowGreen);
-}
-
 .fade-in.ng-enter, .fade-in.ng-leave {
   @include fade-in();
 }
@@ -220,14 +205,23 @@ ul.list-horizontal {
 	float: left;
 }
 
-.completed {
-	background-color: $okraGreen !important;
-	background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.5) 50%);
-	background-size: 40px 50px;
+.status {
+	position: absolute;
+	left: 6px;
+	top: 5px;
+	font-size: 12px;
 
-	.md-subheader {
-		color: $white;
+	.fa-exclamation {
+		color: $warningRed;
 	}
+
+	.fa-check {
+		color: $okraGreen;
+	}
+}
+
+button {
+	border: 0;
 }
 // Organization ================================================================
 .organization-wrapper > [layout=row], .organization-wrapper > [layout=column] {
@@ -334,12 +328,23 @@ ul.list-horizontal {
 	.task-node {
 		background-color: $okraGreen;
 		padding: 10px 10px;
+		padding-left: 20px;
 		color: $nodeColor;
 		@include border-radius(5px);
 		min-width: 100px;
 		margin-top: 10px;
 		text-decoration: none;
 		width: 250px;
+		position: relative;
+	}
+
+	#taskNode {
+		[layout-align="start center"] {
+			margin-top: -5px;
+		}
+		[layout-align="start center"]:first-child {
+			margin-top: 25px;
+		}
 	}
 
 	.objective + .objective, 
@@ -355,6 +360,8 @@ ul.list-horizontal {
 	}
 
 	.task-row {
+		margin-top: 25px !important;
+
 		.md-primary {
 			background: transparent !important;
 			border: 2px solid;
