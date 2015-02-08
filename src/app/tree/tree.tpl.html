@@ -43,42 +43,20 @@
 				   <md-input required class="short" name="treeName" ng-model="objective.newName" autocapitalize="off"></md-input>
 				</md-input-container>
 			</div>
-			<div layout="column" layout-align="start end" 
-				ok-edit-node 
-				edit="fa-pencil" 
-				cancel="fa-close" 
-				save="fa-check" 
-				node="objective"
-				tree="vm.tree"
-				node-type="Objective">
+			<div layout="column" layout-align="start end">
 	            <md-button href class="md-raised" ng-click="vm.changeCurrentObjective(objective)" ok-collapse ok-toggle-color linked-to="objectiveNode"  all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
-	        	<md-button ng-show="!objective.isEditMode" href class="md-raised md-primary fade-in" aria-label="edit">
+	        	<md-button href class="md-raised md-primary fade-in" aria-label="edit">
 					<i class="fa fa-pencil"></i>
-	        	</md-button>
-	        </div>
-	        <div layout="column" layout-align="start end" 
-	        	ok-edit-node 
-	        	edit="fa-pencil" 
-	        	cancel="fa-close" 
-	        	save="fa-check" 
-	        	node="objective"
-	        	tree="vm.tree"
-	        	node-type="Objective">
-	        	<md-button ng-show="objective.isEditMode" href class="md-raised md-primary fade-in" aria-label="save">
-					<i class="fa fa-check"></i>
-	        	</md-button>
-	        	<md-button ng-show="objective.isEditMode" href class="md-raised md-warn fade-in" aria-label="close">
-					<i class="fa fa-close"></i>
 	        	</md-button>
 	        </div>
 		</div>
 		<div class="objective add-node" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
-			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)" class="tree-node" layout-align="start">
+			<button href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)" class="tree-node" layout-align="start">
 				<div>Add</div> 
 				<div>Objective <i class="fa fa-plus"></i></div>
-			</a>
+			</button>
 		</div>
 	</div>
 
@@ -96,44 +74,20 @@
 				   <md-input required class="short" name="treeName" ng-model="keyResult.newName" autocapitalize="off"></md-input>
 				</md-input-container>
 			</div>
-			<div layout="column" layout-align="start end" 
-				ok-edit-node 
-				edit="fa-pencil" 
-				cancel="fa-close" 
-				save="fa-check" 
-				node="keyResult"
-				tree="vm.tree"
-	        	node-type="KeyResult"
-	        	parent="vm.currentObjective">
+			<div layout="column" layout-align="start end">
 				<md-button href class="md-raised" ng-click="vm.changeCurrentKeyResult(keyResult)" ok-collapse ok-toggle-color linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
 	            	<i class="fa fa-plus"></i>
 	        	</md-button>
-	        	<md-button href ng-show="!keyResult.isEditMode" class="md-raised md-primary fade-in" aria-label="edit">
+	        	<md-button href class="md-raised md-primary fade-in" aria-label="edit">
 					<i class="fa fa-pencil"></i>
-	        	</md-button>
-	        </div>
-	        <div layout="column" layout-align="start end" 
-	        	 ok-edit-node 
-	        	 edit="fa-pencil" 
-	        	 cancel="fa-close" 
-	        	 save="fa-check" 
-	        	 node="keyResult"
-				 tree="vm.tree"
-	        	 node-type="KeyResult"
-	        	 parent="vm.currentObjective">
-	        	<md-button ng-show="keyResult.isEditMode" href class="md-raised md-primary fade-in" aria-label="save">
-					<i class="fa fa-check"></i>
-	        	</md-button>
-	        	<md-button ng-show="keyResult.isEditMode" href class="md-raised md-warn fade-in" aria-label="close">
-					<i class="fa fa-close"></i>
 	        	</md-button>
 	        </div>
 		</div>
 		<div class="key-result add-node" layout="row" layout-align="start" ng-if="vm.currentObjective.KeyResults.length !== 4">
-			<a href ng-click="vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)" class="tree-node" layout-align="start">
+			<button href ng-click="vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)" class="tree-node" layout-align="start">
 				<div>Add</div>
 				<div>Key Result <i class="fa fa-plus"></i></div>
-			</a>
+			</button>
 		</div>
 	</div>
 
