@@ -1,20 +1,15 @@
 <section class="organization-wrapper">
-	<div class="organization active" layout="row" layout-align="center" id="organizationNode">
-		<div class="tree-node">
+	<div class="tree active" layout="row" layout-align="center" id="organizationNode">
+		<button class="tree-node" 
+			ok-collapse 
+			linked-to="organizationNode"
+			all-linked-nodes="vm.linkedNodeIds">
 			{{vm.tree.TreeName}}
 			<md-tooltip ng-if="vm.tree.TreeName.length > 14">
 				{{vm.tree.TreeName}}
 			</md-tooltip>
-		</div>
+		</button>
 		<div layout="column" layout-align="start end">
-			<md-button href class="md-raised md-primary" 
-					ok-collapse 
-					ok-toggle-color
-					linked-to="organizationNode"
-					all-linked-nodes="vm.linkedNodeIds"
-					aria-label="toggle">
-	        	<i class="fa fa-plus"></i>
-	    	</md-button>
 	    	<md-button href class="md-raised md-primary" aria-label="edit">
 				<i class="fa fa-pencil"></i>
 	    	</md-button>
@@ -32,23 +27,26 @@
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives">
-			<button href class="tree-node" ng-class="{completed: objective.Completed === true}" layout-align="start">
+			<button class="tree-node" 
+				ng-click="vm.changeCurrentObjective(objective)"
+				 ok-collapse 
+				 linked-to="objectiveNode"  
+				 all-linked-nodes="vm.linkedNodeIds" 
+				 layout-align="start">
 				{{objective.Name}}
 				<md-tooltip ng-if="objective.Name.length > 14">
 					{{objective.Name}}
 				</md-tooltip>
+				<span class="status" ng-if="objective.Completed === true"> <i class="fa fa-check"></i></span>
 			</button>
 			<div layout="column" layout-align="start end">
-	            <md-button href class="md-raised" ng-click="vm.changeCurrentObjective(objective)" ok-collapse ok-toggle-color linked-to="objectiveNode"  all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
-	            	<i class="fa fa-plus"></i>
-	        	</md-button>
 	        	<md-button href class="md-raised md-primary fade-in" ng-click="vm.openNodeModalDashboard($event, true, 'Objective', objective, false, false)" aria-label="edit">
 					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
 		</div>
 		<div class="objective add-node" layout="row" layout-align="start" ng-if="vm.tree.Objectives.length !== 4">
-			<button href ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)" class="tree-node" layout-align="start">
+			<button ng-click="vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)" class="tree-node" layout-align="start">
 				<div>Add</div> 
 				<div>Objective <i class="fa fa-plus"></i></div>
 			</button>
@@ -58,23 +56,33 @@
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
 		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.KeyResults">
-			<button href class="tree-node" ng-class="{completed: keyResult.Completed === true}">
+			<button class="tree-node" 
+				ng-class="{completed: keyResult.Completed === true}"
+				ng-click="vm.changeCurrentKeyResult(keyResult)"
+				ok-collapse 
+				linked-to="keyResultNode" 
+				all-linked-nodes="vm.linkedNodeIds" 
+				aria-label="toggle">
 				{{keyResult.Name}}
 				<md-tooltip ng-if="keyResult.Name.length > 14">
 					{{keyResult.Name}}
 				</md-tooltip>
+				<span class="status" ng-if="keyResult.Completed === true"> <i class="fa fa-check"></i></span>
+				<span class="status" ng-if="!keyResult.Completed && keyResult.Priority === 'High'"> 
+					<md-tooltip>
+						High Priority
+					</md-tooltip>
+					<i class="fa fa-exclamation"></i>
+				</span>
 			</button>
 			<div layout="column" layout-align="start end">
-				<md-button href class="md-raised" ng-click="vm.changeCurrentKeyResult(keyResult)" ok-collapse ok-toggle-color linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" aria-label="toggle">
-	            	<i class="fa fa-plus"></i>
-	        	</md-button>
 	        	<md-button href class="md-raised md-primary fade-in" ng-click="vm.openNodeModalDashboard($event, true, 'Key Result', keyResult, vm.currentObjective, false)" aria-label="edit">
 					<i class="fa fa-pencil"></i>
 	        	</md-button>
 	        </div>
 		</div>
 		<div class="key-result add-node" layout="row" layout-align="start" ng-if="vm.currentObjective.KeyResults.length !== 4">
-			<button href ng-click="vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)" class="tree-node" layout-align="start">
+			<button ng-click="vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)" class="tree-node" layout-align="start">
 				<div>Add</div>
 				<div>Key Result <i class="fa fa-plus"></i></div>
 			</button>
@@ -87,6 +95,12 @@
 			<md-checkbox ng-model="task.Completed" aria-label></md-checkbox>
 			<a href class="task-node" ng-click="vm.openNodeModalDashboard($event, true, 'Task', task, vm.currentObjective, vm.currentKeyResult)">
 				{{task.Name}}
+			<span class="status" ng-if="!task.Completed && task.Priority === 'High'"> 
+				<md-tooltip>
+					High Priority
+				</md-tooltip>
+				<i class="fa fa-exclamation"></i>
+			</span>
 			</a>
 		</div>
 		<div class="task-row" layout="row" layout-align="start center" ng-if="vm.currentKeyResult.Tasks.length !== 9">
