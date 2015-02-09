@@ -22,8 +22,10 @@
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
 
-        vm.changeCurrentObjective = function (objective) {
+        vm.changeCurrentObjective = function (nodeId, objective) {
             vm.currentObjective = objective;
+            vm.currentObjective.nodeId = 'objective' + nodeId;
+            console.log(vm.currentObjective.nodeId);
         };
 
         vm.changeCurrentKeyResult = function (keyResult) {
