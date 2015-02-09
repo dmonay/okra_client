@@ -231,7 +231,8 @@ button {
 }
 .organization-wrapper .objective.active .tree-node,
 .organization-wrapper .key-result.active .tree-node,
-.organization-wrapper .organization.active .tree-node {
+.organization-wrapper .organization.active .tree-node,
+.organization-wrapper .tree.active .tree-node {
   background-color: #99b742;
 }
 .organization-wrapper .objective .tree-node:after {

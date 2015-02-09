@@ -45,16 +45,10 @@
             '500': '#99b742'
         });
 
-        var okraRed = $mdThemingProvider.extendPalette('red', {
-            '500': '#EF7652'
-        });
-
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
-        $mdThemingProvider.definePalette('okraRed', okraRed);
         // Use that theme for the primary intentions
         $mdThemingProvider.theme('default')
-            .primaryColor('okraGreen')
-            .warnColor('okraRed');
+            .primaryColor('okraGreen');
     });
 
     //Constants
@@ -86,5 +80,22 @@
     app.constant('hardCoded', {
         userId: '54d55f11673e6cfceef7e097',
         userName: 'someuser123'
+    });
+
+    //could turn this into a service? So we can change whenever we want for 2.0
+    app.constant('jsPlumbDefaults', {
+        PaintStyle: {
+            lineWidth: 3,
+            strokeStyle: "#99b742",
+            outlineWidth: 1
+        },
+        EndpointStyle: {
+            fillStyle: "#99b742",
+            radius: 3
+        },
+        Connector: ["Bezier", {
+            curviness: 20
+        }],
+        Anchors: ["BottomCenter", "TopCenter"]
     });
 })();

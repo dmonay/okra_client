@@ -151,7 +151,7 @@
                     treeId: tree.Id,
                     name: keyResult.Name,
                     body: keyResult.Body,
-                    priority: keyResult.priority,
+                    priority: keyResult.Priority,
                     completed: false,
                     members: keyResult.Members
                 });
@@ -175,7 +175,7 @@
                 return $http.post(url, {
                     krName: keyResult.Name,
                     krbody: keyResult.Body,
-                    priority: keyResult.priority,
+                    priority: keyResult.Priority,
                     completed: keyResult.Completed,
                     // members: objective.Members
                 });
@@ -202,7 +202,7 @@
                     treeId: tree.Id,
                     name: task.Name,
                     body: task.Body,
-                    priority: task.priority,
+                    priority: task.Priority,
                     completed: false,
                     members: task.Members
                 });
@@ -230,7 +230,7 @@
                 return $http.post(url, {
                     taskname: task.Name,
                     taskbody: task.Body,
-                    priority: task.priority,
+                    priority: task.Priority,
                     completed: task.Completed,
                     // members: task.Members
                 });

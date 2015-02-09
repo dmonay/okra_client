@@ -45,16 +45,10 @@
             '500': '#99b742'
         });
 
-        var okraRed = $mdThemingProvider.extendPalette('red', {
-            '500': '#EF7652'
-        });
-
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
-        $mdThemingProvider.definePalette('okraRed', okraRed);
         // Use that theme for the primary intentions
         $mdThemingProvider.theme('default')
-            .primaryColor('okraGreen')
-            .warnColor('okraRed');
+            .primaryColor('okraGreen');
     });
 
     //Constants
@@ -86,6 +80,23 @@
     app.constant('hardCoded', {
         userId: '54d55f11673e6cfceef7e097',
         userName: 'someuser123'
+    });
+
+    //could turn this into a service? So we can change whenever we want for 2.0
+    app.constant('jsPlumbDefaults', {
+        PaintStyle: {
+            lineWidth: 3,
+            strokeStyle: "#99b742",
+            outlineWidth: 1
+        },
+        EndpointStyle: {
+            fillStyle: "#99b742",
+            radius: 3
+        },
+        Connector: ["Bezier", {
+            curviness: 20
+        }],
+        Anchors: ["BottomCenter", "TopCenter"]
     });
 })();
 
@@ -561,7 +572,7 @@
                     treeId: tree.Id,
                     name: keyResult.Name,
                     body: keyResult.Body,
-                    priority: keyResult.priority,
+                    priority: keyResult.Priority,
                     completed: false,
                     members: keyResult.Members
                 });
@@ -585,7 +596,7 @@
                 return $http.post(url, {
                     krName: keyResult.Name,
                     krbody: keyResult.Body,
-                    priority: keyResult.priority,
+                    priority: keyResult.Priority,
                     completed: keyResult.Completed,
                     // members: objective.Members
                 });
@@ -612,7 +623,7 @@
                     treeId: tree.Id,
                     name: task.Name,
                     body: task.Body,
-                    priority: task.priority,
+                    priority: task.Priority,
                     completed: false,
                     members: task.Members
                 });
@@ -640,7 +651,7 @@
                 return $http.post(url, {
                     taskname: task.Name,
                     taskbody: task.Body,
-                    priority: task.priority,
+                    priority: task.Priority,
                     completed: task.Completed,
                     // members: task.Members
                 });
@@ -799,6 +810,64 @@
 })();
 
 (function () {
+    'use strict';
+
+    var app = angular.module('SharedDirectives');
+
+    /**
+     * @ngdoc directive
+     * @name SharedDirectives.directive:ok-draw-connection
+     * @restrict A
+     *
+     * @description
+     * @param {string} parent-id Id of the parent this node will be linked to (required).
+     *  ** Not used as a scope attr because of multi dir instead use as normal attribute.
+     *
+     * @usage
+     *<div id="uniqueIdOne"></div>
+     *<div id="uniqueIdTwo" ok-draw-connection parent-id="uniqueOne"></div>
+     */
+
+
+    app.directive('okDrawConnection', function (jsPlumbDefaults) {
+        return {
+            restrict: 'A',
+            link: linkFunc
+        };
+
+        function linkFunc(scope, iElement, iAttrs) {
+            var parentId = iAttrs.parentId;
+            iElement.on('click', function () {
+                jsPlumb.detachEveryConnection(parentId);
+                iElement.parent().parent().children().removeClass('active');
+                if (!iElement.hasClass('active')) {
+                    iElement.parent().addClass('active');
+                    jsPlumb.importDefaults(jsPlumbDefaults);
+                    traverseUpwards(iElement.attr('id'));
+                    jsPlumb.draggable(iElement[0].id);
+                } else {
+                    iElement.parent().removeClass('active');
+                }
+            });
+
+            function traverseUpwards(nodeId) {
+                var element = angular.element(document.getElementById(nodeId));
+                var parentId = element.attr('parent-id');
+                if (!parentId) {
+                    return;
+                }
+                jsPlumb.connect({
+                    source: parentId,
+                    target: nodeId
+                });
+                traverseUpwards(parentId);
+            }
+        }
+    });
+
+})();
+
+(function () {
 
     'use strict';
 
@@ -953,99 +1022,6 @@
 
 })();
 
-(function () {
-    'use strict';
-
-    var app = angular.module('SharedDirectives');
-
-    /**
-     * @ngdoc directive
-     * @name SharedDirectives.directive:ok-toggle-color
-     * @restrict A
-     * @requires SharedDirectives.directive:ok-collapse
-     *
-     * @description
-     * `ok-toggle-color`
-     *
-     *  Added to an element that has an ok-collapse attribute attached to it. Requires the same attributes as ok-collapse.
-     *  Toggles primary to warning color and minus to plus classes (font awesome).
-     * @usage
-     * <button ok-collapse ok-toggle-color linked-to="uniqueId" all-linked-nodes="['uniqueIdOne', 'uniqueIdTwo']">
-     *  <i class="fa fa-plus"></i>
-     *</button>
-     *<div id="uniqueIdOne"></div>
-     *<div id="uniqueIdTwo"></div>
-     */
-
-    function okToggleColor() {
-        return {
-            restrict: 'A',
-            link: linkFunc
-        };
-
-        function linkFunc(scope, iElement, iAttrs) {
-            var collapseScope = iElement.isolateScope();
-
-            function replaceClass(oldClass, newClass, element) {
-                element.addClass(newClass);
-                element.removeClass(oldClass);
-            }
-
-            function resetAllButtons(iconElements, buttonElement) {
-                var i;
-                for (i = 0; i < iconElements.length; i++) {
-                    var currentElement = angular.element(iconElements[i]);
-                    if (currentElement.hasClass('fa') && currentElement.hasClass('fa-plus') ||
-                        currentElement.hasClass('fa-minus')) {
-                        replaceClass('fa-minus', 'fa-plus', currentElement);
-                        currentElement.parent().removeClass('md-warn');
-                        currentElement.parent().removeClass('md-primary');
-                    }
-                }
-            }
-
-            function disableChildren(collapseScope, thisElement) {
-                var allNodes = collapseScope.allLinkedNodes,
-                    i = allNodes.indexOf(collapseScope.linkedTo);
-                for (i; i < allNodes.length; i++) {
-                    var node = angular.element(document.getElementById(allNodes[i]));
-
-                    node.children().removeClass('active');
-
-                    resetAllButtons(node.find('a').find('i'), node.find('a'));
-                }
-
-                thisElement.addClass('active');
-            }
-
-            iElement.bind('click', function () {
-                //is toggled open
-                if (iElement.hasClass('md-warn')) {
-                    disableChildren(collapseScope, iElement.parent().parent());
-                    replaceClass('fa-minus', 'fa-plus', iElement.find('i'));
-                    replaceClass('md-warn', 'md-primary', iElement);
-                }
-                //is toggled closed 
-                else if (iElement.hasClass('md-primary')) {
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    replaceClass('md-primary', 'md-warn', iElement);
-                }
-                //hasn't been toggled 
-                else {
-                    disableChildren(collapseScope, iElement.parent().parent());
-                    replaceClass('fa-plus', 'fa-minus', iElement.find('i'));
-                    iElement.addClass('md-warn');
-                }
-            });
-        }
-    }
-
-    // okToggleColor.$inject = [];
-
-    app.directive('okToggleColor', okToggleColor);
-
-})();
-
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
     $templateCache.put("app/login/login.tpl.html",
         "<div class=\"green-overlay\" layout=\"column\" layout-align=\"center center\" flex=\"100\"><div layout=\"row\" layout-align=\"center center\"><h1>Login</h1></div><div class=\"well\" layout=\"row\" layout-align=\"center center\"><form name=\"vm.userLoginForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"center center\"><md-input-container class=\"long\"><label>Username</label><md-input required name=\"username\" ng-model=\"username\" autocapitalize=\"off\"></md-input></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.username.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-container class=\"long\"><label>Password</label><md-input required name=\"password\" ng-model=\"vm.password\" autocapitalize=\"off\"></md-input></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"vm.formSubmitted && vm.userLoginForm.password.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div class=\"md-actions-form\" layout=\"row\" layout-align=\"center center\"><md-button class=\"md-raised\" ng-click=\"optionsOpen = !optionsOpen;\" aria-label=\"log in\">More Options</md-button><md-button class=\"md-raised md-primary\" aria-label=\"log in\">Log in</md-button><md-progress-circular ng-if=\"vm.inProgress\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div></form></div><md-sidenav md-is-open=\"optionsOpen\" class=\"md-sidenav-right\"><md-toolbar><h1 class=\"md-toolbar-tools\">More Options</h1></md-toolbar><md-content class=\"md-padding\"><div layout=\"row\"><div flex=\"50\"><h5>Forgot Password?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Reset My Password</md-button></div></div><div layout=\"row\"><div flex=\"50\"><h5>Need An Account?</h5></div><div flex=\"50\"><md-button class=\"side-nav-btn\">Create an Account</md-button></div></div></md-content><div layout=\"row\" layout-align=\"center end\"><md-button ng-click=\"optionsOpen = false;\" class=\"md-raised md-warn\">Dismiss</md-button></div></md-sidenav></div>"
@@ -1075,7 +1051,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\" ng-class=\"{completed: modal.node.Completed === true}\"><md-subheader><h3><span ng-if=\"!modal.editMode\">Create</span> {{modal.name}}</h3></md-subheader></div><md-content><form class=\"form-horizontal\" name=\"modal.nodeForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\" flex=\"100\"><md-input-container flex><label>Name</label><md-input required name=\"nodeName\" md-maxlength=\"30\" ng-model=\"modal.node.Name\" autocapitalize=\"off\"></md-input></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.nodeForm.nodeName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\" flex=\"100\"><md-input-container flex><label>Description</label><textarea required name=\"nodeBody\" ng-model=\"modal.node.Body\" columns=\"1\" md-maxlength=\"150\"></textarea></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.nodeForm.nodeBody.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\" layout=\"row\" flex=\"100\"><md-checkbox class=\"horizontal-checkbox\" ng-change=\"modal.addMember(member, member.isChecked)\" ng-model=\"member.isChecked\" aria-label=\"{{member.userName}}\" ng-repeat=\"member in modal.members\">{{member.userName}}</md-checkbox></div></div><div layout=\"row\" layout-align=\"center center\" ng-if=\"modal.nodeType === 'Key Result' || modal.nodeType === 'Task'\"><div layout-align=\"start-start\" layout=\"row\" flex=\"100\"><md-switch ng-model=\"modal.node.Priority\" aria-label=\"Priority\" ng-true-value=\"'High'\" ng-false-value=\"'Low'\" class=\"md-warn\">{{modal.node.Priority}} Priority</md-switch></div></div><div layout=\"row\" layout-align=\"center center\"><md-checkbox ng-model=\"modal.node.Completed\" aria-label=\"completed\">Completed?</md-checkbox></div></form><md-content><div class=\"md-actions\" style=\"border-top: none\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button ng-if=\"!modal.editMode\" class=\"md-raised md-primary\" ng-click=\"modal.createNode()\" aria-label=\"add\">Create</md-button><md-button ng-if=\"modal.editMode\" class=\"md-raised md-primary\" ng-click=\"modal.updateNode()\" aria-label=\"add\">Save</md-button><md-progress-circular ng-if=\"modal.currentlySaving\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
     );
     $templateCache.put("app/tree/tree.tpl.html",
-        "<section class=\"organization-wrapper\"><div class=\"organization active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">{{vm.tree.TreeName}}<md-tooltip ng-if=\"vm.tree.TreeName.length > 14\">{{vm.tree.TreeName}}</md-tooltip></div><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" ok-collapse ok-toggle-color linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openTreeMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in vm.tree.Objectives\"><button href class=\"tree-node\" ng-class=\"{completed: objective.Completed === true}\" layout-align=\"start\">{{objective.Name}}<md-tooltip ng-if=\"objective.Name.length > 14\">{{objective.Name}}</md-tooltip></button><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ng-click=\"vm.changeCurrentObjective(objective)\" ok-collapse ok-toggle-color linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary fade-in\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Objective', objective, false, false)\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective add-node\" layout=\"row\" layout-align=\"start\" ng-if=\"vm.tree.Objectives.length !== 4\"><button href ng-click=\"vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)\" class=\"tree-node\" layout-align=\"start\"><div>Add</div><div>Objective <i class=\"fa fa-plus\"></i></div></button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\" ng-repeat=\"keyResult in vm.currentObjective.KeyResults\"><button href class=\"tree-node\" ng-class=\"{completed: keyResult.Completed === true}\">{{keyResult.Name}}<md-tooltip ng-if=\"keyResult.Name.length > 14\">{{keyResult.Name}}</md-tooltip></button><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised\" ng-click=\"vm.changeCurrentKeyResult(keyResult)\" ok-collapse ok-toggle-color linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\"><i class=\"fa fa-plus\"></i></md-button><md-button href class=\"md-raised md-primary fade-in\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Key Result', keyResult, vm.currentObjective, false)\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result add-node\" layout=\"row\" layout-align=\"start\" ng-if=\"vm.currentObjective.KeyResults.length !== 4\"><button href ng-click=\"vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)\" class=\"tree-node\" layout-align=\"start\"><div>Add</div><div>Key Result <i class=\"fa fa-plus\"></i></div></button></div></div><div layout=\"column\" class=\"collapse task-column\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in vm.currentKeyResult.Tasks\"><md-checkbox ng-model=\"task.Completed\" aria-label></md-checkbox><a href class=\"task-node\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Task', task, vm.currentObjective, vm.currentKeyResult)\">{{task.Name}}</a></div><div class=\"task-row\" layout=\"row\" layout-align=\"start center\" ng-if=\"vm.currentKeyResult.Tasks.length !== 9\"><md-button ng-click=\"vm.openNodeModalDashboard($event, false, 'Task', {}, vm.currentObjective, vm.currentKeyResult)\" class=\"md-primary md-raised\">Add Task <i class=\"fa fa-plus\"></i></md-button></div></div></section>"
+        "<section class=\"organization-wrapper\"><div class=\"tree active\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><button class=\"tree-node\" id=\"treeNode\" ok-collapse linked-to=\"organizationNode\" all-linked-nodes=\"vm.linkedNodeIds\">{{vm.tree.TreeName}}<md-tooltip ng-if=\"vm.tree.TreeName.length > 14\">{{vm.tree.TreeName}}</md-tooltip></button><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openTreeMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button><md-button class=\"md-raised md-primary\" ng-click=\"vm.openMissionStatementModal()\" aria-label=\"mission statement\"><i class=\"fa fa-briefcase\"></i></md-button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"objectiveNode\"><div class=\"objective\" layout=\"row\" layout-align=\"start\" ng-repeat=\"objective in vm.tree.Objectives track by $index\"><button class=\"tree-node\" id=\"objective{{$index}}\" ng-click=\"vm.changeCurrentObjective(objective)\" layout-align=\"start\" ok-collapse linked-to=\"objectiveNode\" all-linked-nodes=\"vm.linkedNodeIds\" ok-draw-connection parent-id=\"treeNode\">{{objective.Name}}<md-tooltip ng-if=\"objective.Name.length > 14\">{{objective.Name}}</md-tooltip><span class=\"status\" ng-if=\"objective.Completed === true\"><i class=\"fa fa-check\"></i></span></button><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary fade-in\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Objective', objective, false, false)\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"objective add-node\" layout=\"row\" layout-align=\"start\" ng-if=\"vm.tree.Objectives.length !== 4\"><button ng-click=\"vm.openNodeModalDashboard($event, false, 'Objective', {}, false, false)\" class=\"tree-node\" layout-align=\"start\"><div>Add</div><div>Objective <i class=\"fa fa-plus\"></i></div></button></div></div><div layout=\"row\" class=\"collapse\" layout-align=\"center center\" id=\"keyResultNode\"><div class=\"key-result\" layout=\"row\" layout-align=\"start\" ng-repeat=\"keyResult in vm.currentObjective.KeyResults track by $index\"><button class=\"tree-node\" id=\"keyResult{{$index}}\" ng-class=\"{completed: keyResult.Completed === true}\" ng-click=\"vm.changeCurrentKeyResult(keyResult)\" ok-collapse linked-to=\"keyResultNode\" all-linked-nodes=\"vm.linkedNodeIds\" aria-label=\"toggle\">{{keyResult.Name}}<md-tooltip ng-if=\"keyResult.Name.length > 14\">{{keyResult.Name}}</md-tooltip><span class=\"status\" ng-if=\"keyResult.Completed === true\"><i class=\"fa fa-check\"></i></span> <span class=\"status\" ng-if=\"!keyResult.Completed && keyResult.Priority === 'High'\"><md-tooltip>High Priority</md-tooltip><i class=\"fa fa-exclamation\"></i></span></button><div layout=\"column\" layout-align=\"start end\"><md-button href class=\"md-raised md-primary fade-in\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Key Result', keyResult, vm.currentObjective, false)\" aria-label=\"edit\"><i class=\"fa fa-pencil\"></i></md-button></div></div><div class=\"key-result add-node\" layout=\"row\" layout-align=\"start\" ng-if=\"vm.currentObjective.KeyResults.length !== 4\"><button ng-click=\"vm.openNodeModalDashboard($event, false, 'Key Result', {}, vm.currentObjective, false)\" class=\"tree-node\" layout-align=\"start\"><div>Add</div><div>Key Result <i class=\"fa fa-plus\"></i></div></button></div></div><div layout=\"column\" class=\"collapse task-column\" ok-collapse linked-to=\"taskNode\" layout-align=\"space-around center\" all-linked-nodes=\"vm.linkedNodeIds\" id=\"taskNode\"><div layout=\"row\" layout-align=\"start center\" ng-repeat=\"task in vm.currentKeyResult.Tasks\"><md-checkbox ng-model=\"task.Completed\" aria-label></md-checkbox><a href class=\"task-node\" ng-click=\"vm.openNodeModalDashboard($event, true, 'Task', task, vm.currentObjective, vm.currentKeyResult)\">{{task.Name}} <span class=\"status\" ng-if=\"!task.Completed && task.Priority === 'High'\"><md-tooltip>High Priority</md-tooltip><i class=\"fa fa-exclamation\"></i></span></a></div><div class=\"task-row\" layout=\"row\" layout-align=\"start center\" ng-if=\"vm.currentKeyResult.Tasks.length !== 9\"><md-button ng-click=\"vm.openNodeModalDashboard($event, false, 'Task', {}, vm.currentObjective, vm.currentKeyResult)\" class=\"md-primary md-raised\">Add Task <i class=\"fa fa-plus\"></i></md-button></div></div></section>"
     );
 }]);
 
