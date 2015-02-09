@@ -83,6 +83,11 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+.content-wrapper {
+  width: 1200px;
+  margin: 0 auto;
+}
+
 md-content {
   height: 100vh;
   background-color: #2E2E2E !important;
@@ -212,6 +217,7 @@ button {
   text-overflow: ellipsis;
   text-decoration: none;
   text-align: center;
+  opacity: 0.7;
 }
 .organization-wrapper .tree-node md-input-container {
   padding: 0px;
@@ -234,6 +240,8 @@ button {
 .organization-wrapper .organization.active .tree-node,
 .organization-wrapper .tree.active .tree-node {
   background-color: #99b742;
+  font-weight: 700;
+  opacity: 1;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
