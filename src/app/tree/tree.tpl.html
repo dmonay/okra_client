@@ -28,7 +28,7 @@
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives track by $index">
 			<button class="tree-node"  id="objective{{$index}}"
-				ng-click="vm.changeCurrentObjective(objective)"
+				ng-click="vm.changeCurrentObjective($index, objective)"
 				layout-align="start"
 				ok-collapse linked-to="objectiveNode" all-linked-nodes="vm.linkedNodeIds" 
 				ok-draw-connection parent-id="treeNode">
@@ -58,9 +58,8 @@
 			<button class="tree-node" id="keyResult{{$index}}"
 				ng-class="{completed: keyResult.Completed === true}"
 				ng-click="vm.changeCurrentKeyResult(keyResult)"
-				ok-collapse 
-				linked-to="keyResultNode" 
-				all-linked-nodes="vm.linkedNodeIds" 
+				ok-collapse linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" 
+				ok-draw-connection parent-id="{{vm.currentObjective.nodeId}}"
 				aria-label="toggle">
 				{{keyResult.Name}}
 				<md-tooltip ng-if="keyResult.Name.length > 14">
