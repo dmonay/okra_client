@@ -90,7 +90,7 @@ body {
 
 md-content {
   height: 100vh;
-  background-color: #2E2E2E !important;
+  background-color: #2e2e2e !important;
 }
 
 .error-msg {
@@ -242,6 +242,12 @@ button {
   background-color: #99b742;
   font-weight: 700;
   opacity: 1;
+}
+.organization-wrapper .objective.active .tree-node .status .fa-check,
+.organization-wrapper .key-result.active .tree-node .status .fa-check,
+.organization-wrapper .organization.active .tree-node .status .fa-check,
+.organization-wrapper .tree.active .tree-node .status .fa-check {
+  color: #2e2e2e;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
