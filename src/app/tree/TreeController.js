@@ -25,7 +25,6 @@
         vm.changeCurrentObjective = function (nodeId, objective) {
             vm.currentObjective = objective;
             vm.currentObjective.nodeId = 'objective' + nodeId;
-            console.log(vm.currentObjective.nodeId);
         };
 
         vm.changeCurrentKeyResult = function (keyResult) {

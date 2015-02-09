@@ -740,13 +740,14 @@
                     if (allNodes[i] !== scope.linkedTo && !isCollapsed) {
                         $animate.addClass(node, 'collapse');
                     }
+                    if (!isCollapsed) {
+                        $animate.addClass(node, 'collapse');
+                        $animate.removeClass(thisNode.next(), 'collapse');
+                        thisNode.next().children().removeClass('active');
+                    }
                     if (isCollapsed) {
                         $animate.removeClass(node, 'collapse');
                         i = allNodes.length;
-                    }
-                    if (iElement.hasClass('md-warn')) {
-                        $animate.addClass(node, 'collapse');
-                        $animate.removeClass(thisNode.next(), 'collapse');
                     }
                     scope.$apply();
                 }
@@ -810,6 +811,37 @@
 })();
 
 (function () {
+
+    'use strict';
+
+    var app = angular.module('SharedFilters');
+
+    /**
+     * @ngdoc filter
+     * @name SharedFilters.okDecrypt
+     * @description
+     *
+     * # Routes
+     * A filter used to decrypt a string with AES encryption.
+     *
+     * @usage
+     *
+     * <div> {{name | okDecrypt}} </div>
+     */
+
+    app.filter('okDecrypt', function () {
+
+        return function (encryptedString) {
+            var decrypted = CryptoJS.AES.decrypt(encryptedString, "DPokraPC");
+
+            return decrypted.toString(CryptoJS.enc.Utf8);
+        };
+
+    });
+
+})();
+
+(function () {
     'use strict';
 
     var app = angular.module('SharedDirectives');
@@ -863,37 +895,6 @@
                 traverseUpwards(parentId);
             }
         }
-    });
-
-})();
-
-(function () {
-
-    'use strict';
-
-    var app = angular.module('SharedFilters');
-
-    /**
-     * @ngdoc filter
-     * @name SharedFilters.okDecrypt
-     * @description
-     *
-     * # Routes
-     * A filter used to decrypt a string with AES encryption.
-     *
-     * @usage
-     *
-     * <div> {{name | okDecrypt}} </div>
-     */
-
-    app.filter('okDecrypt', function () {
-
-        return function (encryptedString) {
-            var decrypted = CryptoJS.AES.decrypt(encryptedString, "DPokraPC");
-
-            return decrypted.toString(CryptoJS.enc.Utf8);
-        };
-
     });
 
 })();
@@ -1217,7 +1218,6 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         vm.changeCurrentObjective = function (nodeId, objective) {
             vm.currentObjective = objective;
             vm.currentObjective.nodeId = 'objective' + nodeId;
-            console.log(vm.currentObjective.nodeId);
         };
 
         vm.changeCurrentKeyResult = function (keyResult) {
