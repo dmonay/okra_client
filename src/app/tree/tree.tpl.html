@@ -1,6 +1,6 @@
 <section class="organization-wrapper">
 	<div class="tree active" layout="row" layout-align="center" id="organizationNode">
-		<button class="tree-node" 
+		<button class="tree-node" id="treeNode"
 			ok-collapse 
 			linked-to="organizationNode"
 			all-linked-nodes="vm.linkedNodeIds">
@@ -26,13 +26,12 @@
 
 	<!-- objectives -->
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
-		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives">
-			<button class="tree-node" 
+		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives track by $index">
+			<button class="tree-node"  id="objective{{$index}}"
 				ng-click="vm.changeCurrentObjective(objective)"
-				 ok-collapse 
-				 linked-to="objectiveNode"  
-				 all-linked-nodes="vm.linkedNodeIds" 
-				 layout-align="start">
+				layout-align="start"
+				ok-collapse linked-to="objectiveNode" all-linked-nodes="vm.linkedNodeIds" 
+				ok-draw-connection parent-id="treeNode">
 				{{objective.Name}}
 				<md-tooltip ng-if="objective.Name.length > 14">
 					{{objective.Name}}
@@ -55,8 +54,8 @@
 
 	<!-- key results -->
 	<div layout="row" class="collapse" layout-align="center center" id="keyResultNode">
-		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.KeyResults">
-			<button class="tree-node" 
+		<div class="key-result" layout="row" layout-align="start" ng-repeat="keyResult in vm.currentObjective.KeyResults track by $index">
+			<button class="tree-node" id="keyResult{{$index}}"
 				ng-class="{completed: keyResult.Completed === true}"
 				ng-click="vm.changeCurrentKeyResult(keyResult)"
 				ok-collapse 
