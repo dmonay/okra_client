@@ -134,7 +134,7 @@ body {
 
 md-content {
 	height: 100vh;
-	background-color: #2E2E2E !important;
+	background-color: $bgColor !important;
 }
 
 .error-msg {
@@ -279,6 +279,10 @@ button {
 			background-color: $okraGreen;
 			font-weight: 700;
 			opacity: 1;
+
+			.status .fa-check {
+				color: $bgColor;
+			}
 		}
 	}
 

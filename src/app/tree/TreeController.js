@@ -4,6 +4,7 @@
     var app = angular.module('TreeModule');
 
     function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter) {
+        jsPlumb.detachEveryConnection();
         var vm = this,
             treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
 

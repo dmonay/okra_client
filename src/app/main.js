@@ -91,7 +91,7 @@
         },
         EndpointStyle: {
             fillStyle: "#99b742",
-            radius: 3
+            radius: 4
         },
         Connector: ["Bezier", {
             curviness: 20
@@ -1197,6 +1197,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
     var app = angular.module('TreeModule');
 
     function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter) {
+        jsPlumb.detachEveryConnection();
         var vm = this,
             treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
 
