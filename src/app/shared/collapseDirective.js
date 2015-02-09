@@ -42,13 +42,14 @@
                     if (allNodes[i] !== scope.linkedTo && !isCollapsed) {
                         $animate.addClass(node, 'collapse');
                     }
+                    if (!isCollapsed) {
+                        $animate.addClass(node, 'collapse');
+                        $animate.removeClass(thisNode.next(), 'collapse');
+                        thisNode.next().children().removeClass('active');
+                    }
                     if (isCollapsed) {
                         $animate.removeClass(node, 'collapse');
                         i = allNodes.length;
-                    }
-                    if (iElement.hasClass('md-warn')) {
-                        $animate.addClass(node, 'collapse');
-                        $animate.removeClass(thisNode.next(), 'collapse');
                     }
                     scope.$apply();
                 }

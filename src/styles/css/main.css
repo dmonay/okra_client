@@ -309,7 +309,7 @@ button {
   color: #8a8a8a !important;
 }
 .organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
-  margin-top: 25px;
+  margin-top: 30px;
 }
 .organization-wrapper .md-button {
   padding: 3px 8px;
