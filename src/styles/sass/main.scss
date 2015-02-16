@@ -42,8 +42,8 @@ md-item {
 .organization-widget {
 	width: 200px;
     position: absolute;
-    bottom: -180px;
-    left: 15px;
+	top: 15px;
+	left: 10px;
     background: transparent;
     border-radius: 5px;
     border: 1px solid $okraGreen;
@@ -59,12 +59,14 @@ md-item {
     .org-name {
     	margin-top: 20px;
     	margin-bottom: 20px;
+       	color: #ffffff;
+       	font-weight: bold;
     }
 
-    .md-raised {
+    button {
     	color: #ffffff !important;
-    	margin: 0 auto;
-    	display: block;
+    	padding: 5px 10px;
+    	margin-left: 0 !important;
     }
 }
 // Dialog/modal styles =========================================================
@@ -236,7 +238,7 @@ button {
 
 .organization-wrapper {
 	.centered-row {
-		padding: 0px 200px;
+		padding: 0px 253px;
 	}
 
 	.tree-node {
