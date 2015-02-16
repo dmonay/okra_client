@@ -1,18 +1,11 @@
 <section class="organization-wrapper">
 	<div class="organization active" style="margin-bottom: 5px;" layout="row" layout-align="center" id="organizationNode">
-		<div class="tree-node">
+		<button class="tree-node" 
+			ok-collapse 
+			linked-to="organizationNode"
+			all-linked-nodes="['organizationNode', 'treesNode']">
 			{{vm.organization}}
-		</div>
-		<div layout="column" layout-align="start end">
-			<md-button href class="md-raised md-primary" 
-					ok-collapse 
-					ok-toggle-color
-					linked-to="organizationNode"
-					all-linked-nodes="['organizationNode', 'treesNode']"
-					aria-label="toggle">
-	        	<i class="fa fa-plus"></i>
-	    	</md-button>
-	    </div>
+		</button>
 	    <div layout="column" layout-align="start end">
 	    	<md-button class="md-raised md-primary" ng-click="vm.openOrganizationMembersModal()" aria-label="members">
 		    	<i class="fa fa-users"></i>

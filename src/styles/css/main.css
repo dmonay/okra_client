@@ -1,3 +1,12 @@
+.disable-animations.ng-enter, .disable-animations.ng-leave, .disable-animations.ng-animate {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+.disable-animations.ng-animate {
+  -webkit-animation: none 0s;
+  animation: none 0s;
+}
+
 md-item {
   margin: 0px 10px;
 }
@@ -110,7 +119,7 @@ md-content {
   opacity: 0;
 }
 
-[ng\:cloak], [ng-cloak], .ng-cloak {
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 

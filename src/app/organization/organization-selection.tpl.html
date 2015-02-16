@@ -12,12 +12,13 @@
 			</a>
 		</div>
 		<div class="organization add-node" layout="row" layout-align="start center" ng-if="organizationRow.length < 4">
-			<a href class="tree-node" ng-click="vm.addOrganization()" aria-label="cancel">
-				Add <i class="fa fa-plus"></i>
-			</a>
+			<button class="tree-node" ng-click="vm.addOrganization()" aria-label="cancel">
+				<div>Add </div> 
+				<div>an Org. <i class="fa fa-plus"></i></div>
+			</button>
 		</div>
 	</div>
-	<div layout="row" layout-align="center center" ng-if="vm.organizations.length === 0 || !vm.organizations">
+	<div layout="row" layout-align="center center" class="disable-animations" ng-if="vm.organizations.length === 0 || !vm.organizations">
 		New to Okra? That's alright.
 		<md-button class="md-raised md-primary" ng-click="vm.addOrganization()" aria-label="cancel">
 			Create an Organization <i class="fa fa-plus"></i>
