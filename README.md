@@ -14,6 +14,8 @@ Clone this repo to your local machine, and navigate to the folder in Terminal, t
 
 ```
 npm install
+git config --global url."https://".insteadOf git://
+bower install
 grunt serve
 open http://localhost:3333
 ```
