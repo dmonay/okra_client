@@ -48,7 +48,7 @@
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
         // Use that theme for the primary intentions
         $mdThemingProvider.theme('default')
-            .primaryColor('okraGreen');
+            .primaryPalette('okraGreen');
     });
 
     //Constants
