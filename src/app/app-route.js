@@ -40,7 +40,7 @@
             .state('login', {
                 url: '/',
                 templateUrl: 'app/login/login.tpl.html',
-                // controller: 'LoginController as vm'
+                controller: 'LoginController as vm'
             })
             /**
              * @ngdoc method

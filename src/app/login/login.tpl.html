@@ -33,36 +33,10 @@
 				</div>
 			</div>
 			<div class="md-actions-form" layout="row" layout-align="center center">
-				<md-button class="md-raised" ng-click="optionsOpen = !optionsOpen;" aria-label="log in">More Options</md-button>
+				<md-button class="md-raised" ng-click="vm.googleLogin()" aria-label="log in">Google Login</md-button>
 				<md-button class="md-raised md-primary" aria-label="log in">Log in</md-button>
 				<md-progress-circular ng-if="vm.inProgress" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
 			</div>
 		</form>
 	</div>
-	<md-sidenav md-is-open="optionsOpen" class="md-sidenav-right">
-	    	<md-toolbar>
-	        	<h1 class="md-toolbar-tools">More Options</h1>
-	      	</md-toolbar>
-	        <md-content class="md-padding">
-	        	<div layout="row">
-			        <div flex="50">
-				        <h5>Forgot Password?</h5>
-				    </div>
-				    <div flex="50">
-				    	<md-button class="side-nav-btn">Reset My Password</md-button>
-				    </div>
-				</div>
-				<div layout="row">
-			        <div flex="50">
-				        <h5>Need An Account?</h5>
-				    </div>
-				    <div flex="50">
-				    	<md-button class="side-nav-btn">Create an Account</md-button>
-				    </div>
-				</div>
-		    </md-content>
-		<div layout="row" layout-align="center end">
-	        <md-button ng-click="optionsOpen = false;" class="md-raised md-warn"> Dismiss </md-button>
-	    </div>
-	</md-sidenav>
 </div>
