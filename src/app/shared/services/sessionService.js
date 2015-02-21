@@ -12,7 +12,7 @@
      *
      */
 
-    function session(apiCreds, $http, okraAPI) {
+    function session($cookies, $http, apiCreds, okraAPI) {
 
         var service = {};
 
@@ -25,7 +25,6 @@
                     immediate: isSilent
                 })
                 .then(function (response) {
-
                     if (response.access_token) {
                         session.auth = {
                             accessToken: response.access_token,
@@ -63,7 +62,7 @@
         return service;
     }
 
-    session.$inject = ['apiCreds', '$http', 'okraAPI'];
+    session.$inject = ['$cookies', '$http', 'apiCreds', 'okraAPI'];
 
     app.factory('session', session);
 
