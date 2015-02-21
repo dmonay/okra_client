@@ -7,7 +7,7 @@
         var vm = this;
 
         vm.googleLogin = function () {
-            session.gAuthenticate();
+            session.gAuthenticate(false);
         };
     }
 
