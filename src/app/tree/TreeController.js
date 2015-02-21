@@ -22,6 +22,7 @@
         }
 
         vm.linkedNodeIds = ['organizationNode', 'objectiveNode', 'keyResultNode', 'taskNode'];
+        vm.organization = $stateParams.organization;
 
         vm.changeCurrentObjective = function (nodeId, objective) {
             vm.currentObjective = objective;
@@ -49,7 +50,7 @@
         vm.openTreeMembersModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/shared/members-modal.tpl.html',
+                templateUrl: 'app/shared/members-modal/members-modal.tpl.html',
                 controller: 'MembersModalController',
                 controllerAs: 'modal',
                 locals: {

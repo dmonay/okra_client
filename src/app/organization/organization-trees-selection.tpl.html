@@ -1,11 +1,8 @@
 <section class="organization-wrapper">
 	<div class="organization active" style="margin-bottom: 5px;" layout="row" layout-align="center" id="organizationNode">
-		<button class="tree-node" 
-			ok-collapse 
-			linked-to="organizationNode"
-			all-linked-nodes="['organizationNode', 'treesNode']">
+		<div class="tree-node">
 			{{vm.organization}}
-		</button>
+		</div>
 	    <div layout="column" layout-align="start end">
 	    	<md-button class="md-raised md-primary" ng-click="vm.openOrganizationMembersModal()" aria-label="members">
 		    	<i class="fa fa-users"></i>
@@ -13,7 +10,7 @@
 	    </div>
 	</div> 
 	<!--Trees -->
-	<div layout="column" style="max-height: 100000px;" class="collapse" id="treesNode">
+	<div layout="column" id="treesNode">
 		<div class="centered-row" layout="row" layout-align="start center" ng-repeat="treeRow in vm.trees track by $index">
 			<div class="tree" layout="row" layout-align="start" ng-repeat="tree in treeRow track by $index">
 				<a class="tree-node" ng-hide="tree.isEditMode" ui-sref="organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.organization })">
@@ -24,6 +21,17 @@
 				</a>
 			</div>
 			<div class="tree add-node" layout-align="start" ng-if="treeRow.length < 4">
+				<button href class="tree-node" ng-click="vm.openAddTreeModal()" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
+					<div> Add </div>
+					<div>
+						A Tree
+						<i class="fa fa-plus"></i>
+					</div>
+				</button>
+			</div>
+		</div>
+		<div class="centered-row" ng-if="vm.trees.length === 0" layout="row" layout-align="start center">
+			<div class="tree add-node" layout-align="start">
 				<button href class="tree-node" ng-click="vm.openAddTreeModal()" ng-click="vm.openAddTreeModal()" aria-label="Add Tree">
 					<div> Add </div>
 					<div>

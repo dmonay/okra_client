@@ -20,9 +20,6 @@ module.exports = function (grunt) {
             .writeln('grunt test:unit            # run unit tests')
             .writeln('grunt test:watch           # run unit tests continuously, watching for changes')
             .writeln('grunt test:reports         # run unit & coverage tests and output results to ./reports')
-            .writeln('grunt test:e2e:local       # run e2e tests using localhost against a local browser')
-            .writeln('grunt test:e2e:semi        # run e2e tests using localhost on sauce labs via sauce connect')
-            .writeln('grunt test:e2e:remote      # run e2e tests using saucelabs')
             .writeln('==========================================================================================')
             .writeln('');
     });

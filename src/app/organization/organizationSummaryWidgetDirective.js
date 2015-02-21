@@ -17,7 +17,7 @@
         return {
             restrict: 'A',
             // link: linkFunc,
-            templateUrl: 'app/shared/organization-summary-widget.tpl.html'
+            templateUrl: 'app/organization/organization-summary-widget.tpl.html'
         };
 
         // function linkFunc(scope, iElement, iAttrs) {

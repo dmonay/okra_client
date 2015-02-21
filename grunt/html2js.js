@@ -21,7 +21,7 @@ module.exports = {
                 removeComments: true
             }
         },
-        src: [ 'src/app/**/*.tpl.html' ],
+        src: [ 'src/app/**/*.tpl.html', 'src/app/shared/**/*.tpl.html' ],
         dest: 'src/app/templates.js'
     }
 };

@@ -18,7 +18,7 @@
         vm.openOrganizationMembersModal = function ($event) {
             $mdDialog.show({
                 targetEvent: $event,
-                templateUrl: 'app/shared/members-modal.tpl.html',
+                templateUrl: 'app/shared/members-modal/members-modal.tpl.html',
                 controller: 'MembersModalController',
                 controllerAs: 'modal',
                 locals: {
