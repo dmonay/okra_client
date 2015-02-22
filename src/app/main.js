@@ -199,14 +199,14 @@
 
     var app = angular.module('HeaderModule');
 
-    function HeaderController($scope, $mdDialog, hardCoded, session) {
+    function HeaderController($scope, $mdDialog, hardCoded, session, $interval) {
         var vm = this;
 
         vm.userName = hardCoded.userName;
-        vm.session = session.user;
+        vm.session = session;
     }
 
-    HeaderController.$inject = ['$scope', '$mdDialog', 'hardCoded', 'session'];
+    HeaderController.$inject = ['$scope', '$mdDialog', 'hardCoded', 'session', '$interval'];
 
     app.controller('HeaderController', HeaderController);
 
@@ -699,7 +699,7 @@
      *
      */
 
-    function session($http, okraAPI, ipCookie) {
+    function session($http, $state, okraAPI, ipCookie) {
 
         var service = {};
 
@@ -735,7 +735,8 @@
                     'userId': 'me'
                 });
                 request.then(function (resp) {
-                    session.user = resp.result;
+                    service.user = resp.result;
+                    $state.go('organizations');
                 });
             });
         };
@@ -759,7 +760,7 @@
         return service;
     }
 
-    session.$inject = ['$http', 'okraAPI', 'ipCookie'];
+    session.$inject = ['$http', '$state', 'okraAPI', 'ipCookie'];
 
     app.factory('session', session);
 

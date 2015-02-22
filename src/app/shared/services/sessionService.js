@@ -12,7 +12,7 @@
      *
      */
 
-    function session($http, okraAPI, ipCookie) {
+    function session($http, $state, okraAPI, ipCookie) {
 
         var service = {};
 
@@ -48,7 +48,8 @@
                     'userId': 'me'
                 });
                 request.then(function (resp) {
-                    session.user = resp.result;
+                    service.user = resp.result;
+                    $state.go('organizations');
                 });
             });
         };
@@ -72,7 +73,7 @@
         return service;
     }
 
-    session.$inject = ['$http', 'okraAPI', 'ipCookie'];
+    session.$inject = ['$http', '$state', 'okraAPI', 'ipCookie'];
 
     app.factory('session', session);
 
