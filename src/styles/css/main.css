@@ -345,11 +345,7 @@ button {
 }
 
 .green-overlay {
-<<<<<<< HEAD
-  background-color: #99b742;
-=======
   background: url("../../assets/back_light.png");
->>>>>>> 8ca09b0... bootstrapper added
   color: #99b742;
   height: 100%;
   position: fixed !important;
