@@ -12,7 +12,7 @@
      *
      */
 
-    function session($http, $state, $timeout, okraAPI, ipCookie) {
+    function session($http, $state, $timeout, $mdToast, okraAPI, ipCookie) {
 
         var service = {};
 
@@ -36,14 +36,14 @@
                         };
                         ipCookie('okSession', response.access_token);
                         ipCookie('okTokenExpirationDate', response.expires_at);
-                        service.getProfile();
+                        service.getProfile(isSilent);
                     }
                 }, function (response) {
                     console.log('Silent login failed');
                 });
         };
 
-        service.getProfile = function () {
+        service.getProfile = function (isSilent) {
             gapi.client.load('plus', 'v1').then(function () {
                 var request = gapi.client.plus.people.get({
                     'userId': 'me'
@@ -54,8 +54,17 @@
                     if ($state.current.name == "login") {
                         $state.go('organizations');
                     }
+                    if (!isSilent) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .content('Welcome ' + service.user.displayName)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
                     //refresh the auth token in 40 minutes if the user remains active on the app
                     service.beginAuthCountdown(2400000);
+
 
                 }, function (response) {
                     //invalid credentials let's authenticate and try again
@@ -93,10 +102,14 @@
             service.gAuthenticate(true);
         };
 
+        service.logOut = function () {
+
+        };
+
         return service;
     }
 
-    session.$inject = ['$http', '$state', '$timeout', 'okraAPI', 'ipCookie'];
+    session.$inject = ['$http', '$state', '$timeout', '$mdToast', 'okraAPI', 'ipCookie'];
 
     app.factory('session', session);
 

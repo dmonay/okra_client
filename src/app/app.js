@@ -62,11 +62,14 @@
             session.isAuthenticated();
         };
 
+        //make sure users login before using the app
         $rootScope.$on('$stateChangeSuccess', function () {
             if ($state.current.name != "login" && !session.user) {
                 $state.go('login');
             }
         });
+
+        //make sure that users can't go back to login page once they are logged in
         $rootScope.$on('$stateChangeStart', function () {
             if ($state.current.name != "login" && session.user) {
                 $state.go($state.current.name);
