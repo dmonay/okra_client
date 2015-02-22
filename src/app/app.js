@@ -53,9 +53,19 @@
     });
 
     //get the bootstrap data for the app
-    app.run(function ($http, session) {
+    app.run(function ($http, $location, $rootScope, $state, $window, session) {
         $http.get('app/bootstrap.json').success(function (data) {
             session.storeCredentials(data);
+        });
+
+        $window.isAuthenticated = function () {
+            session.isAuthenticated();
+        };
+
+        $rootScope.$on('$stateChangeSuccess', function () {
+            if ($state.current.name != "login" && !session.user) {
+                $state.go('login');
+            }
         });
     });
 
@@ -90,6 +100,7 @@
         userId: '54d55f11673e6cfceef7e097',
         userName: 'someuser123'
     });
+
     //could turn this into a service? So we can change whenever we want for 2.0
     app.constant('jsPlumbDefaults', {
         PaintStyle: {

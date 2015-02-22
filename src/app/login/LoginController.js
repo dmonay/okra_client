@@ -9,6 +9,7 @@
         vm.googleLogin = function () {
             session.gAuthenticate(false);
         };
+
     }
 
     LoginController.$inject = ['session'];
