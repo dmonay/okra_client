@@ -794,7 +794,7 @@
         };
 
         service.beginAuthCountdown = function (time) {
-            $timeout(function () {
+            service.authCountdown = $timeout(function () {
                 service.gAuthenticate(true);
             }, time);
         };
@@ -812,7 +812,10 @@
         };
 
         service.logOut = function () {
-
+            //cancel the refresh timer
+            $timeout.cancel(service.authCountdown);
+            $state.go('login');
+            service.user = undefined;
         };
 
         return service;
