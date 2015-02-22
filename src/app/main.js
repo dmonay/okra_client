@@ -703,13 +703,13 @@
 
         var service = {};
 
-        service.gAuthenticate = function () {
+        service.gAuthenticate = function (loggedIn) {
             var isSilent = false,
                 currentTime = new Date().getTime(),
                 previousTokenExpiration = ipCookie('okTokenExpirationDate');
 
             gapi.client.setApiKey(service.authCreds.gApiKey);
-            if (currentTime > previousTokenExpiration) {
+            if (currentTime > previousTokenExpiration && loggedIn) {
                 isSilent = true;
             }
 
@@ -725,10 +725,6 @@
                             tokenLifespan: response.expires_in
                         };
                         service.getProfile();
-                    }
-                }, function (error) {
-                    if (error === null) {
-                        service.gAuthenticate(false);
                     }
                 });
         };
