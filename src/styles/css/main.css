@@ -11,6 +11,44 @@ md-item {
   margin: 0px 10px;
 }
 
+.header-dropdown.closed {
+  height: 0;
+  overflow: hidden;
+}
+
+.header-dropdown {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  padding-bottom: 0;
+  background-color: #99b742;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 88px;
+  -webkit-transition: height ease-in 0.1s;
+  -moz-transition: height ease-in 0.1s;
+  -ms-transition: height ease-in 0.1s;
+  transition: height ease-in 0.1s;
+}
+.header-dropdown md-item {
+  margin: 0;
+}
+.header-dropdown md-item-content {
+  height: 40px;
+  cursor: pointer;
+  -webkit-transition: background-color ease-in 0.4s;
+  -moz-transition: background-color ease-in 0.4s;
+  -ms-transition: background-color ease-in 0.4s;
+  transition: background-color ease-in 0.4s;
+}
+.header-dropdown md-item:last-child md-item-content {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.header-dropdown md-item-content:hover {
+  background-color: #90AD3C;
+}
+
 .username {
   text-align: center;
 }

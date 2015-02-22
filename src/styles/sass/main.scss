@@ -29,6 +29,42 @@ md-item {
 	margin: 0px 10px;
 }
 
+.header-dropdown.closed {
+	height: 0;
+	overflow: hidden;
+}
+
+.header-dropdown {
+	position: absolute;
+	right: 0;
+	top: 55px;
+	padding-bottom: 0;
+	background-color: $okraGreen;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	height: 88px;
+	@include transition(height, 0.1s);
+
+	md-item {
+		margin: 0;
+	}
+
+	md-item-content {
+		height: 40px;
+		cursor: pointer;
+		@include transition(background-color, 0.4s);
+	}
+
+	md-item:last-child md-item-content {
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+
+	md-item-content:hover {
+		background-color: #90AD3C;
+	}
+}
+
 .username {
 	text-align: center;
 }

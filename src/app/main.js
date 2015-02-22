@@ -223,6 +223,7 @@
 
         vm.userName = hardCoded.userName;
         vm.session = session;
+        vm.dropdownOpen = false;
 
     }
 

@@ -21,17 +21,8 @@
               <h1 class="username" flex>
                 {{vm.session.user.displayName}}
               </h1>
-              <md-button aria-label="settings">
-                    <i class="fa fa-cog"></i>
-                    <md-list>
-                      <md-item>
-                        <md-item-content>
-                          <div class="md-tile-content">
-                            <h4>Logout</h4>
-                          </div>
-                        </md-item-content>
-                      </md-item>
-                    </md-list>                   
+              <md-button aria-label="settings" ng-click="vm.dropdownOpen = !vm.dropdownOpen">
+                    <i class="fa fa-cog"></i>                 
               </md-button>
               <md-button aria-label="user profile">
                     <i class="fa fa-user"></i>                    
@@ -39,6 +30,22 @@
               <md-button aria-label="notifications">
                     <i class="fa fa-bell"></i>                    
               </md-button>
+              <md-list class="header-dropdown" ng-class="{'closed': !vm.dropdownOpen}">
+                <md-item>
+                  <md-item-content>
+                    <div class="md-tile-content">
+                      <h4>Settings</h4>
+                    </div>
+                  </md-item-content>
+                </md-item>
+                <md-item>
+                  <md-item-content>
+                    <div class="md-tile-content">
+                      <h4>Logout</h4>
+                    </div>
+                  </md-item-content>
+                </md-item>
+              </md-list>  
             </div>
           </md-toolbar>
           <md-content>

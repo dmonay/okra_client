@@ -10,3 +10,10 @@
     -ms-transition: max-height ease-in-out 0.9s;
 	transition: max-height ease-in-out 0.9s;
 }
+
+@mixin transition($property, $duration) {
+	-webkit-transition: $property ease-in $duration;
+    -moz-transition: $property ease-in $duration;
+    -ms-transition: $property ease-in $duration;
+	transition: $property ease-in $duration;
+}
