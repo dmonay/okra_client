@@ -12,15 +12,22 @@
      *
      */
 
-    function session($cookies, $http, apiCreds, okraAPI) {
+    function session($http, okraAPI, ipCookie) {
 
         var service = {};
 
-        service.gAuthenticate = function (isSilent) {
-            gapi.client.setApiKey(apiCreds.gApiKey);
+        service.gAuthenticate = function () {
+            var isSilent = false,
+                currentTime = new Date().getTime(),
+                previousTokenExpiration = ipCookie('okTokenExpirationDate');
+
+            gapi.client.setApiKey(service.authCreds.gApiKey);
+            if (currentTime > previousTokenExpiration) {
+                isSilent = true;
+            }
 
             gapi.auth.authorize({
-                    client_id: apiCreds.gauthClientId,
+                    client_id: service.authCreds.gauthClientId,
                     scope: 'https://www.googleapis.com/auth/userinfo.profile',
                     immediate: isSilent
                 })
@@ -59,10 +66,17 @@
             });
         };
 
+        service.storeCredentials = function (credentials) {
+            service.authCreds = {
+                gauthClientId: credentials.gauthClientId,
+                gApiKey: credentials.gApiKey
+            };
+        };
+
         return service;
     }
 
-    session.$inject = ['$cookies', '$http', 'apiCreds', 'okraAPI'];
+    session.$inject = ['$http', 'okraAPI', 'ipCookie'];
 
     app.factory('session', session);
 

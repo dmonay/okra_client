@@ -1,42 +1,9 @@
 <div class="green-overlay" layout="column" layout-align="center center" flex="100">
 	<div layout="row" layout-align="center center">
-		<h1>Login</h1>
+		<img class="logo" src="assets/okra-logo-large.png">
 	</div>
-	<div class="well" layout="row" layout-align="center center">
-		<form name="vm.userLoginForm">
-		    <div layout="row" layout-align="center center">
-		    	<div layout-align="center center">
-					<md-input-container class="long">
-					   <label>Username</label>
-					   <md-input required name="username" ng-model="username" autocapitalize="off"></md-input>
-					</md-input-container>
-				</div>
-				<div class="error-msg ng-hide" layout-align="center end" ng-show="vm.formSubmitted && vm.userLoginForm.username.$invalid" ng-cloak>
-					<i class="fa fa-warning"></i>
-					<md-tooltip>
-						This field is required
-					</md-tooltip>
-				</div>
-			</div>
-			<div layout="row" layout-align="center center">
-		    	<div layout-align="start start">
-					<md-input-container class="long">
-					   <label>Password</label>
-					   <md-input required name="password" ng-model="vm.password" autocapitalize="off"></md-input>
-					</md-input-container>
-				</div>
-				<div class="error-msg ng-hide" layout-align="center end" ng-show="vm.formSubmitted && vm.userLoginForm.password.$invalid" ng-cloak>
-					<i class="fa fa-warning"></i>
-					<md-tooltip>
-						This field is required
-					</md-tooltip>
-				</div>
-			</div>
-			<div class="md-actions-form" layout="row" layout-align="center center">
-				<md-button class="md-raised" ng-click="vm.googleLogin()" aria-label="log in">Google Login</md-button>
-				<md-button class="md-raised md-primary" aria-label="log in">Log in</md-button>
-				<md-progress-circular ng-if="vm.inProgress" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
-			</div>
-		</form>
+	<div layout="row" layout-align="center center">
+		<h1 class="slogan">An OKR management tool to keep your team on track.</h1>
 	</div>
+	<md-button class="md-raised md-warn" ng-click="vm.googleLogin()" aria-label="log in"><i class="fa fa-google"></i> Sign in with Google</md-button>
 </div>

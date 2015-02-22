@@ -137,3 +137,4 @@ src/app/templates.js
 .tmp
 coverage
 src/components
+src/app/bootstrap.json
