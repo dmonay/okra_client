@@ -67,6 +67,11 @@
                 $state.go('login');
             }
         });
+        $rootScope.$on('$stateChangeStart', function () {
+            if ($state.current.name != "login" && session.user) {
+                $state.go($state.current.name);
+            }
+        });
     });
 
     //Constants
