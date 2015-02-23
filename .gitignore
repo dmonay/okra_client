@@ -137,4 +137,8 @@ src/app/templates.js
 .tmp
 coverage
 src/components
+
+# Security
+# ----
 src/app/bootstrap.json
+grunt/replace.js
