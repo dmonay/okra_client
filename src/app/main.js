@@ -49,7 +49,7 @@
 
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
         $mdThemingProvider.theme('default')
-            .primaryColor('okraGreen');
+            .primaryPalette('okraGreen');
     });
 
     //get the bootstrap data for the app

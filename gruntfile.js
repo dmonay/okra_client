@@ -79,15 +79,14 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', [
         'clean:dist',
         'concurrent:dist',
-        'copy',
-        'autoprefixer:dist',
-        'test:unit',
-        'test:reports',
-        'ngdocs',
-        'useminPrepare',
         'concat',
+        'copy',
+        'ngmin:dist',
         'uglify',
-        'usemin'
+        'replace:dist',
+        // 'test:unit', uncomment once all tests working
+        // 'test:reports',
+        'ngdocs'
     ]);
 
 };

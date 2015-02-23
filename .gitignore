@@ -141,4 +141,3 @@ src/components
 # Security
 # ----
 src/app/bootstrap.json
-grunt/replace.js

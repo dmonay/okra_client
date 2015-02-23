@@ -14,7 +14,6 @@ module.exports = {
     dist: [
         'lodash',
         'html2js:app',
-        'ngmin:dist',
         'sass:dist'
     ]
 };

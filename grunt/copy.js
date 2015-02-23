@@ -9,7 +9,8 @@ module.exports = {
         src: [
             '{,*/}*.html',
             'lang/*',
-            'assets/**/*'
+            'assets/**/*',
+            'app/main.js'
         ],
         dest: '<%= meta.dist %>'
     }

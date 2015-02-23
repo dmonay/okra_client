@@ -6,9 +6,9 @@ module.exports = {
     dist: {
         files: [{
             expand: true,
-            cwd: '<%= meta.src %>/app/app.js',
-            src: '*.js',
-            dest: '<%= meta.dist %>/app'
+            cwd: 'dist/app/',
+            src: 'main.js',
+            dest: 'dist/app'
         }]
     }
 };
