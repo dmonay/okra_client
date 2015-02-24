@@ -45,6 +45,7 @@
     "grunt-karma": "~0.8.0",
     "grunt-lodash": "^0.3.0",
     "grunt-newer": "^0.6.1",
+    "grunt-ng-constant": "^1.1.0",
     "grunt-ngdocs": "^0.2.6",
     "grunt-ngmin": "0.0.3",
     "grunt-protractor-runner": "1.0.0",
