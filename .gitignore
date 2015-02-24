@@ -129,7 +129,6 @@ node_modules
 
 *.jar
 cache
-libs
 reports
 docs
 src/app/templates.js
