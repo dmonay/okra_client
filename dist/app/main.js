@@ -42,7 +42,7 @@
     function ($mdThemingProvider) {
       var okraGreen = $mdThemingProvider.extendPalette('green', { '500': '#99b742' });
       $mdThemingProvider.definePalette('okraGreen', okraGreen);
-      $mdThemingProvider.theme('default').primaryColor('okraGreen');
+      $mdThemingProvider.theme('default').primaryPalette('okraGreen');
     }
   ]);
   //get the bootstrap data for the app

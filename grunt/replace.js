@@ -1,5 +1,5 @@
 module.exports = {
-    dev: {
+    dist: {
       options: {
           patterns: [{
               match: /http:\/\/localhost:8080/g,

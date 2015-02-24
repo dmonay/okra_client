@@ -16,7 +16,7 @@ module.exports = {
             style: 'compressed'
         },
         files: {
-            '<%= meta.dist %>/styles/css/main.css': '<%= meta.src %>/styles/sass/main.scss'
+            '<%= meta.dist %>/styles/css/main.min.css': '<%= meta.src %>/styles/sass/main.scss'
         }
     }
 };
