@@ -81,9 +81,9 @@ module.exports = function (grunt) {
         'concurrent:dist',
         'concat',
         'copy',
+        'replace:dist',
         'ngmin:dist',
         'uglify',
-        'replace:dist',
         // 'test:unit', uncomment once all tests working
         // 'test:reports',
         'ngdocs'
