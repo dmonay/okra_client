@@ -12,7 +12,7 @@ module.exports = {
             'assets/**/*',
             'app/main.js',
             'app/templates.js',
-            'components/*',
+            'components/**/*.js',
             'external/dom.jsPlumb-1.7.2-min.js'
         ],
         dest: '<%= meta.dist %>'
