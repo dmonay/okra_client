@@ -67,12 +67,8 @@
             if ($state.current.name != "login" && !session.user) {
                 $state.go('login');
             }
-        });
-
-        //make sure that users can't go back to login page once they are logged in
-        $rootScope.$on('$stateChangeStart', function () {
-            if ($state.current.name != "login" && session.user) {
-                $state.go($state.current.name);
+            if ($state.current.name == "login" && session.user) {
+                $state.go('organizations');
             }
         });
     });
@@ -939,10 +935,13 @@
                 if (!parentId) {
                     return;
                 }
-                jsPlumb.connect({
+                var plumb = jsPlumb.connect({
                     source: parentId,
                     target: nodeId
                 });
+
+                console.log(jsPlumb);
+
                 traverseUpwards(parentId);
             }
         }
@@ -964,7 +963,7 @@ angular.module('okra.templates', []).run(['$templateCache', function ($templateC
         "<section class=\"organization-wrapper\"><div layout-align=\"center center\" layout=\"row\"><h1>Organizations</h1></div><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"organizationRow in vm.organizations track by $index\"><div class=\"organization\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"org in organizationRow track by $index\"><a href class=\"tree-node\" ui-sref=\"organization({ organization: org })\">{{org}}<md-tooltip ng-if=\"org.length > 14\">{{org}}</md-tooltip></a></div><div class=\"organization add-node\" layout=\"row\" layout-align=\"start center\" ng-if=\"organizationRow.length < 4\"><button class=\"tree-node\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\"><div>Add</div><div>an Org. <i class=\"fa fa-plus\"></i></div></button></div></div><div layout=\"row\" layout-align=\"center center\" class=\"disable-animations\" ng-if=\"vm.organizations.length === 0 || !vm.organizations\">New to Okra? That's alright.<md-button class=\"md-raised md-primary\" ng-click=\"vm.addOrganization()\" aria-label=\"cancel\">Create an Organization <i class=\"fa fa-plus\"></i></md-button></div></section>"
     );
     $templateCache.put("app/organization/organization-summary-widget.tpl.html",
-        "<div class=\"organization-widget\"><img class=\"logo\" src=\"http://img4.wikia.nocookie.net/__cb20140723203502/thehungergames/images/b/b9/House_stark_by_azraeuz-d61daf1.png\"><div class=\"org-name\">{{vm.organization}}</div><div><md-button class=\"md-raised\" aria-label=\"members\">Members</md-button></div></div>"
+        "<div class=\"organization-widget\"><img class=\"logo\" src=\"assets/okra-default-logo.png\"><div class=\"org-name\">{{vm.organization}}</div><div><md-button class=\"md-raised\" aria-label=\"members\">Members</md-button></div></div>"
     );
     $templateCache.put("app/organization/organization-trees-selection.tpl.html",
         "<section class=\"organization-wrapper\"><div class=\"organization active\" style=\"margin-bottom: 5px\" layout=\"row\" layout-align=\"center\" id=\"organizationNode\"><div class=\"tree-node\">{{vm.organization}}</div><div layout=\"column\" layout-align=\"start end\"><md-button class=\"md-raised md-primary\" ng-click=\"vm.openOrganizationMembersModal()\" aria-label=\"members\"><i class=\"fa fa-users\"></i></md-button></div></div><div layout=\"column\" id=\"treesNode\"><div class=\"centered-row\" layout=\"row\" layout-align=\"start center\" ng-repeat=\"treeRow in vm.trees track by $index\"><div class=\"tree\" layout=\"row\" layout-align=\"start\" ng-repeat=\"tree in treeRow track by $index\"><a class=\"tree-node\" ng-hide=\"tree.isEditMode\" ui-sref=\"organization/tree({ treeIdEnc: (tree.Id | okEncrypt), organization: vm.organization })\">{{tree.Name}}<md-tooltip ng-if=\"tree.Name.length > 14\">{{tree.Name}}</md-tooltip></a></div><div class=\"tree add-node\" layout-align=\"start\" ng-if=\"treeRow.length < 4\"><button href class=\"tree-node\" ng-click=\"vm.openAddTreeModal()\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><div>Add</div><div>A Tree <i class=\"fa fa-plus\"></i></div></button></div></div><div class=\"centered-row\" ng-if=\"vm.trees.length === 0\" layout=\"row\" layout-align=\"start center\"><div class=\"tree add-node\" layout-align=\"start\"><button href class=\"tree-node\" ng-click=\"vm.openAddTreeModal()\" ng-click=\"vm.openAddTreeModal()\" aria-label=\"Add Tree\"><div>Add</div><div>A Tree <i class=\"fa fa-plus\"></i></div></button></div></div></div></section>"

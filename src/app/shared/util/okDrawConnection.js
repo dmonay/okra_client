@@ -45,10 +45,13 @@
                 if (!parentId) {
                     return;
                 }
-                jsPlumb.connect({
+                var plumb = jsPlumb.connect({
                     source: parentId,
                     target: nodeId
                 });
+
+                console.log(jsPlumb);
+
                 traverseUpwards(parentId);
             }
         }

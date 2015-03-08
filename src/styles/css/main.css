@@ -64,7 +64,7 @@ md-item {
   left: 10px;
   background: transparent;
   border-radius: 5px;
-  border: 1px solid #99b742;
+  border: 1px solid #8a8a8a;
   padding: 10px;
   text-align: center;
 }
@@ -80,7 +80,7 @@ md-item {
   font-weight: bold;
 }
 .organization-widget button {
-  color: #ffffff !important;
+  color: #8a8a8a !important;
   padding: 5px 10px;
   margin-left: 0 !important;
 }
@@ -89,7 +89,7 @@ md-item {
   padding-bottom: 0px;
   background-color: white !important;
   height: initial;
-  color: #2e2e2e;
+  color: #9ca194;
 }
 .md-dialog-container md-tooltip .md-background {
   height: 30px;
@@ -128,7 +128,7 @@ md-checkbox .md-icon {
 }
 
 body {
-  color: #8a8a8a;
+  color: #ffffff;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -139,7 +139,7 @@ body {
 
 md-content {
   height: 100vh;
-  background-color: #2e2e2e !important;
+  background-color: #9ca194 !important;
 }
 
 .error-msg {
@@ -259,7 +259,7 @@ button {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   border-radius: 5px;
-  color: #3c3a3a;
+  color: white;
   width: 155px;
   white-space: nowrap;
   overflow: hidden;
@@ -296,7 +296,7 @@ button {
 .organization-wrapper .key-result.active .tree-node .status .fa-check,
 .organization-wrapper .organization.active .tree-node .status .fa-check,
 .organization-wrapper .tree.active .tree-node .status .fa-check {
-  color: #2e2e2e;
+  color: #9ca194;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
@@ -313,7 +313,7 @@ button {
   top: 7%;
   right: 5%;
   font-weight: 600;
-  color: #3c3a3a;
+  color: white;
 }
 .organization-wrapper .objective.add-node .tree-node:after, .organization-wrapper .key-result.add-node .tree-node:after {
   content: "";
@@ -336,7 +336,7 @@ button {
   background-color: #99b742;
   padding: 10px 10px;
   padding-left: 20px;
-  color: #3c3a3a;
+  color: white;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;

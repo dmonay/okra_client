@@ -5,8 +5,8 @@
 $white  : #8A8A8A;
 $black : #000000;
 $okraGreen : #99b742;
-$nodeColor : #3C3A3A;
-$bgColor: #2E2E2E;
+$nodeColor : #ffffff;
+$bgColor: #9ca194;
 $grey : #C2C5C3;
 $warningRed : #F44336;
 
@@ -82,7 +82,7 @@ md-item {
 	left: 10px;
     background: transparent;
     border-radius: 5px;
-    border: 1px solid $okraGreen;
+    border: 1px solid $white;
     padding: 10px;
     text-align: center;
 
@@ -100,7 +100,7 @@ md-item {
     }
 
     button {
-    	color: #ffffff !important;
+    	color: $white !important;
     	padding: 5px 10px;
     	margin-left: 0 !important;
     }
@@ -161,7 +161,7 @@ md-checkbox .md-icon {
 }
 //Global Styles ================================================================
 body {
-	color: $white;
+	color: #ffffff;
 	font-family: 'Raleway', sans-serif;
 }
 
