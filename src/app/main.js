@@ -62,6 +62,11 @@
             session.isAuthenticated();
         };
 
+        //repaint all connections
+        $window.onresize = function (event) {
+            $window.jsPlumb.repaintEverything();
+        };
+
         //make sure users login before using the app
         $rootScope.$on('$stateChangeSuccess', function () {
             if ($state.current.name != "login" && !session.user) {
@@ -70,6 +75,7 @@
             if ($state.current.name == "login" && session.user) {
                 $state.go('organizations');
             }
+            $window.jsPlumb.repaintEverything();
         });
     });
 
@@ -121,6 +127,7 @@
         }],
         Anchors: ["BottomCenter", "TopCenter"]
     });
+
 })();
 
 (function () {
