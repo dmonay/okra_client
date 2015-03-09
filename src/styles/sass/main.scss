@@ -110,6 +110,7 @@ md-item {
 
 	md-content {
 		padding-bottom: 0px;
+		padding-top: 5px !important;
 		background-color: rgb(255,255,255) !important;
 		height: initial;
 		color: $bgColor;
@@ -319,7 +320,7 @@ button {
 			opacity: 1;
 
 			.status .fa-check {
-				color: $bgColor;
+				color: $nodeColor;
 			}
 		}
 	}
@@ -363,7 +364,7 @@ button {
 		font-weight: 600;
 
 		.tree-node {
-			color: $white;
+			color: $grey;
 			background: transparent;
 			border: 2px solid;
 			padding: 8px;
@@ -373,6 +374,10 @@ button {
 				top: 20px;
 				right: 20px;
 			}
+		}
+
+		.tree-node:after {
+			content: "";
 		}
 	}
 
@@ -416,7 +421,8 @@ button {
 		.md-primary {
 			background: transparent !important;
 			border: 2px solid;
-			color: $white !important;
+			color: $grey !important;
+			box-shadow: none;
 		}
 	}
 
@@ -488,3 +494,8 @@ md-radio-group {
 		margin-top: 15px !important;
 	}
 }
+
+md-radio-group.md-default-theme:focus:not(:empty) {
+	border-color: transparent !important;
+}
+

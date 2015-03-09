@@ -80,6 +80,7 @@
                     secondaryParentNode: secondaryParentNode
                 }
             }).then(function (response) {
+
                 if (response) {
                     var node = response.node,
                         parentNode = response.parentNode;

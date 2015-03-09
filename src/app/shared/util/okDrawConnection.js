@@ -31,6 +31,12 @@
                 jsPlumb.detachEveryConnection(parentId);
             });
 
+            //repaint all connections
+            $window.onresize = function (event) {
+                $window.jsPlumb.repaintEverything();
+            };
+
+
             iElement.on('click', function () {
                 jsPlumb.detachEveryConnection(parentId);
                 iElement.parent().parent().children().removeClass('active');
@@ -50,11 +56,13 @@
                 if (!parentId) {
                     return;
                 }
-                var plumb = jsPlumb.connect({
+                jsPlumb.connect({
                     source: parentId,
                     target: nodeId,
                     detachable: false
                 });
+
+                jsPlumb.setDraggable(nodeId, false);
 
                 traverseUpwards(parentId);
             }

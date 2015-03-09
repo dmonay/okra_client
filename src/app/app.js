@@ -43,13 +43,22 @@
      * Theme Configuration
      */
     app.config(function ($mdThemingProvider) {
+        //create color palletes
         var okraGreen = $mdThemingProvider.extendPalette('green', {
-            '500': '#99b742'
+            '500': '#99b742',
+        });
+        var okraGreenAccent = $mdThemingProvider.extendPalette('green', {
+            'A200': '#99b742'
         });
 
+        //define color extensions
         $mdThemingProvider.definePalette('okraGreen', okraGreen);
+        $mdThemingProvider.definePalette('okraGreenAccent', okraGreenAccent);
+
+        //register extensions to the theme
         $mdThemingProvider.theme('default')
-            .primaryPalette('okraGreen');
+            .primaryPalette('okraGreen')
+            .accentPalette('okraGreenAccent');
     });
 
     //get the bootstrap data for the app
@@ -60,11 +69,6 @@
 
         $window.isAuthenticated = function () {
             session.isAuthenticated();
-        };
-
-        //repaint all connections
-        $window.onresize = function (event) {
-            $window.jsPlumb.repaintEverything();
         };
 
         //make sure users login before using the app
@@ -125,7 +129,9 @@
         Connector: ["Bezier", {
             curviness: 20
         }],
-        Anchors: ["BottomCenter", "TopCenter"]
+        Anchors: ["BottomCenter", "TopCenter"],
+        ConnectionsDetachable: false,
+        ReattachConnections: false
 
     });
 

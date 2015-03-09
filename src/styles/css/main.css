@@ -87,6 +87,7 @@ md-item {
 
 .md-dialog-container md-content {
   padding-bottom: 0px;
+  padding-top: 5px !important;
   background-color: white !important;
   height: initial;
   color: #9ca194;
@@ -296,7 +297,7 @@ button {
 .organization-wrapper .key-result.active .tree-node .status .fa-check,
 .organization-wrapper .organization.active .tree-node .status .fa-check,
 .organization-wrapper .tree.active .tree-node .status .fa-check {
-  color: #9ca194;
+  color: white;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
@@ -322,7 +323,7 @@ button {
   font-weight: 600;
 }
 .organization-wrapper .add-node .tree-node {
-  color: #8a8a8a;
+  color: #c2c5c3;
   background: transparent;
   border: 2px solid;
   padding: 8px;
@@ -331,6 +332,9 @@ button {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+.organization-wrapper .add-node .tree-node:after {
+  content: "";
 }
 .organization-wrapper .task-node {
   background-color: #99b742;
@@ -369,7 +373,8 @@ button {
 .organization-wrapper .task-row .md-primary {
   background: transparent !important;
   border: 2px solid;
-  color: #8a8a8a !important;
+  color: #c2c5c3 !important;
+  box-shadow: none;
 }
 .organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
   margin-top: 30px;
@@ -427,4 +432,8 @@ button {
 
 md-radio-group md-radio-button:first-child {
   margin-top: 15px !important;
+}
+
+md-radio-group.md-default-theme:focus:not(:empty) {
+  border-color: transparent !important;
 }
