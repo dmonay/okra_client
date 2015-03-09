@@ -3,7 +3,7 @@
 
     var app = angular.module('TreeModule');
 
-    function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter) {
+    function TreeController($scope, $mdDialog, TreeFactory, $stateParams, $filter, $timeout) {
         jsPlumb.detachEveryConnection();
         var vm = this,
             treeId = $filter('okDecrypt')($stateParams.treeIdEnc);
@@ -31,6 +31,21 @@
 
         vm.changeCurrentKeyResult = function (keyResult) {
             vm.currentKeyResult = keyResult;
+        };
+
+        vm.doubleTapComplete = function (apiMethod, node, parentNode, secondParentNode) {
+            apiMethod = 'update' + apiMethod;
+
+            if (apiMethod !== 'updateTask') {
+                node.Completed = !node.Completed;
+            }
+
+            TreeFactory[apiMethod](vm.tree, node, parentNode, secondParentNode)
+                .then(function (response) {
+                    if (response.data.Success === undefined || !response.data.Success) {
+                        node.Completed = !node.Completed;
+                    }
+                });
         };
 
         vm.openMissionStatementModal = function ($event) {
@@ -133,7 +148,7 @@
         init();
     }
 
-    TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', '$filter'];
+    TreeController.$inject = ['$scope', '$mdDialog', 'TreeFactory', '$stateParams', '$filter', '$timeout'];
 
     app.controller('TreeController', TreeController);
 })();

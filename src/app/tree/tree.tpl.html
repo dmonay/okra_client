@@ -29,6 +29,7 @@
 	<div layout="row" class="collapse" layout-align="center center" id="objectiveNode">
 		<div class="objective" layout="row" layout-align="start" ng-repeat="objective in vm.tree.Objectives track by $index">
 			<button class="tree-node"  id="objective{{$index}}"
+				ng-dblclick="vm.doubleTapComplete('Objective', objective)"
 				ng-click="vm.changeCurrentObjective($index, objective)"
 				layout-align="start"
 				ok-collapse linked-to="objectiveNode" all-linked-nodes="vm.linkedNodeIds" 
@@ -59,6 +60,7 @@
 			<button class="tree-node" id="keyResult{{$index}}"
 				ng-class="{completed: keyResult.Completed === true}"
 				ng-click="vm.changeCurrentKeyResult(keyResult)"
+				ng-dblclick="vm.doubleTapComplete('KeyResult', keyResult, vm.currentObjective)"
 				ok-collapse linked-to="keyResultNode" all-linked-nodes="vm.linkedNodeIds" 
 				ok-draw-connection parent-id="{{vm.currentObjective.nodeId}}"
 				aria-label="toggle">
@@ -91,7 +93,7 @@
 	<!-- Tasks -->
 	<div layout="column" class="collapse task-column" ok-collapse linked-to="taskNode" layout-align="space-around center" all-linked-nodes="vm.linkedNodeIds" id="taskNode">		
 		<div layout="row" layout-align="start center" ng-repeat="task in vm.currentKeyResult.Tasks">
-			<md-checkbox ng-model="task.Completed" aria-label></md-checkbox>
+			<md-checkbox ng-model="task.Completed" ng-change="vm.doubleTapComplete('Task', task, vm.currentObjective, vm.currentKeyResult)" aria-label></md-checkbox>
 			<a href class="task-node" ng-click="vm.openNodeModalDashboard($event, true, 'Task', task, vm.currentObjective, vm.currentKeyResult)">
 				{{task.Name}}
 			<span class="status" ng-if="!task.Completed && task.Priority === 'High'"> 
