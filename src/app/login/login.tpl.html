@@ -5,5 +5,11 @@
 	<div layout="row" layout-align="center center">
 		<h1 class="slogan">An OKR management tool to keep your team on track.</h1>
 	</div>
-	<md-button class="md-raised md-warn" ng-click="vm.googleLogin()" aria-label="log in"><i class="fa fa-google"></i> Sign in with Google</md-button>
+	<md-button class="md-raised md-warn" ng-click="vm.googleLogin()" aria-label="log in">
+		<div layout="row" layout-align="center center">
+			<i ng-if="!vm.session.isAuthenticating" class="fa fa-google"></i> 
+			<md-progress-circular ng-if="vm.session.isAuthenticating" md-mode="indeterminate" md-diameter="20"></md-progress-circular>
+			<span> Sign in with Google </span>
+		</div>
+	</md-button>
 </div>

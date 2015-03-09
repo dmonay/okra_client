@@ -37,9 +37,11 @@
                         ipCookie('okSession', response.access_token);
                         ipCookie('okTokenExpirationDate', response.expires_at);
                         service.getProfile(isSilent);
+                        session.isAuthenticating = false;
                     }
                 }, function (response) {
                     console.log('Silent login failed');
+                    session.isAuthenticating = false;
                 });
         };
 

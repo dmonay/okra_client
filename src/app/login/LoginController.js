@@ -6,8 +6,13 @@
     function LoginController(session) {
         var vm = this;
 
+        vm.session = session;
+
+        session.isAuthenticating = false;
+
         vm.googleLogin = function () {
             session.gAuthenticate(false);
+            session.isAuthenticating = true;
         };
 
     }

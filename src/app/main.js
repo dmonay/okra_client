@@ -251,8 +251,13 @@
     function LoginController(session) {
         var vm = this;
 
+        vm.session = session;
+
+        session.isAuthenticating = false;
+
         vm.googleLogin = function () {
             session.gAuthenticate(false);
+            session.isAuthenticating = true;
         };
 
     }
@@ -756,9 +761,11 @@
                         ipCookie('okSession', response.access_token);
                         ipCookie('okTokenExpirationDate', response.expires_at);
                         service.getProfile(isSilent);
+                        session.isAuthenticating = false;
                     }
                 }, function (response) {
                     console.log('Silent login failed');
+                    session.isAuthenticating = false;
                 });
         };
 
@@ -977,7 +984,7 @@
 
 angular.module('okra.templates', []).run(['$templateCache', function ($templateCache) {
     $templateCache.put("app/login/login.tpl.html",
-        "<div class=\"green-overlay\" layout=\"column\" layout-align=\"center center\" flex=\"100\"><div layout=\"row\" layout-align=\"center center\"><img class=\"logo\" src=\"assets/okra-logo-large.png\"></div><div layout=\"row\" layout-align=\"center center\"><h1 class=\"slogan\">An OKR management tool to keep your team on track.</h1></div><md-button class=\"md-raised md-warn\" ng-click=\"vm.googleLogin()\" aria-label=\"log in\"><i class=\"fa fa-google\"></i> Sign in with Google</md-button></div>"
+        "<div class=\"green-overlay\" layout=\"column\" layout-align=\"center center\" flex=\"100\"><div layout=\"row\" layout-align=\"center center\"><img class=\"logo\" src=\"assets/okra-logo-large.png\"></div><div layout=\"row\" layout-align=\"center center\"><h1 class=\"slogan\">An OKR management tool to keep your team on track.</h1></div><md-button class=\"md-raised md-warn\" ng-click=\"vm.googleLogin()\" aria-label=\"log in\"><div layout=\"row\" layout-align=\"center center\"><i ng-if=\"!vm.session.isAuthenticating\" class=\"fa fa-google\"></i><md-progress-circular ng-if=\"vm.session.isAuthenticating\" md-mode=\"indeterminate\" md-diameter=\"20\"></md-progress-circular><span>Sign in with Google</span></div></md-button></div>"
     );
     $templateCache.put("app/organization/add-organization-modal.tpl.html",
         "<md-dialog flex=\"30\"><div layout=\"row\" layout-align=\"center\"><md-subheader><h3>Add An Organization</h3></md-subheader></div><md-content><div layout=\"row\" layout-align=\"center\"><form class=\"form-horizontal\" name=\"modal.organizationForm\"><div layout=\"row\" layout-align=\"center center\"><div layout-align=\"start start\"><md-input-container class=\"long\"><label>Organization Name</label><md-input required name=\"organizationName\" ng-model=\"modal.organizationName\" autocapitalize=\"off\"></md-input></md-input-container></div><div class=\"error-msg ng-hide\" layout-align=\"center end\" ng-show=\"modal.formSubmitted && modal.organizationForm.organizationName.$invalid\" ng-cloak><i class=\"fa fa-warning\"></i><md-tooltip>This field is required</md-tooltip></div></div></form></div><md-content><div class=\"md-actions\" layout=\"row\" layout-align=\"center end\"><md-button class=\"md-raised md-warn\" ng-click=\"modal.closeModal()\" aria-label=\"cancel\">Cancel</md-button><md-button class=\"md-raised md-primary\" ng-click=\"modal.createOrganization(modal.organizationName)\" aria-label=\"add\">Add</md-button></div><md-dialog></md-dialog></md-content></md-content></md-dialog>"
