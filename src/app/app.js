@@ -75,8 +75,8 @@
             if ($state.current.name == "login" && session.user) {
                 $state.go('organizations');
             }
-            $window.jsPlumb.repaintEverything();
         });
+
     });
 
     //Constants
@@ -126,6 +126,7 @@
             curviness: 20
         }],
         Anchors: ["BottomCenter", "TopCenter"]
+
     });
 
 })();

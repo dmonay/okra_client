@@ -18,7 +18,7 @@
      */
 
 
-    app.directive('okDrawConnection', function (jsPlumbDefaults) {
+    app.directive('okDrawConnection', function (jsPlumbDefaults, $window) {
         return {
             restrict: 'A',
             link: linkFunc
@@ -26,6 +26,11 @@
 
         function linkFunc(scope, iElement, iAttrs) {
             var parentId = iAttrs.parentId;
+
+            scope.$on('$stateChangeStart', function () {
+                jsPlumb.detachEveryConnection(parentId);
+            });
+
             iElement.on('click', function () {
                 jsPlumb.detachEveryConnection(parentId);
                 iElement.parent().parent().children().removeClass('active');
@@ -47,10 +52,9 @@
                 }
                 var plumb = jsPlumb.connect({
                     source: parentId,
-                    target: nodeId
+                    target: nodeId,
+                    detachable: false
                 });
-
-                console.log(jsPlumb);
 
                 traverseUpwards(parentId);
             }
