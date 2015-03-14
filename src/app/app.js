@@ -111,8 +111,8 @@
     });
 
     app.constant('hardCoded', {
-        userId: '54d55f11673e6cfceef7e097',
-        userName: 'someuser123'
+        userId: '54fcb5ddefb6f78081000001',
+        userName: 'Pedro Cunha'
     });
 
     //could turn this into a service? So we can change whenever we want for 2.0
