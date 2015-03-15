@@ -64,7 +64,7 @@ md-item {
   left: 10px;
   background: transparent;
   border-radius: 5px;
-  border: 1px solid #8a8a8a;
+  border: 1px solid #8A8A8A;
   padding: 10px;
   text-align: center;
 }
@@ -80,7 +80,7 @@ md-item {
   font-weight: bold;
 }
 .organization-widget button {
-  color: #8a8a8a !important;
+  color: #8A8A8A !important;
   padding: 5px 10px;
   margin-left: 0 !important;
 }
@@ -125,7 +125,7 @@ md-checkbox:focus .md-label {
 }
 
 md-checkbox .md-icon {
-  border-color: #8a8a8a !important;
+  border-color: #8A8A8A !important;
 }
 
 body {
@@ -144,7 +144,7 @@ md-content {
 }
 
 .error-msg {
-  color: #f44336;
+  color: #F44336;
   opacity: 1;
 }
 
@@ -196,7 +196,7 @@ ul.list-horizontal li span.sub-text {
 }
 
 .well {
-  background-color: #8a8a8a;
+  background-color: #8A8A8A;
   padding: 50px 0px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -231,7 +231,7 @@ ul.list-horizontal li span.sub-text {
   font-size: 12px;
 }
 .status .fa-exclamation {
-  color: #f44336;
+  color: #F44336;
 }
 .status .fa-check {
   color: #99b742;
@@ -255,12 +255,12 @@ button {
 .organization-wrapper .tree-node {
   padding: 20px 20px;
   position: relative;
-  background-color: #c2c5c3;
+  background-color: #C2C5C3;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   border-radius: 5px;
-  color: white;
+  color: #ffffff;
   width: 155px;
   white-space: nowrap;
   overflow: hidden;
@@ -277,7 +277,7 @@ button {
 .organization-wrapper .tree-node md-input-container input.short {
   width: 120px;
   padding: 0px;
-  color: #8a8a8a;
+  color: #8A8A8A;
 }
 .organization-wrapper .tree-node:hover {
   -webkit-box-shadow: 0px 2px 6px #888888;
@@ -297,7 +297,7 @@ button {
 .organization-wrapper .key-result.active .tree-node .status .fa-check,
 .organization-wrapper .organization.active .tree-node .status .fa-check,
 .organization-wrapper .tree.active .tree-node .status .fa-check {
-  color: white;
+  color: #ffffff;
 }
 .organization-wrapper .objective .tree-node:after {
   content: "OBJ";
@@ -314,7 +314,7 @@ button {
   top: 7%;
   right: 5%;
   font-weight: 600;
-  color: white;
+  color: #ffffff;
 }
 .organization-wrapper .objective.add-node .tree-node:after, .organization-wrapper .key-result.add-node .tree-node:after {
   content: "";
@@ -323,7 +323,7 @@ button {
   font-weight: 600;
 }
 .organization-wrapper .add-node .tree-node {
-  color: #c2c5c3;
+  color: #C2C5C3;
   background: transparent;
   border: 2px solid;
   padding: 8px;
@@ -340,7 +340,7 @@ button {
   background-color: #99b742;
   padding: 10px 10px;
   padding-left: 20px;
-  color: white;
+  color: #ffffff;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -373,7 +373,7 @@ button {
 .organization-wrapper .task-row .md-primary {
   background: transparent !important;
   border: 2px solid;
-  color: #c2c5c3 !important;
+  color: #C2C5C3 !important;
   box-shadow: none;
 }
 .organization-wrapper [layout-align="center center"], .organization-wrapper [layout-align="center"], .organization-wrapper [layout-align="start center"] {
@@ -437,3 +437,5 @@ md-radio-group md-radio-button:first-child {
 md-radio-group.md-default-theme:focus:not(:empty) {
   border-color: transparent !important;
 }
+
+/*# sourceMappingURL=main.css.map */
