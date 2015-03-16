@@ -16,7 +16,8 @@ module.exports = {
             'components/**/*.css',
             'components/**/*.map',
             'external/dom.jsPlumb-1.7.2-min.js',
-            'libs/*.js'
+            'libs/*.js',
+            'app/bootstrapper.json'
         ],
         dest: '<%= meta.dist %>'
     }

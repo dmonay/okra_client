@@ -2,7 +2,7 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.8.0-rc1-master-35d5d75
+ * v0.8.3-master-c9aae9b
  */
 goog.provide('ng.material.components.button');
 goog.require('ng.material.core');
@@ -60,7 +60,7 @@ angular.module('material.components.button', [
 function MdButtonDirective($mdInkRipple, $mdTheming, $mdAria) {
 
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: getTemplate,

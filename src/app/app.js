@@ -63,7 +63,7 @@
 
     //get the bootstrap data for the app
     app.run(function ($http, $location, $rootScope, $state, $window, session) {
-        $http.get('app/bootstrap.json').success(function (data) {
+        $http.get('app/bootstrapper.json').success(function (data) {
             session.storeCredentials(data);
         });
 
