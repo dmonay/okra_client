@@ -92,6 +92,10 @@
                             username: userName,
                             displayName: displayName,
                             gid: googleId
+                        }).then(function (response) {
+                            console.log(response.data.Success);
+                            service.user._id = response.data.Success;
+                            service.user.username = userName;
                         });
                     } else {
                         service.user._id = response.data.Success[userName];

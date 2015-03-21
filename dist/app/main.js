@@ -87,7 +87,8 @@
      *
      */
   app.constant('okraAPI', {
-    registerUser: 'https://evening-river-9352.herokuapp.com/create/register',
+    getUser: 'https://evening-river-9352.herokuapp.com/get/users/all/',
+    registerUser: 'https://evening-river-9352.herokuapp.com/register',
     createOrg: 'https://evening-river-9352.herokuapp.com/create/organization',
     updateMission: 'https://evening-river-9352.herokuapp.com/update/mission/',
     updateMembers: 'https://evening-river-9352.herokuapp.com/update/members/',
@@ -101,10 +102,6 @@
     updateKeyResult: 'https://evening-river-9352.herokuapp.com/update/kr/properties/',
     createTask: 'https://evening-river-9352.herokuapp.com/create/task/',
     updateTask: 'https://evening-river-9352.herokuapp.com/update/task/properties/'
-  });
-  app.constant('hardCoded', {
-    userId: '54fcb5ddefb6f78081000001',
-    userName: 'Pedro Cunha'
   });
   //could turn this into a service? So we can change whenever we want for 2.0
   app.constant('jsPlumbDefaults', {
@@ -172,7 +169,7 @@
 (function () {
   'use strict';
   var app = angular.module('HeaderModule');
-  function HeaderController($scope, $mdDialog, hardCoded, session, $interval) {
+  function HeaderController($scope, $mdDialog, session, $interval) {
     var vm = this;
     vm.session = session;
     vm.dropdownOpen = false;
@@ -180,7 +177,6 @@
   HeaderController.$inject = [
     '$scope',
     '$mdDialog',
-    'hardCoded',
     'session',
     '$interval'
   ];
@@ -228,7 +224,7 @@
 (function () {
   'use strict';
   var app = angular.module('OrganizationModule');
-  function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded, organization) {
+  function AddTreeModalController($scope, TreeFactory, $mdDialog, session, organization) {
     var modal = this;
     modal.timeframe = 'monthly';
     modal.formSubmitted = false;
@@ -257,7 +253,7 @@
     '$scope',
     'TreeFactory',
     '$mdDialog',
-    'hardCoded',
+    'session',
     'organization'
   ];
   app.controller('AddTreeModalController', AddTreeModalController);
@@ -321,10 +317,10 @@
 (function () {
   'use strict';
   var app = angular.module('OrganizationModule');
-  function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, hardCoded, TreeFactory) {
+  function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, session, TreeFactory) {
     var vm = this;
     function getOrganizations() {
-      OrganizationFactory.getOrganizations(hardCoded.userId).then(function (response) {
+      OrganizationFactory.getOrganizations(session.user._id).then(function (response) {
         vm.organizations = TreeFactory.formatTrees(response.data.Success);
       });
     }
@@ -349,7 +345,7 @@
     '$scope',
     '$mdDialog',
     'OrganizationFactory',
-    'hardCoded',
+    'session',
     'TreeFactory'
   ];
   app.controller('OrganizationSelectionController', OrganizationSelectionController);
@@ -366,12 +362,12 @@
      * A factory that holds methods that interact with the backend API, specifically organization data endpoints.
      *
      */
-  function OrganizationFactory($http, okraAPI, hardCoded) {
+  function OrganizationFactory($http, okraAPI, session) {
     var organizationAPI = {
         createOrganization: function (orgName) {
           return $http.post(okraAPI.createOrg, {
             organization: orgName,
-            userId: hardCoded.userId
+            userId: session.user._id
           });
         },
         updateMission: function (orgName, mission) {
@@ -398,7 +394,7 @@
   OrganizationFactory.$inject = [
     '$http',
     'okraAPI',
-    'hardCoded'
+    'session'
   ];
   app.factory('OrganizationFactory', OrganizationFactory);
 }());
@@ -554,14 +550,14 @@
      * Interacts with the current session.
      *
      */
-  function session($http, $state, $timeout, $mdToast, okraAPI, ipCookie) {
+  function session($http, $state, $timeout, $mdToast, $q, okraAPI, ipCookie) {
     var service = {};
     service.gAuthenticate = function (isSilent) {
       var currentTime = new Date().getTime(), previousTokenExpiration = ipCookie('okTokenExpirationDate') * 1000;
       gapi.client.setApiKey(service.authCreds.gApiKey);
       gapi.auth.authorize({
         client_id: service.authCreds.gauthClientId,
-        scope: 'https://www.googleapis.com/auth/userinfo.profile',
+        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
         immediate: isSilent
       }).then(function (response) {
         if (response.access_token) {
@@ -569,7 +565,6 @@
             accessToken: response.access_token,
             tokenLifespan: response.expires_in
           };
-          ipCookie('okSession', response.access_token);
           ipCookie('okTokenExpirationDate', response.expires_at);
           service.getProfile(isSilent);
           session.isAuthenticating = false;
@@ -584,15 +579,16 @@
         var request = gapi.client.plus.people.get({ 'userId': 'me' });
         request.then(function (response) {
           service.user = response.result;
-          // service.updateUser(response.result);
-          if ($state.current.name == 'login') {
-            $state.go('organizations');
-          }
-          if (!isSilent) {
-            $mdToast.show($mdToast.simple().content('Welcome ' + service.user.displayName).position('top right').hideDelay(3000));
-          }
-          //refresh the auth token in 40 minutes if the user remains active on the app
-          service.beginAuthCountdown(2400000);
+          service.updateUser(response.result).then(function (response) {
+            if ($state.current.name == 'login') {
+              $state.go('organizations');
+            }
+            if (!isSilent) {
+              $mdToast.show($mdToast.simple().content('Welcome ' + service.user.displayName).position('top right').hideDelay(3000));
+            }
+            //refresh the auth token in 40 minutes if the user remains active on the app
+            service.beginAuthCountdown(2400000);
+          });
         }, function (response) {
           //invalid credentials let's authenticate and try again
           if (response.error === '401') {
@@ -602,9 +598,29 @@
       });
     };
     service.updateUser = function (user) {
-      //look for the user on the backend to update user obj
-      //save session and related tokens on the back end if no user found
-      $http.post(okraAPI.registerUser, { userName: session.user.displayName });
+      var userName = user.emails[0].value.match(/^.*(?=(\@))/g)[0], displayName = user.displayName, googleId = user.id, deferred = $q.defer();
+      //look for the user on the backend to update user obj or register
+      $http.get(okraAPI.getUser + userName).then(function (response) {
+        if (response) {
+          if (!response.data.Success[userName]) {
+            $http.post(okraAPI.registerUser, {
+              username: userName,
+              displayName: displayName,
+              gid: googleId
+            }).then(function (response) {
+              console.log(response.data.Success);
+              service.user._id = response.data.Success;
+              service.user.username = userName;
+            });
+          } else {
+            service.user._id = response.data.Success[userName];
+            service.user.username = userName;
+          }
+          deferred.resolve(service.user);
+        }
+        deferred.reject('Error');
+      });
+      return deferred.promise;
     };
     service.beginAuthCountdown = function (time) {
       service.authCountdown = $timeout(function () {
@@ -634,6 +650,7 @@
     '$state',
     '$timeout',
     '$mdToast',
+    '$q',
     'okraAPI',
     'ipCookie'
   ];
@@ -775,7 +792,7 @@ angular.module('okra.templates', []).run([
 (function () {
   'use strict';
   var app = angular.module('OrganizationModule');
-  function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement, hardCoded) {
+  function MissionStatementModalController($scope, OrganizationFactory, $mdDialog, missionStatement, $stateParams) {
     var modal = this;
     modal.missionStatement = missionStatement;
     modal.formSubmitted = false;
@@ -783,7 +800,7 @@ angular.module('okra.templates', []).run([
       modal.formSubmitted = true;
       if (modal.missionStatementForm.$valid) {
         modal.currentlySaving = true;
-        OrganizationFactory.updateMission(hardCoded.org, modal.newMissionStatement).then(function (response) {
+        OrganizationFactory.updateMission($stateParams.organization, modal.newMissionStatement).then(function (response) {
           modal.currentlySaving = false;
           modal.formSubmitted = false;
           $mdDialog.hide(response.data);
@@ -799,7 +816,7 @@ angular.module('okra.templates', []).run([
     'OrganizationFactory',
     '$mdDialog',
     'missionStatement',
-    'hardCoded'
+    '$stateParams'
   ];
   app.controller('MissionStatementModalController', MissionStatementModalController);
 }());
