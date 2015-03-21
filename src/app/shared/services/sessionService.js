@@ -12,7 +12,7 @@
      *
      */
 
-    function session($http, $state, $timeout, $mdToast, okraAPI, ipCookie) {
+    function session($http, $state, $timeout, $mdToast, $q, okraAPI, ipCookie) {
 
         var service = {};
 
@@ -25,7 +25,7 @@
 
             gapi.auth.authorize({
                     client_id: service.authCreds.gauthClientId,
-                    scope: 'https://www.googleapis.com/auth/userinfo.profile',
+                    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
                     immediate: isSilent
                 })
                 .then(function (response) {
@@ -34,7 +34,6 @@
                             accessToken: response.access_token,
                             tokenLifespan: response.expires_in
                         };
-                        ipCookie('okSession', response.access_token);
                         ipCookie('okTokenExpirationDate', response.expires_at);
                         service.getProfile(isSilent);
                         session.isAuthenticating = false;
@@ -52,21 +51,23 @@
                 });
                 request.then(function (response) {
                     service.user = response.result;
-                    // service.updateUser(response.result);
-                    if ($state.current.name == "login") {
-                        $state.go('organizations');
-                    }
-                    if (!isSilent) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .content('Welcome ' + service.user.displayName)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    }
-                    //refresh the auth token in 40 minutes if the user remains active on the app
-                    service.beginAuthCountdown(2400000);
+                    service.updateUser(response.result)
+                        .then(function (response) {
+                            if ($state.current.name == "login") {
+                                $state.go('organizations');
+                            }
+                            if (!isSilent) {
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .content('Welcome ' + service.user.displayName)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                            }
+                            //refresh the auth token in 40 minutes if the user remains active on the app
+                            service.beginAuthCountdown(2400000);
 
+                        });
 
                 }, function (response) {
                     //invalid credentials let's authenticate and try again
@@ -78,12 +79,30 @@
         };
 
         service.updateUser = function (user) {
-            //look for the user on the backend to update user obj
+            var userName = user.emails[0].value.match(/^.*(?=(\@))/g)[0],
+                displayName = user.displayName,
+                googleId = user.id,
+                deferred = $q.defer();
 
-            //save session and related tokens on the back end if no user found
-            $http.post(okraAPI.registerUser, {
-                userName: session.user.displayName
+            //look for the user on the backend to update user obj or register
+            $http.get(okraAPI.getUser + userName).then(function (response) {
+                if (response) {
+                    if (!response.data.Success[userName]) {
+                        $http.post(okraAPI.registerUser, {
+                            username: userName,
+                            displayName: displayName,
+                            gid: googleId
+                        });
+                    } else {
+                        service.user._id = response.data.Success[userName];
+                        service.user.username = userName;
+                    }
+                    deferred.resolve(service.user);
+                }
+                deferred.reject('Error');
             });
+
+            return deferred.promise;
         };
 
         service.beginAuthCountdown = function (time) {
@@ -114,7 +133,7 @@
         return service;
     }
 
-    session.$inject = ['$http', '$state', '$timeout', '$mdToast', 'okraAPI', 'ipCookie'];
+    session.$inject = ['$http', '$state', '$timeout', '$mdToast', '$q', 'okraAPI', 'ipCookie'];
 
     app.factory('session', session);
 

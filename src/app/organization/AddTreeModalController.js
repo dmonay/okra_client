@@ -3,7 +3,7 @@
 
     var app = angular.module('OrganizationModule');
 
-    function AddTreeModalController($scope, TreeFactory, $mdDialog, hardCoded, organization) {
+    function AddTreeModalController($scope, TreeFactory, $mdDialog, session, organization) {
         var modal = this;
 
         modal.timeframe = 'monthly';
@@ -17,8 +17,8 @@
                 var tree = {
                     name: modal.newTreeName,
                     timeframe: modal.timeframe,
-                    userId: hardCoded.userId,
-                    username: hardCoded.userName
+                    userId: session.user._id,
+                    username: session.user.username
                 };
 
                 TreeFactory.createTree(organization, tree)
@@ -35,7 +35,7 @@
         };
     }
 
-    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'hardCoded', 'organization'];
+    AddTreeModalController.$inject = ['$scope', 'TreeFactory', '$mdDialog', 'session', 'organization'];
 
     app.controller('AddTreeModalController', AddTreeModalController);
 

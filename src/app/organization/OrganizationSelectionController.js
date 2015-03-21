@@ -3,11 +3,11 @@
 
     var app = angular.module('OrganizationModule');
 
-    function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, hardCoded, TreeFactory) {
+    function OrganizationSelectionController($scope, $mdDialog, OrganizationFactory, session, TreeFactory) {
         var vm = this;
 
         function getOrganizations() {
-            OrganizationFactory.getOrganizations(hardCoded.userId)
+            OrganizationFactory.getOrganizations(session.user._id)
                 .then(function (response) {
                     vm.organizations = TreeFactory.formatTrees(response.data.Success);
                 });
@@ -33,7 +33,7 @@
         init();
     }
 
-    OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'OrganizationFactory', 'hardCoded',
+    OrganizationSelectionController.$inject = ['$scope', '$mdDialog', 'OrganizationFactory', 'session',
         'TreeFactory'
     ];
 

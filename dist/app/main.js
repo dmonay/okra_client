@@ -174,7 +174,6 @@
   var app = angular.module('HeaderModule');
   function HeaderController($scope, $mdDialog, hardCoded, session, $interval) {
     var vm = this;
-    vm.userName = hardCoded.userName;
     vm.session = session;
     vm.dropdownOpen = false;
   }
@@ -240,8 +239,8 @@
         var tree = {
             name: modal.newTreeName,
             timeframe: modal.timeframe,
-            userId: hardCoded.userId,
-            username: hardCoded.userName
+            userId: session.user._id,
+            username: session.user.username
           };
         TreeFactory.createTree(organization, tree).then(function (response) {
           modal.currentlySaving = false;

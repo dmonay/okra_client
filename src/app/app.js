@@ -94,7 +94,8 @@
      *
      */
     app.constant('okraAPI', {
-        registerUser: 'http://localhost:8080/create/register',
+        getUser: 'http://localhost:8080/get/users/all/',
+        registerUser: 'http://localhost:8080/register',
         createOrg: 'http://localhost:8080/create/organization',
         updateMission: 'http://localhost:8080/update/mission/',
         updateMembers: 'http://localhost:8080/update/members/',
@@ -108,11 +109,6 @@
         updateKeyResult: 'http://localhost:8080/update/kr/properties/', // orgName / treeid / objID / krIndex
         createTask: 'http://localhost:8080/create/task/', // orgName / objId / taskIndex
         updateTask: 'http://localhost:8080/update/task/properties/' // orgName / treeId / objId / krIndex / taskIndex
-    });
-
-    app.constant('hardCoded', {
-        userId: '54fcb5ddefb6f78081000001',
-        userName: 'Pedro Cunha'
     });
 
     //could turn this into a service? So we can change whenever we want for 2.0

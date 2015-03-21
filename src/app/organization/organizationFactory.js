@@ -12,7 +12,7 @@
      *
      */
 
-    function OrganizationFactory($http, okraAPI, hardCoded) {
+    function OrganizationFactory($http, okraAPI, session) {
 
         var organizationAPI = {
             /**
@@ -27,7 +27,7 @@
             createOrganization: function (orgName) {
                 return $http.post(okraAPI.createOrg, {
                     organization: orgName,
-                    userId: hardCoded.userId
+                    userId: session.user._id
                 });
             },
             /**
@@ -84,7 +84,7 @@
         return organizationAPI;
     }
 
-    OrganizationFactory.$inject = ['$http', 'okraAPI', 'hardCoded'];
+    OrganizationFactory.$inject = ['$http', 'okraAPI', 'session'];
 
     app.factory('OrganizationFactory', OrganizationFactory);
 
